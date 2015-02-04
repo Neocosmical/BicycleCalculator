@@ -1,0 +1,770 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:res="clr-namespace:BicycleCalculatorWPF.Properties"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+    xmlns:themes="clr-namespace:WPF.Themes;assembly=WPF.Themes"
+    themes:ThemeManager.Theme="{Binding ElementName=themes, Path=SelectedItem}"
+        x:Name="MainWindow1" x:Class="BicycleCalculatorWPF.MainWindow"    
+        xmlns:oxy="http://oxyplot.codeplex.com"
+        xmlns:local="clr-namespace:WpfApplication2"
+        Title="{x:Static res:Resources.StringTitle}" 
+        Height="711" Width="1000" 
+        Loaded="Form1_Load" Closed="Window_Closed_1" 
+        Icon="Resources/自行车计算器s.ico" 
+        FontFamily="Microsoft YaHei UI" 
+        Background="#FFF0F0F0" 
+        Closing="Window_Closing_1"
+    >
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+    </Window.Resources>
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Menu VerticalAlignment="Top" Padding="6,2,0,2">
+            <MenuItem Header="{x:Static res:Resources.StringFile}" Padding="8,2,8,1">
+                <MenuItem Header="{x:Static res:Resources.StringOpen}" Visibility="Collapsed"/>
+                <MenuItem x:Name="saveToolStripMenuItem" Header="{x:Static res:Resources.StringExport}" Click="saveToolStripMenuItem_Click"/>
+                <MenuItem Header="{x:Static res:Resources.StringLanguage}" SubmenuOpened="LanguageMenuItem_Click">
+                    <MenuItem Header = "{x:Static res:Resources.StringDefault}" Click="DftLanguageMenuItem_Click"/>
+                    <Separator/>
+                    <MenuItem Header = "English" Click="EngMenuItem_Click"/>
+                    <MenuItem Header = "简体中文" Click="ChnMenuItem_Click"/>
+                </MenuItem>
+                <MenuItem Header="{x:Static res:Resources.StringReset}" Click="ResetMenuItem_Click"/>
+                <Separator/>
+                <MenuItem x:Name="exitToolStripMenuItem" Header="{x:Static res:Resources.StringExit}" Click="exitToolStripMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="ViewMenuItem" Header="{x:Static res:Resources.StringView}" SubmenuOpened="ViewMenuItem_SubmenuOpened" Padding="8,2,8,1">
+                <MenuItem x:Name="internalHubsToolStripMenuItem" Header="{x:Static res:Resources.StringInternalHub}" IsCheckable="True" IsChecked="True" Click="internalHubsToolStripMenuItem_Click" />
+                <MenuItem x:Name="chartToolStripMenuItem" Header="{x:Static res:Resources.StringChart}" IsCheckable="True" IsChecked="True" Click="chartToolStripMenuItem_Click" Visibility="Collapsed"/>
+            </MenuItem>
+            <MenuItem x:Name="RusultMenuItem" Header="{x:Static res:Resources.StringResult}"  Padding="8,2,8,1" >
+                <MenuItem x:Name="selectToolStripMenuItem" Header="{x:Static res:Resources.StringColumn}" SubmenuOpened="selectToolStripMenuItem_SubmenuOpened">
+                    <MenuItem Header="ALL"/>
+                </MenuItem>
+                <MenuItem x:Name="unitToolStripMenuItem" Header="{x:Static res:Resources.StringUnit}" SubmenuOpened="unitToolStripMenuItem_SubmenuOpened">
+                    <MenuItem x:Name="kMHToolStripMenuItem" Header="KM/H" Click="kMHToolStripMenuItem_Click"/>
+                    <MenuItem x:Name="mPHToolStripMenuItem" Header="MPH" Click="mPHToolStripMenuItem_Click"/>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="{x:Static res:Resources.StringChart}"  Padding="8,2,8,1" SubmenuOpened="PlotToolStripMenuItem_SubmenuOpened">
+                <MenuItem Header="{x:Static res:Resources.StringDisAll}" Click="DisAllToolStripMenuItem_Click" Tag="2"/>
+                <Separator Tag="2"/>
+                <MenuItem Header="{x:Static res:Resources.StringLRSide}" SubmenuOpened="LRSideDisToolStripMenuItem_Click" Tag="2">
+                    <MenuItem Header="{x:Static res:Resources.StringRight}" IsCheckable="True" Click="DisLeftToolStripMenuItem_Click"/>
+                    <MenuItem Header="{x:Static res:Resources.StringLeft}" IsCheckable="True" Click="DisRightToolStripMenuItem_Click"/>
+                </MenuItem>
+                <MenuItem Header="{x:Static res:Resources.StringDisItem}" SubmenuOpened="DisItemStripMenuItem_Click" Tag="2">
+                    <MenuItem Header="{x:Static res:Resources.StringRimline}" IsCheckable="True" Click="RimlineToolStripMenuItem_Click"/>
+                    <MenuItem Header="{x:Static res:Resources.StringRimhole}" IsCheckable="True" Click="RimholeToolStripMenuItem_Click"/>
+                    <MenuItem Header="{x:Static res:Resources.StringHubline}" IsCheckable="True" Click="HublineToolStripMenuItem_Click"/>
+                    <MenuItem Header="{x:Static res:Resources.StringHubhole}" IsCheckable="True" Click="HubholeToolStripMenuItem_Click"/>
+                    <MenuItem Header="{x:Static res:Resources.StringSpokesline}" IsCheckable="True" Click="SpolineToolStripMenuItem_Click"/>
+                </MenuItem>
+                <Separator Tag="2"/>
+                <MenuItem Header="{x:Static res:Resources.StringResetAxis}" Click="ResetAxisToolStripMenuItem1_Click" Tag="2"/>
+
+                <MenuItem x:Name="AddCurveToolStripMenuItem" Header="{x:Static res:Resources.StringAddCurve}" Click="AddCurveToolStripMenuItem_Click" Tag="1"/>
+                <MenuItem x:Name="ClrCurveToolStripMenuItem" Header="{x:Static res:Resources.StringClrCurve}" Click="ClrCurveToolStripMenuItem_Click" Tag="1"/>
+                <Separator Tag="1"/>
+                <MenuItem x:Name="BranchDisToolStripMenuItem" Header="{x:Static res:Resources.StringBranchDisplay}" SubmenuOpened="BranchDisToolStripMenuItem_Click" Tag="1">
+                    <MenuItem x:Name="WithCrankToolStripMenuItem" Header="{x:Static res:Resources.StringBranchfr}" IsCheckable="True" Click="WithCrankToolStripMenuItem_Click"/>
+                    <MenuItem x:Name="WithCassToolStripMenuItem" Header="{x:Static res:Resources.StringBranchbk}" Visibility="Collapsed" IsCheckable="True" Click="WithCassToolStripMenuItem_Click"/>
+                    <MenuItem x:Name="WithInterToolStripMenuItem" Header="{x:Static res:Resources.StringBranchin}" IsCheckable="True" Click="WithInterToolStripMenuItem_Click"/>
+                    <Separator/>
+                    <MenuItem x:Name="NoneToolStripMenuItem" Header="{x:Static res:Resources.StringNone}" IsCheckable="True" IsChecked="True" Click="NoneToolStripMenuItem_Click"/>
+                </MenuItem>
+                <MenuItem x:Name="YAxisToolStripMenuItem" Header="{x:Static res:Resources.StringYAxis}" SubmenuOpened="YAxisToolStripMenuItem_Click" Tag="1">
+                    <MenuItem x:Name="SRToolStripMenuItem" Header="{x:Static res:Resources.StringSpdRatio}" IsCheckable="True" IsChecked="True" Click="SRToolStripMenuItem_Click"/>
+                    <MenuItem x:Name="GIToolStripMenuItem" Header="{x:Static res:Resources.StringGI}" IsCheckable="True" Click="GIToolStripMenuItem_Click"/>
+                    <MenuItem x:Name="GRToolStripMenuItem" Header="{x:Static res:Resources.StringGearRatio}" IsCheckable="True" Click="GRToolStripMenuItem_Click"/>
+                    <MenuItem x:Name="SpdToolStripMenuItem" Header="{x:Static res:Resources.StringSpdCAD}" IsCheckable="True" Click="SpdToolStripMenuItem_Click"/>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="{x:Static res:Resources.StringHelp}"  Padding="8,2,8,1">
+                <MenuItem x:Name="instructionsToolStripMenuItem" Header="{x:Static res:Resources.StringInstructions}" Click="instructionsToolStripMenuItem_Click"/>
+                <MenuItem x:Name="donateToolStripMenuItem" Header="{x:Static res:Resources.StringDonate}" Foreground="Red" FontWeight="Bold" Click="donateToolStripMenuItem_Click"/>
+                <Separator/>
+                <MenuItem x:Name="aboutToolStripMenuItem" Header="{x:Static res:Resources.StringAbout}" Click="aboutToolStripMenuItem_Click"/>
+            </MenuItem>
+        </Menu>
+        <TabControl Grid.Row="1" x:Name="TabControlMain" SelectedIndex="0" SelectionChanged="TabControlMain_SelectionChanged">
+            <TabItem Header="{x:Static res:Resources.StringTransmission}">
+                <Grid x:Name="GridT">
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="UpRow" Height="349*"/>
+                        <RowDefinition x:Name="DownRow" Height="280*"/>
+                    </Grid.RowDefinitions>
+
+                    <GridSplitter HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="1" Height="4"/>
+
+                    <oxy:PlotView x:Name="Chart1" Grid.Row="1" PlotAreaBackground="#B2FFFFFF" Margin="0,4,0,0">
+                        <oxy:PlotView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="{x:Static res:Resources.StringAddCurve}" Click="AddCurveToolStripMenuItem_Click"/>
+                                <MenuItem Header="{x:Static res:Resources.StringClrCurve}" Click="ClrCurveToolStripMenuItem_Click"/>
+                                <Separator/>
+                                <MenuItem Header="{x:Static res:Resources.StringBranchDisplay}" SubmenuOpened="BranchDisToolStripMenuItem_Click">
+                                    <MenuItem Header="{x:Static res:Resources.StringBranchfr}" IsCheckable="True" Click="WithCrankToolStripMenuItem_Click"/>
+                                    <MenuItem Header="{x:Static res:Resources.StringBranchbk}" Visibility="Collapsed" IsCheckable="True" Click="WithCassToolStripMenuItem_Click"/>
+                                    <MenuItem Header="{x:Static res:Resources.StringBranchin}" IsCheckable="True" Click="WithInterToolStripMenuItem_Click"/>
+                                    <Separator/>
+                                    <MenuItem Header="{x:Static res:Resources.StringNone}" IsCheckable="True" IsChecked="True" Click="NoneToolStripMenuItem_Click"/>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static res:Resources.StringYAxis}" SubmenuOpened="YAxisToolStripMenuItem_Click">
+                                    <MenuItem Header="{x:Static res:Resources.StringSpdRatio}" IsCheckable="True" IsChecked="True" Click="SRToolStripMenuItem_Click"/>
+                                    <MenuItem Header="{x:Static res:Resources.StringGI}" IsCheckable="True" Click="GIToolStripMenuItem_Click"/>
+                                    <MenuItem Header="{x:Static res:Resources.StringGearRatio}" IsCheckable="True" Click="GRToolStripMenuItem_Click"/>
+                                    <MenuItem Header="{x:Static res:Resources.StringSpdCAD}" IsCheckable="True" Click="SpdToolStripMenuItem_Click"/>
+                                </MenuItem>
+                                <Separator/>
+                                <MenuItem Header="{x:Static res:Resources.StringResetAxis}" Click="ResetAxisToolStripMenuItem_Click"/>
+                            </ContextMenu>
+                        </oxy:PlotView.ContextMenu>
+                        <oxy:PlotView.Background>
+                            <ImageBrush ImageSource="Resources/back.png" Stretch="UniformToFill"/>
+                        </oxy:PlotView.Background>
+                        <oxy:LineSeries ItemsSource="{Binding Points}"/>
+                    </oxy:PlotView>
+
+                    <Grid x:Name="GridUp" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="InputColumn" Width="555*"/>
+                            <ColumnDefinition x:Name="AnsColumn" Width="431*"/>
+                        </Grid.ColumnDefinitions>
+                        <GridSplitter x:Name="GridSplitter2" HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Column="1" Width="4"/>
+
+                        <Grid x:Name="GridInput" SizeChanged="splitContainer2_Panel1_SizeChanged">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <GroupBox x:Name="groupBox2" Header="{x:Static res:Resources.StringCassette}" Margin="5" Grid.Column="1" Grid.RowSpan="2">
+                                <GroupBox.Background>
+                                    <ImageBrush ImageSource="Resources/飞轮-s4.png" Stretch="UniformToFill"/>
+                                </GroupBox.Background>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{x:Static res:Resources.StringSpeeds}" VerticalAlignment="Center" Margin="3"/>
+                                    <TextBlock Grid.Row="1" Text="{x:Static res:Resources.StringTeeth}" VerticalAlignment="Center" Margin="3"/>
+                                    <ComboBox x:Name="BkNumcomboBox" Grid.Column="1" Margin="3" SelectionChanged="BkNumcomboBox_SelectedIndexChanged"/>
+                                    <ComboBox x:Name="BkModelcomboBox" Grid.Column="1" Grid.Row="1" Margin="3" SelectionChanged="BkModelcomboBox_SelectedIndexChanged"/>
+                                    <DataGrid x:Name="dataGridViewBk" Grid.Row="2" Margin="3" Background="#B2FFFFFF" Grid.ColumnSpan="2" HeadersVisibility="None" GridLinesVisibility="Horizontal" HorizontalScrollBarVisibility="Disabled">
+                                        <DataGrid.BorderBrush>
+                                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                        </DataGrid.BorderBrush>
+                                        <DataGrid.VerticalGridLinesBrush>
+                                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                        </DataGrid.VerticalGridLinesBrush>
+                                        <DataGrid.HorizontalGridLinesBrush>
+                                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                        </DataGrid.HorizontalGridLinesBrush>
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn IsReadOnly="True">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Id}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn IsReadOnly="True" Width="1*">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Text="{Binding Teeth}" MouseWheel="TextBox_MouseWheel_Bk" Tag="{Binding Id}" LostKeyboardFocus="TextBox_LostKeyboardFocus_Bk" BorderBrush="{x:Null}" Background="{x:Null}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="0"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn IsReadOnly="True">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Grid Width="40">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="1*"/>
+                                                                <ColumnDefinition Width="1*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <RepeatButton Content="-"  Click="bkMinuButton_Click" CommandParameter="{Binding Id}" Grid.Column="0" Margin="0,0,1,0"/>
+                                                            <RepeatButton Content="+"  Click="bkAddButton_Click" CommandParameter="{Binding Id}" Grid.Column="1" Margin="1,0,0,0"/>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                        <Button/>
+
+                                    </DataGrid>
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox x:Name="groupBox5" Header="{x:Static res:Resources.StringInternalHub}" Margin="5" Grid.Column="2" Grid.RowSpan="2">
+                                <GroupBox.Background>
+                                    <ImageBrush ImageSource="Resources/内变速-s1.png" Stretch="UniformToFill"/>
+                                </GroupBox.Background>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{x:Static res:Resources.StringSpeeds}" VerticalAlignment="Center" Margin="3"/>
+                                    <TextBlock Grid.Row="1" Text="{x:Static res:Resources.StringRatio}" VerticalAlignment="Center" Margin="3"/>
+                                    <ComboBox x:Name="InNumcomboBox" Grid.Column="1" Margin="3" SelectionChanged="InNumcomboBox_SelectedIndexChanged"/>
+                                    <ComboBox x:Name="InModelcomboBox" Grid.Column="1" Grid.Row="1" Margin="3" SelectionChanged="InModelcomboBox_SelectedIndexChanged"/>
+                                    <DataGrid x:Name="dataGridViewIn" Grid.Row="2" Margin="3" Background="#B2FFFFFF" Grid.ColumnSpan="2" HeadersVisibility="None" GridLinesVisibility="Horizontal" HorizontalScrollBarVisibility="Disabled">
+                                        <DataGrid.BorderBrush>
+                                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                        </DataGrid.BorderBrush>
+                                        <DataGrid.VerticalGridLinesBrush>
+                                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                        </DataGrid.VerticalGridLinesBrush>
+                                        <DataGrid.HorizontalGridLinesBrush>
+                                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                        </DataGrid.HorizontalGridLinesBrush>
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn IsReadOnly="True">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Id}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn IsReadOnly="True" Width="1*">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Text="{Binding Teeth, StringFormat=\{0:F3\}}" MouseWheel="TextBox_MouseWheel_In" Tag="{Binding Id}" LostKeyboardFocus="TextBox_LostKeyboardFocus_In" BorderBrush="{x:Null}" Background="{x:Null}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="0"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn IsReadOnly="True">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Grid Width="40">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="1*"/>
+                                                                <ColumnDefinition Width="1*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <RepeatButton Content="-"  Click="inMinuButton_Click" CommandParameter="{Binding Id}" Grid.Column="0" Margin="0,0,1,0"/>
+                                                            <RepeatButton Content="+"  Click="inAddButton_Click" CommandParameter="{Binding Id}" Grid.Column="1" Margin="1,0,0,0"/>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                        <Button/>
+                                    </DataGrid>
+                                </Grid>
+                            </GroupBox>
+                            <Grid Grid.Column="0" Grid.RowSpan="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <GroupBox Header="{x:Static res:Resources.StringCranksets}" Margin="5" Grid.Row="0">
+                                    <GroupBox.Background>
+                                        <ImageBrush ImageSource="Resources/牙盘1-s8.png" Stretch="UniformToFill">
+                                            <ImageBrush.RelativeTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                                    <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                                                    <TranslateTransform/>
+                                                </TransformGroup>
+                                            </ImageBrush.RelativeTransform>
+                                        </ImageBrush>
+                                    </GroupBox.Background>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="{x:Static res:Resources.StringSpeeds}" VerticalAlignment="Center" Margin="3"/>
+                                        <TextBlock Grid.Row="1" Text="{x:Static res:Resources.StringTeeth}" VerticalAlignment="Center" Margin="3"/>
+                                        <ComboBox x:Name="FrNumcomboBox" Grid.Column="1" Margin="3" SelectionChanged="FrNumcomboBox_SelectedIndexChanged"/>
+                                        <ComboBox x:Name="FrModelcomboBox" Grid.Column="1" Grid.Row="1" Margin="3" SelectionChanged="FrModelcomboBox_SelectedIndexChanged"/>
+                                        <DataGrid x:Name="dataGridViewFr" Grid.Row="2" Margin="3" Background="#B2FFFFFF" Grid.ColumnSpan="2" HeadersVisibility="None" GridLinesVisibility="Horizontal" HorizontalScrollBarVisibility="Disabled">
+                                            <DataGrid.BorderBrush>
+                                                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                            </DataGrid.BorderBrush>
+                                            <DataGrid.VerticalGridLinesBrush>
+                                                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                            </DataGrid.VerticalGridLinesBrush>
+                                            <DataGrid.HorizontalGridLinesBrush>
+                                                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                            </DataGrid.HorizontalGridLinesBrush>
+                                            <DataGrid.Columns>
+                                                <DataGridTemplateColumn IsReadOnly="True">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock Text="{Binding Id}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn IsReadOnly="True" Width="1*">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Teeth}" MouseWheel="TextBox_MouseWheel_Fr" Tag="{Binding Id}" LostKeyboardFocus="TextBox_LostKeyboardFocus_Fr" BorderBrush="{x:Null}" Background="{x:Null}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="0"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn IsReadOnly="True">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Grid Width="40">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="1*"/>
+                                                                    <ColumnDefinition Width="1*"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <RepeatButton Content="-"  Click="frMinuButton_Click" CommandParameter="{Binding Id}" Grid.Column="0" Margin="0,0,1,0"/>
+                                                                <RepeatButton Content="+"  Click="frAddButton_Click" CommandParameter="{Binding Id}" Grid.Column="1" Margin="1,0,0,0"/>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                            </DataGrid.Columns>
+                                            <Button/>
+
+                                        </DataGrid>
+                                    </Grid>
+                                </GroupBox>
+                                <GroupBox Header="{x:Static res:Resources.StringCadenceSpeed}" Margin="5" Grid.Row="1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Slider x:Name="trackBar1" Grid.ColumnSpan="2" Margin="3" ValueChanged="trackBar1_ValueChanged" Minimum="1" Maximum="200" LargeChange="10" SmallChange="1" Value="80" TickFrequency="20"/>
+                                        <Label x:Name="labelCAD" Content="80 rpm" Grid.Row="1" Margin="3" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" Foreground="Black" ContextMenuOpening="labelCAD_ContextMenuOpening">
+                                            <Label.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Header="KM/H" Click="kMHToolStripMenuItem_Click"/>
+                                                    <MenuItem Header="MPH" Click="mPHToolStripMenuItem_Click"/>
+                                                </ContextMenu>
+                                            </Label.ContextMenu>
+                                        </Label>
+                                        <CheckBox x:Name="checkBox1" Content="{x:Static res:Resources.StringSpeed}" Grid.Column="1" Margin="3" Grid.Row="1" VerticalAlignment="Center" Click="checkBox1_Click"/>
+
+                                    </Grid>
+                                </GroupBox>
+                                <GroupBox Header="{x:Static res:Resources.StringTire}" Margin="5" Grid.Row="2">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <ComboBox x:Name="WheelcomboBox" Grid.ColumnSpan="4" Margin="3" SelectionChanged="WheelcomboBox_SelectedIndexChanged" IsEditable="True" StaysOpenOnEdit="True" GotKeyboardFocus="WheelcomboBox_GotKeyboardFocus" LostKeyboardFocus="WheelcomboBox_LostKeyboardFocus"/>
+                                        <Grid x:Name="tableLayoutPanel10" Grid.ColumnSpan="4" Margin="3" Visibility="Hidden">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox x:Name="numericUpDown1" Text="50" TextChanged="numericUpDown1_ValueChanged" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" LostKeyboardFocus="numericUpDown1_LostKeyboardFocus"/>
+                                            <TextBox x:Name="numericUpDown2" Text="406" Grid.Column="2" TextChanged="numericUpDown2_ValueChanged" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" LostKeyboardFocus="numericUpDown2_LostKeyboardFocus"/>
+                                            <TextBlock Grid.Column="1" Text="-" Margin="2" HorizontalAlignment="Center"/>
+                                        </Grid>
+                                        <CheckBox x:Name="checkBox2" Content="ISO" Grid.Column="3" Margin="3" Grid.Row="1" VerticalAlignment="Center" Click="checkBox2_CheckedChanged"/>
+                                        <RepeatButton Content="-" Grid.Column="1" Margin="1,3" Grid.Row="1" Click="Button_Click_2" Padding="1,0,1,1" Width="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <RepeatButton Content="+" Grid.Column="2" Margin="1,3" Grid.Row="1" Click="Button_Click_1" Padding="1,0,1,1" Width="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <TextBox x:Name="WheelLenthtextBox" Margin="3" Grid.Row="1" TextWrapping="Wrap" Text="2000" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" TextChanged="WheelLenthtextBox_TextChanged" MouseWheel="WheelLenthtextBox_MouseWheel" LostKeyboardFocus="WheelLenthtextBox_LostKeyboardFocus"/>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Column="1" Margin="4,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <ListView x:Name="listBox1" Grid.ColumnSpan="4" Margin="3" SelectionChanged="listBox1_SelectedIndexChanged" ButtonBase.Click="GridViewColumnHeader_Click" ContextMenuOpening="listBox1_ContextMenuOpening">
+                                <ListView.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="KM/H" Click="kMHToolStripMenuItem_Click"/>
+                                        <MenuItem Header="MPH" Click="mPHToolStripMenuItem_Click"/>
+                                    </ContextMenu>
+                                </ListView.ContextMenu>
+                                <ListView.View>
+                                    <GridView x:Name="listBox1Grid">
+                                        <GridView.ColumnHeaderContextMenu>
+                                            <ContextMenu/>
+                                        </GridView.ColumnHeaderContextMenu>
+                                        <GridViewColumn Header="No." DisplayMemberBinding="{Binding No1}"/>
+                                        <GridViewColumn Header="{x:Static res:Resources.StringGear}" DisplayMemberBinding="{Binding Gear1}"/>
+                                        <GridViewColumn Header="{x:Static res:Resources.StringGearTeeth}" DisplayMemberBinding="{Binding GearT1}"/>
+                                        <GridViewColumn Header="{x:Static res:Resources.StringGearRatio}" DisplayMemberBinding="{Binding GearRatio1, StringFormat=\{0:F2\}}"/>
+                                        <GridViewColumn Header="{x:Static res:Resources.StringGI}" DisplayMemberBinding="{Binding SpeedRatio1, StringFormat=\{0:F1\}}"/>
+                                        <GridViewColumn x:Name="SpeedColumn" Header="Speed (km/h)" DisplayMemberBinding="{Binding Speed1, StringFormat=\{0:F1\}}"/>
+                                        <GridViewColumn Header="{x:Static res:Resources.StringIncrement}" DisplayMemberBinding="{Binding Increment1, StringFormat=\{0:P\}}"/>
+                                        <GridViewColumn Header="{x:Static res:Resources.StringRemark}" DisplayMemberBinding="{Binding Remark1}"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <Label x:Name="labelinfo" Grid.Row="1" Grid.Column="0" Content="Total Diff: 502%" Margin="3" BorderThickness="1" Padding="5,3">
+                                <Label.BorderBrush>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                </Label.BorderBrush>
+                                <Label.Background>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}"/>
+                                </Label.Background>
+                            </Label>
+                            <Label x:Name="labelinfo1" Grid.Row="1" Grid.Column="1" Content="Total Cap: 34T" Margin="3" BorderThickness="1" Padding="5,3">
+                                <Label.BorderBrush>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                </Label.BorderBrush>
+                                <Label.Background>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}"/>
+                                </Label.Background>
+                            </Label>
+                            <Label x:Name="labelinfo2" Grid.Row="1" Grid.Column="2" Content="Increasment: 23.5%" Margin="3" Visibility="Collapsed" BorderThickness="1" Padding="5,3">
+                                <Label.BorderBrush>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                </Label.BorderBrush>
+                                <Label.Background>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}"/>
+                                </Label.Background>
+                            </Label>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{x:Static res:Resources.StringSpokeLength}">
+                <Grid x:Name="GridS">
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="UpRow1" Height="1*"/>
+                        <RowDefinition x:Name="DownRow1" Height="2*"/>
+                    </Grid.RowDefinitions>
+
+                    <GridSplitter HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="1" Height="4"/>
+
+                    <oxy:PlotView x:Name="Chart2" Title="{Binding Title}" Grid.Row="1" PlotAreaBackground="#B2FFFFFF" Margin="0,4,0,0">
+                        <oxy:PlotView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="{x:Static res:Resources.StringDisAll}" Click="DisAllToolStripMenuItem_Click"/>
+                                <Separator/>
+                                <MenuItem Header="{x:Static res:Resources.StringLRSide}" SubmenuOpened="LRSideDisToolStripMenuItem_Click">
+                                    <MenuItem Header="{x:Static res:Resources.StringRight}" IsCheckable="True" Click="DisLeftToolStripMenuItem_Click"/>
+                                    <MenuItem Header="{x:Static res:Resources.StringLeft}" IsCheckable="True" Click="DisRightToolStripMenuItem_Click"/>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static res:Resources.StringDisItem}" SubmenuOpened="DisItemStripMenuItem_Click">
+                                    <MenuItem Header="{x:Static res:Resources.StringRimline}" IsCheckable="True" Click="RimlineToolStripMenuItem_Click"/>
+                                    <MenuItem Header="{x:Static res:Resources.StringRimhole}" IsCheckable="True" Click="RimholeToolStripMenuItem_Click"/>
+                                    <MenuItem Header="{x:Static res:Resources.StringHubline}" IsCheckable="True" Click="HublineToolStripMenuItem_Click"/>
+                                    <MenuItem Header="{x:Static res:Resources.StringHubhole}" IsCheckable="True" Click="HubholeToolStripMenuItem_Click"/>
+                                    <MenuItem Header="{x:Static res:Resources.StringSpokesline}" IsCheckable="True" Click="SpolineToolStripMenuItem_Click"/>
+                                </MenuItem>
+                                <Separator/>
+                                <MenuItem Header="{x:Static res:Resources.StringResetAxis}" Click="ResetAxisToolStripMenuItem1_Click"/>
+                            </ContextMenu>
+                        </oxy:PlotView.ContextMenu>
+                        <oxy:PlotView.Background>
+                            <ImageBrush ImageSource="Resources/back1.png" Stretch="UniformToFill"/>
+                        </oxy:PlotView.Background>
+                        <oxy:LineSeries ItemsSource="{Binding Points}"/>
+                    </oxy:PlotView>
+
+                    <Grid x:Name="GridUp1" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="InputColumn1" Width="9*"/>
+                            <ColumnDefinition x:Name="AnsColumn1" Width="7*"/>
+                        </Grid.ColumnDefinitions>
+                        <GridSplitter x:Name="GridSplitter3" HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Column="1" Width="4"/>
+
+                        <Grid x:Name="GridInput1" SizeChanged="splitContainer2_Panel1_SizeChanged">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <GroupBox x:Name="groupBox3" Header="{x:Static res:Resources.StringRims}" Margin="5" Grid.Column="0">
+                                <GroupBox.Background>
+                                    <ImageBrush ImageSource="Resources/Rims.png" Stretch="UniformToFill"/>
+                                </GroupBox.Background>
+                                <!--<GroupBox.Background>
+                                    <ImageBrush ImageSource="Resources/飞轮-s4.png" Stretch="UniformToFill"/>
+                                </GroupBox.Background>-->
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <ComboBox x:Name="RimNumcomboBox" Grid.Column="1" Margin="3" SelectionChanged="RimNumcomboBox_SelectionChanged"/>
+                                    <DataGrid x:Name="dataGridViewRim" Grid.Row="1" Margin="3" Background="#B2FFFFFF" Grid.ColumnSpan="2" HeadersVisibility="None" GridLinesVisibility="Horizontal" HorizontalScrollBarVisibility="Disabled">
+                                        <DataGrid.BorderBrush>
+                                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                        </DataGrid.BorderBrush>
+                                        <DataGrid.VerticalGridLinesBrush>
+                                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                        </DataGrid.VerticalGridLinesBrush>
+                                        <DataGrid.HorizontalGridLinesBrush>
+                                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                        </DataGrid.HorizontalGridLinesBrush>
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn IsReadOnly="True">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn IsReadOnly="True" Width="1*">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Text="{Binding Val, StringFormat=\{0:F2\}}" Tag="{Binding No}" BorderBrush="{x:Null}" Background="{x:Null}" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Margin="0" MouseWheel="rimtextBox_MouseWheel" LostKeyboardFocus="rimTextBox_LostKeyboardFocus"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn IsReadOnly="True">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Grid Width="40">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="1*"/>
+                                                                <ColumnDefinition Width="1*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <RepeatButton Content="-"  Click="rimMinuButton_Click" CommandParameter="{Binding No}" Grid.Column="0" Margin="0,0,1,0"/>
+                                                            <RepeatButton Content="+"  Click="rimAddButton_Click" CommandParameter="{Binding No}" Grid.Column="1" Margin="1,0,0,0"/>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                        <Button/>
+
+                                    </DataGrid>
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox Header="{x:Static res:Resources.StringHubs}" Margin="5" Grid.Column="1" Grid.RowSpan="2">
+                                <GroupBox.Background>
+                                    <ImageBrush ImageSource="Resources/Hub - 副本.png" Stretch="UniformToFill"/>
+                                </GroupBox.Background>
+                                <!--<GroupBox.Background>
+                                    <ImageBrush ImageSource="Resources/牙盘1-s8.png" Stretch="UniformToFill">
+                                        <ImageBrush.RelativeTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                                <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </ImageBrush.RelativeTransform>
+                                    </ImageBrush>
+                                </GroupBox.Background>-->
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <ComboBox x:Name="HubNumcomboBox" Grid.Column="1" Margin="3" SelectionChanged="HubNumcomboBox_SelectionChanged"/>
+                                    <DataGrid x:Name="dataGridViewHub" Grid.Row="1" Margin="3" Background="#B2FFFFFF" Grid.ColumnSpan="2" HeadersVisibility="None" GridLinesVisibility="Horizontal" HorizontalScrollBarVisibility="Disabled">
+                                        <DataGrid.BorderBrush>
+                                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                        </DataGrid.BorderBrush>
+                                        <DataGrid.VerticalGridLinesBrush>
+                                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                        </DataGrid.VerticalGridLinesBrush>
+                                        <DataGrid.HorizontalGridLinesBrush>
+                                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                        </DataGrid.HorizontalGridLinesBrush>
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn IsReadOnly="True">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn IsReadOnly="True" Width="1*">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Text="{Binding Val, StringFormat=\{0:F2\}}" Tag="{Binding No}" BorderBrush="{x:Null}" Background="{x:Null}" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" MouseWheel="hubtextBox_MouseWheel" LostKeyboardFocus="hubTextBox_LostKeyboardFocus"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn IsReadOnly="True">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Grid Width="40">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="1*"/>
+                                                                <ColumnDefinition Width="1*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <RepeatButton Content="-"  Click="hubMinuButton_Click" CommandParameter="{Binding No}" Grid.Column="0" Margin="0,0,1,0"/>
+                                                            <RepeatButton Content="+"  Click="hubAddButton_Click" CommandParameter="{Binding No}" Grid.Column="1" Margin="1,0,0,0"/>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                        <Button/>
+
+                                    </DataGrid>
+                                </Grid>
+                            </GroupBox>
+
+                            <GroupBox Header="{x:Static res:Resources.StringOther}" Margin="5,5,5,5" Grid.Row="1">
+                                <Grid Margin="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{x:Static res:Resources.StringSpokes}" Margin="3" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{x:Static res:Resources.StringCrosses}" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                                    <Grid Grid.Column="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <RepeatButton Content="-" Grid.Column="1" Margin="1,3" Grid.Row="1" Padding="1,0,1,1" Width="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="OnSpokeMinButtonClick"/>
+                                        <RepeatButton Content="+" Grid.Column="2" Margin="1,3" Grid.Row="1" Padding="1,0,1,1" Width="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="OnSpokeAddButtonClick"/>
+                                        <TextBox x:Name="TextBoxSpokes" Margin="3" Grid.Row="1" TextWrapping="Wrap" Text="36" 
+        									HorizontalContentAlignment="Right" 
+        									VerticalContentAlignment="Center" 
+        									MouseWheel="WheelLenthtextBox_MouseWheel" 
+        									LostKeyboardFocus="TextBoxCrosses_LostKeyboardFocus" 
+        									TextChanged="TextBoxSpokes_TextChanged"/>
+                                    </Grid>
+                                    <Grid Grid.Column="1" Grid.Row="2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <RepeatButton Content="-" Grid.Column="1" Margin="1,3" Grid.Row="1" Padding="1,0,1,1" Width="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="OnCrossMinButtonClick"/>
+                                        <RepeatButton Content="+" Grid.Column="2" Margin="1,3" Grid.Row="1" Padding="1,0,1,1" Width="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="OnCrossAddButtonClick"/>
+                                        <TextBox x:Name="TextBoxCrosses" Margin="3" Grid.Row="1" TextWrapping="Wrap" Text="3" 
+        									HorizontalContentAlignment="Right" 
+        									VerticalContentAlignment="Center" 
+        									MouseWheel="WheelLenthtextBox_MouseWheel" 
+        									LostKeyboardFocus="WheelLenthtextBox_LostKeyboardFocus" 
+        									TextChanged="TextBoxCrosses_TextChanged"/>
+                                    </Grid>
+                                </Grid>
+                            </GroupBox>
+                        </Grid>
+
+                        <Grid Grid.Column="1" Margin="4,0,0,0">
+                            <!--<Label x:Name="labelinfo11" Grid.Row="1" Grid.Column="0" Content="Total Diff: 502%" Margin="3" BorderThickness="1" Padding="5,3">
+                                <Label.BorderBrush>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                </Label.BorderBrush>
+                                <Label.Background>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}"/>
+                                </Label.Background>
+                            </Label>
+                            <Label x:Name="labelinfo12" Grid.Row="1" Grid.Column="1" Content="Total Cap: 34T" Margin="3" BorderThickness="1" Padding="5,3">
+                                <Label.BorderBrush>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                </Label.BorderBrush>
+                                <Label.Background>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}"/>
+                                </Label.Background>
+                            </Label>
+                            <Label x:Name="labelinfo13" Grid.Row="1" Grid.Column="2" Content="Increasment: 23.5%" Margin="3" Visibility="Collapsed" BorderThickness="1" Padding="5,3">
+                                <Label.BorderBrush>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                </Label.BorderBrush>
+                                <Label.Background>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}"/>
+                                </Label.Background>
+                            </Label>-->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <ListView x:Name="listBox2" Grid.ColumnSpan="4" Margin="3">
+                                <ListView.View>
+                                    <GridView x:Name="listBox2Grid">
+                                        <GridView.ColumnHeaderContextMenu>
+                                            <ContextMenu/>
+                                        </GridView.ColumnHeaderContextMenu>
+                                        <GridViewColumn Header="{x:Static res:Resources.StringCrosses}" DisplayMemberBinding="{Binding Crosses}"/>
+                                        <GridViewColumn Header="{x:Static res:Resources.StringSpokeLL}" DisplayMemberBinding="{Binding Lenthleft, StringFormat=\{0:F2\}}"/>
+                                        <GridViewColumn Header="{x:Static res:Resources.StringSpokeLR}" DisplayMemberBinding="{Binding Lenthright, StringFormat=\{0:F2\}}"/>
+                                        <GridViewColumn Header="{x:Static res:Resources.StringTenRat}" DisplayMemberBinding="{Binding Tensionratio, StringFormat=\{0:P\}}"/>
+                                        <GridViewColumn Header="{x:Static res:Resources.StringRemark}" DisplayMemberBinding="{Binding Remark}"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Grid x:Name="TextBlockLoad" Grid.Row="0" Grid.RowSpan="2" Visibility="Hidden">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#B2969696" Offset="0.5"/>
+                    <GradientStop Offset="1"/>
+                    <GradientStop/>
+                    <GradientStop Color="#B2969696" Offset="0.4"/>
+                    <GradientStop Color="#B2969696" Offset="0.6"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Label Grid.Row="1" Foreground="#FF5F5E5E" FontSize="72" FontFamily="Microsoft YaHei UI Light" Content="{x:Static res:Resources.StringTitle}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="White" Padding="5,20,5,0"/>
+            <Label x:Name="LabelVer" Grid.Row="2" Foreground="#FF878787" Content="Loading ..." VerticalContentAlignment="Center" Background="White" Padding="5,2,5,10" HorizontalContentAlignment="Center" FontSize="14"/>
+        </Grid>
+    </Grid>
+</Window>

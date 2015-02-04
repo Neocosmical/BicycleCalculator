@@ -1,0 +1,41 @@
+﻿<Window x:Class="BicycleCalculatorWPF.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:res="clr-namespace:BicycleCalculatorWPF.Properties"
+        Title="{x:Static res:Resources.StringAbout}" Height="353.4" Width="488.8" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Icon="Resources/自行车计算器s.ico" FontFamily="Microsoft YaHei UI">
+    <Window.Background>
+        <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}"/>
+    </Window.Background>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Image Margin="3,3,7.8,3" Grid.RowSpan="7" Source="Resources/about.PNG" Stretch="UniformToFill"/>
+        <Button Content="{x:Static res:Resources.StringOK}" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="6" VerticalAlignment="Bottom" Width="81" Height="25" Click="Button_Click_1" Margin="3"/>
+        <TextBlock Grid.Column="1" Margin="3" TextWrapping="Wrap" Text="{x:Static res:Resources.StringTitle}" FontSize="36"/>
+        <TextBlock x:Name="labelVersion" Grid.Column="1" Margin="3" TextWrapping="Wrap" Text="版本" Grid.Row="1"/>
+        <TextBlock x:Name="labelCopyright" Grid.Column="1" Margin="3" TextWrapping="Wrap" Text="版权" Grid.Row="2"/>
+        <TextBlock Grid.Column="1" Margin="3" TextWrapping="Wrap" Text="{x:Static res:Resources.StringUpdate}" Grid.Row="3" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" MouseUp="TextBlock_MouseUp_1"/>
+        <TextBlock x:Name="labelCompanyName" Grid.Column="1" Margin="3" TextWrapping="Wrap" Text="neocosmical@gmail.com" Grid.Row="4" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" MouseUp="TextBlock_MouseUp_2"/>
+        <ScrollViewer Margin="3" Grid.Column="1" Grid.Row="5" Background="White" BorderThickness="10" BorderBrush="Black" Padding="3">
+            <StackPanel Margin="3" Grid.Column="1" Grid.Row="5" Background="White" CanVerticallyScroll="True">
+                <TextBlock TextWrapping="Wrap" Text="{x:Static res:Resources.StringAcknow}"/>
+                <TextBlock Grid.Column="1" Margin="3" TextWrapping="Wrap" Text="{x:Static res:Resources.StringSourceRim}" Grid.Row="3" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" MouseUp="TextBlock_MouseUp_3"/>
+                <Image Source="Resources/77bikegreens.png" Margin="3" Cursor="Hand" MouseUp="Image_MouseUp_1"/>
+                <TextBlock x:Name="labelDescription" TextWrapping="Wrap" Text="TextBox"/>
+                <TextBlock x:Name="OxyPlotCopyRight" TextWrapping="Wrap" Text="{x:Static res:Resources.StringOxyPlotC}" Margin="0,20,0,0"/>
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+</Window>
