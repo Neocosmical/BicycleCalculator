@@ -718,24 +718,6 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Reset 的本地化字符串。
-        /// </summary>
-        public static string StringReset {
-            get {
-                return ResourceManager.GetString("StringReset", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Reset all settings to defult? 的本地化字符串。
-        /// </summary>
-        public static string StringResetAll {
-            get {
-                return ResourceManager.GetString("StringResetAll", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Reset All Axes 的本地化字符串。
         /// </summary>
         public static string StringResetAxis {
@@ -745,7 +727,7 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
-        ///   查找类似 This will take effect after restarting the software. 的本地化字符串。
+        ///   查找类似 Take effect after restarting the software. 的本地化字符串。
         /// </summary>
         public static string StringRestartEff {
             get {

@@ -21,6 +21,7 @@ namespace BicycleCalculatorWPF
         public HelpWindow()
         {
             InitializeComponent();
+            Browser1.Source = new Uri(System.Environment.CurrentDirectory.ToString() + "\\Help_zh.mht");
         }
     }
 }

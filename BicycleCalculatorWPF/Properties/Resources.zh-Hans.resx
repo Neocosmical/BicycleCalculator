@@ -484,7 +484,7 @@ hachi, heiyaa, 楚狂声, bingol, xuchux, 落星, azuretears, blocked, babyfish7
     <value>语言</value>
   </data>
   <data name="StringRestartEff" xml:space="preserve">
-    <value>将在重新启动软件后生效。</value>
+    <value>重新启动软件后生效。</value>
   </data>
   <data name="StringCancel" xml:space="preserve">
     <value>取消</value>
@@ -495,11 +495,5 @@ hachi, heiyaa, 楚狂声, bingol, xuchux, 落星, azuretears, blocked, babyfish7
   <data name="StringSourceRim" xml:space="preserve">
     <value>轮圈花鼓数据来源: 
 http://bbs.77bike.com/read.php?tid=58657</value>
-  </data>
-  <data name="StringReset" xml:space="preserve">
-    <value>重置</value>
-  </data>
-  <data name="StringResetAll" xml:space="preserve">
-    <value>重置所有设置?</value>
   </data>
 </root>

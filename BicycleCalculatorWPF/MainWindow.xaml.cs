@@ -145,7 +145,7 @@ namespace BicycleCalculatorWPF
         int CurveY = 1;
 
         System.Timers.Timer timerCAD = new System.Timers.Timer(50);
-
+        System.Diagnostics.Stopwatch CADwatch = new System.Diagnostics.Stopwatch();
         
         private void Form1_Load(object sender, RoutedEventArgs e)
         {
@@ -161,8 +161,18 @@ namespace BicycleCalculatorWPF
                 InputColumn.Width = new GridLength(Properties.Settings.Default.InputCWidth, GridUnitType.Star);
                 AnsColumn.Width = new GridLength(1.0 - Properties.Settings.Default.InputCWidth, GridUnitType.Star);
 
-                UpRow.Height = new GridLength(Properties.Settings.Default.UpRHight, GridUnitType.Star);
-                DownRow.Height = new GridLength(1.0 - Properties.Settings.Default.UpRHight, GridUnitType.Star);
+                if (Properties.Settings.Default.UpRHight == 1.0)
+                {
+                    Chart1.Visibility = System.Windows.Visibility.Collapsed;
+                    DownRow.MinHeight = 0;
+                    DownRow.MaxHeight = 0;
+                    GridSplitterT1.IsEnabled = false;
+                }
+                else
+                {
+                    UpRow.Height = new GridLength(Properties.Settings.Default.UpRHight, GridUnitType.Star);
+                    DownRow.Height = new GridLength(1.0 - Properties.Settings.Default.UpRHight, GridUnitType.Star);
+                }
 
                 InputColumn1.Width = new GridLength(Properties.Settings.Default.InputC1Width, GridUnitType.Star);
                 AnsColumn1.Width = new GridLength(1.0 - Properties.Settings.Default.InputC1Width, GridUnitType.Star);
@@ -196,7 +206,8 @@ namespace BicycleCalculatorWPF
                 }
                 else
                 {
-                    byte n = Convert.ToByte(Math.Sin(Math.PI * trackBar1.Value / 30000 * System.DateTime.Now.Ticks / 10000.0) * 100.0 + 100.0);
+                    
+                    byte n = Convert.ToByte(Math.Sin(Math.PI * trackBar1.Value / 30000.0 * CADwatch.ElapsedMilliseconds) * 100.0 + 100.0);
                     labelCAD.Foreground = new SolidColorBrush(Color.FromRgb(n, n, n));
                 }
             }));
@@ -2410,7 +2421,7 @@ namespace BicycleCalculatorWPF
 
             timerCAD.Enabled = true;
             timerCAD.Elapsed += timerCAD_Elapsed;
-
+            CADwatch.Start();
             listBox1Grid.ColumnHeaderContextMenu.Opened += ColumnHeaderContextMenu_Opened;
 
             checkBox2.ToolTip = Properties.Resources.StringEnterISO + "\r\n" + Properties.Resources.StringISOeg;
@@ -2437,8 +2448,8 @@ namespace BicycleCalculatorWPF
             HubNumcomboBox.ItemsSource = hublist;
             RimNumcomboBox.ItemsSource = rimlist;
 
-            HubNumcomboBox.SelectedIndex = Properties.Settings.Default.hubnowid;
-            RimNumcomboBox.SelectedIndex = Properties.Settings.Default.rimnowid;
+            HubNumcomboBox.SelectedIndex = 1;
+            RimNumcomboBox.SelectedIndex = 1;
 
 
             frnow.teeth[0].Teeth = Properties.Settings.Default.frnow1;
@@ -2488,16 +2499,6 @@ namespace BicycleCalculatorWPF
             for (int i = 0; i < 14; i++)
                 if (innow.teeth[i].Teeth == 0) innow.teeth[i].Teeth = 1;
 
-
-            hubnow.LeftFlange = Properties.Settings.Default.hubnowLeftFlange;
-            hubnow.RightFlange = Properties.Settings.Default.hubnowRightFlange;
-            hubnow.CenterToLeft = Properties.Settings.Default.hubnowCenterToLeft;
-            hubnow.CenterToRight = Properties.Settings.Default.hubnowCenterToRight;
-            hubnow.SpokeHole = Properties.Settings.Default.hubnowSpokeHole;
-
-            rimnow.ERD = Properties.Settings.Default.rimnowERD;
-            rimnow.OSB = Properties.Settings.Default.rimnowOSB;
-
             checkBox1.IsChecked = Properties.Settings.Default.IsSpd;
             trackBar1.Value = Properties.Settings.Default.SpdVal;
             checkBox2.IsChecked = Properties.Settings.Default.IsISO;
@@ -2507,9 +2508,6 @@ namespace BicycleCalculatorWPF
             WheelLenthtextBox.Text = Convert.ToString(Properties.Settings.Default.wheellen);
             numericUpDown1.Text = Convert.ToString(Properties.Settings.Default.numUD1);
             numericUpDown2.Text = Convert.ToString(Properties.Settings.Default.numUD2);
-
-            TextBoxSpokes.Text = Convert.ToString(Properties.Settings.Default.Spokes);
-            TextBoxCrosses.Text = Convert.ToString(Properties.Settings.Default.Crosses);
 
             TabControlMain.SelectedIndex = Properties.Settings.Default.TabSlt;
 
@@ -3316,12 +3314,21 @@ namespace BicycleCalculatorWPF
             if (Chart1.Visibility == Visibility.Visible)
             {
                 Chart1.Visibility = Visibility.Collapsed;
-                MainGrid.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Auto);
+                //MainGrid.RowDefinitions[0].Height = new GridLength(300, GridUnitType.Star);
+                //MainGrid.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Auto);
+                //GridT.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Auto);
+                DownRow.MinHeight = 0;
+                DownRow.MaxHeight = 0;
+                GridSplitterT1.IsEnabled = false;
             }
             else
             {
                 Chart1.Visibility = Visibility.Visible;
-                MainGrid.RowDefinitions[1].Height = new GridLength(300, GridUnitType.Star);
+                //MainGrid.RowDefinitions[1].Height = new GridLength(300, GridUnitType.Star);
+                //GridT.RowDefinitions[1].Height = new GridLength(300, GridUnitType.Star);
+                DownRow.MaxHeight = Double.PositiveInfinity;
+                DownRow.MinHeight = 100;
+                GridSplitterT1.IsEnabled = true;
             }
         }
 
@@ -4434,7 +4441,6 @@ namespace BicycleCalculatorWPF
             Properties.Settings.Default.Language = 0;
             MessageBox.Show(Properties.Resources.StringRestartEff);
             Properties.Settings.Default.Save();
-            this.Close();
         }
 
         private void EngMenuItem_Click(object sender, RoutedEventArgs e)
@@ -4442,7 +4448,6 @@ namespace BicycleCalculatorWPF
             Properties.Settings.Default.Language = 2;
             MessageBox.Show(Properties.Resources.StringRestartEff);
             Properties.Settings.Default.Save();
-            this.Close();
         }
 
         private void ChnMenuItem_Click(object sender, RoutedEventArgs e)
@@ -4450,12 +4455,10 @@ namespace BicycleCalculatorWPF
             Properties.Settings.Default.Language = 3;
             MessageBox.Show(Properties.Resources.StringRestartEff);
             Properties.Settings.Default.Save();
-            this.Close();
         }
 
         private void Window_Closing_1(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (isReset) return;
             Properties.Settings.Default.frnumid = FrNumcomboBox.SelectedIndex;
             Properties.Settings.Default.frmodid = FrModelcomboBox.SelectedIndex;
             Properties.Settings.Default.frnow1 = frnow.teeth[0].Teeth;
@@ -4512,23 +4515,6 @@ namespace BicycleCalculatorWPF
             Properties.Settings.Default.numUD1 = Convert.ToDouble(numericUpDown1.Text);
             Properties.Settings.Default.numUD2 = Convert.ToDouble(numericUpDown2.Text);
 
-
-            Properties.Settings.Default.hubnowid = HubNumcomboBox.SelectedIndex;
-            Properties.Settings.Default.rimnowid = RimNumcomboBox.SelectedIndex;
-
-            Properties.Settings.Default.hubnowLeftFlange = hubnow.LeftFlange;
-            Properties.Settings.Default.hubnowRightFlange = hubnow.RightFlange;
-            Properties.Settings.Default.hubnowCenterToLeft = hubnow.CenterToLeft;
-            Properties.Settings.Default.hubnowCenterToRight = hubnow.CenterToRight;
-            Properties.Settings.Default.hubnowSpokeHole = hubnow.SpokeHole;
-
-
-            Properties.Settings.Default.rimnowERD = rimnow.ERD;
-            Properties.Settings.Default.rimnowOSB = rimnow.OSB;
-
-            Properties.Settings.Default.Spokes = Convert.ToInt16(TextBoxSpokes.Text);
-            Properties.Settings.Default.Crosses = Convert.ToInt16(TextBoxCrosses.Text);
-
             //////////////////////////GUI/////////////////////////////////////////////////
             Properties.Settings.Default.InputCWidth = InputColumn.ActualWidth / GridT.ActualWidth;
             Properties.Settings.Default.UpRHight = UpRow.ActualHeight / GridT.ActualHeight;
@@ -4543,17 +4529,6 @@ namespace BicycleCalculatorWPF
 
             Properties.Settings.Default.TabSlt = TabControlMain.SelectedIndex;
             ////////////////////////////////////////////////////////////////////////////////
-        }
-
-        bool isReset = false;
-        private void ResetMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show(Properties.Resources.StringResetAll + "\r\n\r\n" + Properties.Resources.StringRestartEff, Properties.Resources.StringReset, MessageBoxButton.YesNo) != MessageBoxResult.Yes)
-                return;
-            //MessageBox.Show(Properties.Resources.StringRestartEff);
-            Properties.Settings.Default.Reset();
-            isReset = true;
-            this.Close();
         }
 
 

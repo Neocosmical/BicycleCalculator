@@ -498,7 +498,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>Language</value>
   </data>
   <data name="StringRestartEff" xml:space="preserve">
-    <value>This will take effect after restarting the software.</value>
+    <value>Take effect after restarting the software.</value>
   </data>
   <data name="StringCancel" xml:space="preserve">
     <value>Cancel</value>
@@ -509,11 +509,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   <data name="StringSourceRim" xml:space="preserve">
     <value>Data source of rims and hubs: 
 http://bbs.77bike.com/read.php?tid=58657</value>
-  </data>
-  <data name="StringReset" xml:space="preserve">
-    <value>Reset</value>
-  </data>
-  <data name="StringResetAll" xml:space="preserve">
-    <value>Reset all settings to defult?</value>
   </data>
 </root>

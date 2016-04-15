@@ -185,38 +185,5 @@
     <Setting Name="TabSlt" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="rimnowid" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
-    </Setting>
-    <Setting Name="hubnowid" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
-    </Setting>
-    <Setting Name="hubnowLeftFlange" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">30</Value>
-    </Setting>
-    <Setting Name="hubnowRightFlange" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">30</Value>
-    </Setting>
-    <Setting Name="hubnowCenterToLeft" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">33.5</Value>
-    </Setting>
-    <Setting Name="hubnowCenterToRight" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">33.5</Value>
-    </Setting>
-    <Setting Name="hubnowSpokeHole" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">2.6</Value>
-    </Setting>
-    <Setting Name="rimnowERD" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">428</Value>
-    </Setting>
-    <Setting Name="rimnowOSB" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="Spokes" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">36</Value>
-    </Setting>
-    <Setting Name="Crosses" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3</Value>
-    </Setting>
   </Settings>
 </SettingsFile>
