@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("neocosmical@gmail.com")]
 [assembly: AssemblyProduct("Bicycle Calculator")]
-[assembly: AssemblyCopyright("Copyright © 2015 Neocosmical")]
+[assembly: AssemblyCopyright("Copyright © 2016 Neocosmical")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -51,5 +51,5 @@ using System.Windows;
 // 可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值，
 // 方法是按如下所示使用“*”:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.5.2.0411")]
-[assembly: AssemblyFileVersion("1.5.2.0411")]
+[assembly: AssemblyVersion("1.5.3.0901")]
+[assembly: AssemblyFileVersion("1.5.3.0901")]

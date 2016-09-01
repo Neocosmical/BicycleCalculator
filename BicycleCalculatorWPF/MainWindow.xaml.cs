@@ -2916,74 +2916,84 @@ namespace BicycleCalculatorWPF
 
         private void ExportFileSp()
         {
+            Microsoft.Win32.SaveFileDialog saveFileDialog1 = new Microsoft.Win32.SaveFileDialog();
+            saveFileDialog1.DefaultExt = "csv";
+            saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            saveFileDialog1.FileName = Properties.Resources.StringSpokesData + ".csv";
+            if (!saveFileDialog1.ShowDialog().Value)
+                return;
+
             CRim rimtemp = rimnow;
             CHub hubtemp = hubnow;
 
             System.IO.StreamWriter swriter;
-            Microsoft.Win32.SaveFileDialog saveFileDialog1 = new Microsoft.Win32.SaveFileDialog();
-            saveFileDialog1.FileName = Properties.Resources.StringSpokesData + ".csv";
-            if (saveFileDialog1.ShowDialog().Value)
+            string _filename = saveFileDialog1.FileName;
+            try
             {
-                string _filename = saveFileDialog1.FileName;
-                try
-                {
-                    swriter = new System.IO.StreamWriter(_filename, false, Encoding.UTF8);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(Properties.Resources.StringUnableexp + "\r\n" + ex.Message);
-                    return;
-                }
-                swriter.WriteLine(Properties.Resources.StringSpokesData);
-                swriter.WriteLine("");
-
-
-                swriter.WriteLine(Properties.Resources.StringRims + "," + rimtemp.Name + ",");
-                swriter.WriteLine("ERD" + "," + "OSB" + ",");
-                swriter.WriteLine(rimtemp.ERD.ToString() + "mm" + "," + rimtemp.OSB.ToString() + "mm");
-                swriter.WriteLine("");
-
-
-                swriter.WriteLine(Properties.Resources.StringHubs + "," + hubtemp.Name + ",");
-                string hubstr = "";
-                hubstr += Properties.Resources.StringFlangeL + ",";
-                hubstr += Properties.Resources.StringFlangeR + ",";
-                hubstr += Properties.Resources.StringCenterL + ",";
-                hubstr += Properties.Resources.StringCenterR + ",";
-                hubstr += Properties.Resources.StringSpokeHole + ",";
-                swriter.WriteLine(hubstr);
-                hubstr = "";
-                hubstr += hubtemp.LeftFlange + "mm" + ",";
-                hubstr += hubtemp.RightFlange + "mm" + ",";
-                hubstr += hubtemp.CenterToLeft + "mm" + ",";
-                hubstr += hubtemp.CenterToRight + "mm" + ",";
-                hubstr += hubtemp.SpokeHole + "mm" + ",";
-                swriter.WriteLine(hubstr);
-                swriter.WriteLine("");
-
-                swriter.WriteLine(Properties.Resources.StringSpokes + "," + TextBoxSpokes.Text);
-                swriter.WriteLine("");
-                
-                string strtemp = "";
-                foreach (GridViewColumn ch in listBox2Grid.Columns)
-                    strtemp += ch.Header + ",";
-                swriter.WriteLine(strtemp);
-
-                foreach (CSpokeResult it in listBox2.Items)
-                {
-                    strtemp = "";
-                    strtemp += it.Crosses.ToString() + ",";
-                    strtemp += it.Lenthleft.ToString("0.00") + ",";
-                    strtemp += it.Lenthright.ToString("0.00") + ",";
-                    strtemp += it.Remark + ",";
-                    swriter.WriteLine(strtemp);
-                }
-                swriter.Close();
+                swriter = new System.IO.StreamWriter(_filename, false, Encoding.UTF8);
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Properties.Resources.StringUnableexp + "\r\n" + ex.Message);
+                return;
+            }
+            swriter.WriteLine(Properties.Resources.StringSpokesData);
+            swriter.WriteLine("");
+
+
+            swriter.WriteLine(Properties.Resources.StringRims + "," + rimtemp.Name + ",");
+            swriter.WriteLine("ERD" + "," + "OSB" + ",");
+            swriter.WriteLine(rimtemp.ERD.ToString() + "mm" + "," + rimtemp.OSB.ToString() + "mm");
+            swriter.WriteLine("");
+
+
+            swriter.WriteLine(Properties.Resources.StringHubs + "," + hubtemp.Name + ",");
+            string hubstr = "";
+            hubstr += Properties.Resources.StringFlangeL + ",";
+            hubstr += Properties.Resources.StringFlangeR + ",";
+            hubstr += Properties.Resources.StringCenterL + ",";
+            hubstr += Properties.Resources.StringCenterR + ",";
+            hubstr += Properties.Resources.StringSpokeHole + ",";
+            swriter.WriteLine(hubstr);
+            hubstr = "";
+            hubstr += hubtemp.LeftFlange + "mm" + ",";
+            hubstr += hubtemp.RightFlange + "mm" + ",";
+            hubstr += hubtemp.CenterToLeft + "mm" + ",";
+            hubstr += hubtemp.CenterToRight + "mm" + ",";
+            hubstr += hubtemp.SpokeHole + "mm" + ",";
+            swriter.WriteLine(hubstr);
+            swriter.WriteLine("");
+
+            swriter.WriteLine(Properties.Resources.StringSpokes + "," + TextBoxSpokes.Text);
+            swriter.WriteLine("");
+
+            string strtemp = "";
+            foreach (GridViewColumn ch in listBox2Grid.Columns)
+                strtemp += ch.Header + ",";
+            swriter.WriteLine(strtemp);
+
+            foreach (CSpokeResult it in listBox2.Items)
+            {
+                strtemp = "";
+                strtemp += it.Crosses.ToString() + ",";
+                strtemp += it.Lenthleft.ToString("0.00") + ",";
+                strtemp += it.Lenthright.ToString("0.00") + ",";
+                strtemp += it.Remark + ",";
+                swriter.WriteLine(strtemp);
+            }
+            swriter.Close();
+
         }
 
         private void ExportFileTr()
         {
+            Microsoft.Win32.SaveFileDialog saveFileDialog1 = new Microsoft.Win32.SaveFileDialog();
+            saveFileDialog1.DefaultExt = "csv";
+            saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            saveFileDialog1.FileName = Properties.Resources.StringTransData + ".csv";
+            if (!saveFileDialog1.ShowDialog().Value)
+                return;
+
             CGear frtemp = (CGear)((CGear)FrModelcomboBox.SelectedItem).Clone();
             CGear bktemp = (CGear)((CGear)BkModelcomboBox.SelectedItem).Clone();
             CInnerGear intemp = (CInnerGear)((CInnerGear)InModelcomboBox.SelectedItem).Clone();
@@ -2998,64 +3008,59 @@ namespace BicycleCalculatorWPF
 
             whtemp.lenth = Convert.ToInt32(WheelLenthtextBox.Text);
             System.IO.StreamWriter swriter;
-            Microsoft.Win32.SaveFileDialog saveFileDialog1 = new Microsoft.Win32.SaveFileDialog();
-            saveFileDialog1.FileName = Properties.Resources.StringTransData + ".csv";
-            if (saveFileDialog1.ShowDialog().Value)
+            string _filename = saveFileDialog1.FileName;
+            try
             {
-                string _filename = saveFileDialog1.FileName;
-                try
-                {
-                    swriter = new System.IO.StreamWriter(_filename, false, Encoding.UTF8);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(Properties.Resources.StringUnableexp + "\r\n" + ex.Message);
-                    return;
-                }
-                swriter.WriteLine(Properties.Resources.StringTransData);
-                swriter.WriteLine("");
-
-
-                swriter.WriteLine(Properties.Resources.StringTire + "," + whtemp.name + "," + whtemp.lenth.ToString() + "mm");
-
-                string frstr = "";
-                for (int i = 0; i < frtemp.num; i++)
-                    frstr += frtemp.teeth[i].teeth.ToString() + "/";
-                frstr += "T";
-                swriter.WriteLine(Properties.Resources.StringCranksets + "," + frtemp.name + "," + frstr);
-
-                string bkstr = "";
-                for (int i = 0; i < bktemp.num; i++)
-                    bkstr += bktemp.teeth[i].teeth.ToString() + "/";
-                bkstr += "T";
-                swriter.WriteLine(Properties.Resources.StringCassette + "," + bktemp.name + "," + bkstr);
-
-                string instr = "";
-                for (int i = 0; i < intemp.num; i++)
-                    instr += intemp.teeth[i].teeth.ToString("0.00") + "/";
-                swriter.WriteLine(Properties.Resources.StringInternalHub + "," + intemp.name + "," + instr);
-
-                swriter.WriteLine("");
-                string strtemp = "";
-                foreach (GridViewColumn ch in listBox1Grid.Columns)
-                    strtemp += ch.Header + ",";
-                swriter.WriteLine(strtemp);
-
-                foreach (CResult it in listBox1.Items)
-                {
-                    strtemp = "";
-                    strtemp += it.No1.ToString() + ",";
-                    strtemp += it.Gear1 + ",";
-                    strtemp += it.GearT1 + ",";
-                    strtemp += it.GearRatio1.ToString("0.00") + ",";
-                    strtemp += it.SpeedRatio1.ToString("0.0") + ",";
-                    strtemp += it.Speed1.ToString("0.0") + ",";
-                    strtemp += it.Increment1.ToString("P2") + ",";
-                    strtemp += it.Remark1 + ",";
-                    swriter.WriteLine(strtemp);
-                }
-                swriter.Close();
+                swriter = new System.IO.StreamWriter(_filename, false, Encoding.UTF8);
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Properties.Resources.StringUnableexp + "\r\n" + ex.Message);
+                return;
+            }
+            swriter.WriteLine(Properties.Resources.StringTransData);
+            swriter.WriteLine("");
+
+
+            swriter.WriteLine(Properties.Resources.StringTire + "," + whtemp.name + "," + whtemp.lenth.ToString() + "mm");
+
+            string frstr = "";
+            for (int i = 0; i < frtemp.num; i++)
+                frstr += frtemp.teeth[i].teeth.ToString() + "/";
+            frstr += "T";
+            swriter.WriteLine(Properties.Resources.StringCranksets + "," + frtemp.name + "," + frstr);
+
+            string bkstr = "";
+            for (int i = 0; i < bktemp.num; i++)
+                bkstr += bktemp.teeth[i].teeth.ToString() + "/";
+            bkstr += "T";
+            swriter.WriteLine(Properties.Resources.StringCassette + "," + bktemp.name + "," + bkstr);
+
+            string instr = "";
+            for (int i = 0; i < intemp.num; i++)
+                instr += intemp.teeth[i].teeth.ToString("0.00") + "/";
+            swriter.WriteLine(Properties.Resources.StringInternalHub + "," + intemp.name + "," + instr);
+
+            swriter.WriteLine("");
+            string strtemp = "";
+            foreach (GridViewColumn ch in listBox1Grid.Columns)
+                strtemp += ch.Header + ",";
+            swriter.WriteLine(strtemp);
+
+            foreach (CResult it in listBox1.Items)
+            {
+                strtemp = "";
+                strtemp += it.No1.ToString() + ",";
+                strtemp += it.Gear1 + ",";
+                strtemp += it.GearT1 + ",";
+                strtemp += it.GearRatio1.ToString("0.00") + ",";
+                strtemp += it.SpeedRatio1.ToString("0.0") + ",";
+                strtemp += it.Speed1.ToString("0.0") + ",";
+                strtemp += it.Increment1.ToString("P2") + ",";
+                strtemp += it.Remark1 + ",";
+                swriter.WriteLine(strtemp);
+            }
+            swriter.Close();
         }
         
 
