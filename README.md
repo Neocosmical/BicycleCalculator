@@ -22,13 +22,13 @@ http://www.microsoft.com/zh-cn/download/details.aspx?id=17718
 7. 在计算结果表格中选择任意一行，可查看所对应的档位信息和图像上的位置。
 
 Instructions:
-1 Select the crankset, Cassette Sprockets, Internal Hub, tires models and cadence, the gear ratio, speed ratio and other parameters will be calculated in real-time and the curve will be drawn automatically.
-2 Check "speed" in the group box "cadence / speed", the reverse calculation from speed to cadence will be available.
-3 Click "Add current curve" button to add current curve to the chart for comparison, multiple curves can be added.
-4 Click "Export File" to export current configuration and calculation results, the exported file can be opened with Excel.
-5 For Internal Hub only cases, select "1s /  Internal Hub" in the Cassette Sprockets box and set the number of teeth on cassette.
-6 Right-click on the chart to select the display mode of the current curve.
-7 Select any row in the results table, the corresponding gears and point on the curve will be highlighted.
+1. Select the crankset, Cassette Sprockets, Internal Hub, tires models and cadence, the gear ratio, speed ratio and other parameters will be calculated in real-time and the curve will be drawn automatically.
+2. Check "speed" in the group box "cadence / speed", the reverse calculation from speed to cadence will be available.
+3. Click "Add current curve" button to add current curve to the chart for comparison, multiple curves can be added.
+4. Click "Export File" to export current configuration and calculation results, the exported file can be opened with Excel.
+5. For Internal Hub only cases, select "1s /  Internal Hub" in the Cassette Sprockets box and set the number of teeth on cassette.
+6. Right-click on the chart to select the display mode of the current curve.
+7. Select any row in the results table, the corresponding gears and point on the curve will be highlighted.
 
 更新日志：
 
@@ -108,7 +108,7 @@ Instructions:
 
 2014-05-29
 1.1.10
-Bug修复
+1. Bug修复
 
 2014-05-28
 1.1.9
