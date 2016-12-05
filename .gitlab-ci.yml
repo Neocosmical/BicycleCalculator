@@ -1,15 +1,15 @@
-stages:
-  - build
+#stages:
+#  - build
 
-job:
-  stage: build
-  script:
-#  - ls
-  - echo "Release build..."
-  - C:\Windows\Microsoft.NET\Framework64\v4.0.30319\msbuild.exe /consoleloggerparameters:ErrorsOnly /maxcpucount /nologo /property:Configuration=Release /verbosity:quiet "BicycleCalculatorWPF.sln"
-  tags: 
-  except:
-  - tags
+#job:
+#  stage: build
+#  script:
+##  - ls
+#  - echo "Release build..."
+#  - C:\Windows\Microsoft.NET\Framework64\v4.0.30319\msbuild.exe /consoleloggerparameters:ErrorsOnly /maxcpucount /nologo /property:Configuration=Release /verbosity:quiet "BicycleCalculatorWPF.sln"
+#  tags: 
+#  except:
+#  - tags
   
   build:
   script:
