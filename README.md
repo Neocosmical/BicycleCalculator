@@ -2,11 +2,9 @@
 
 [![build status](http://neocosmical.eicp.net:30000/neocosmical/BicycleCalculator/badges/master/build.svg)](http://neocosmical.eicp.net:30000/neocosmical/BicycleCalculator/commits/master)
 
-Bicycle Calculator
+## 自行车计算器
 
-自行车计算器
-
-使用说明：
+## 使用说明：
 1. 选择牙盘、飞轮、内变速、轮胎等型号以及踏频，实时计算出齿比、速比、车速等参数并绘制曲线。
 2. 勾选”踏频/车速“中的”车速“，可输入车速，反算所需踏频。
 3. 点击”添加当前曲线“记录当前的曲线用于对比，可添加多条曲线。
@@ -15,7 +13,7 @@ Bicycle Calculator
 6. 右键点击曲线图可选择当前曲线显示模式。
 7. 在计算结果表格中选择任意一行，可查看所对应的档位信息和图像上的位置。
 
-Instructions:
+## Instructions:
 1. Select the crankset, Cassette Sprockets, Internal Hub, tires models and cadence, the gear ratio, speed ratio and other parameters will be calculated in real-time and the curve will be drawn automatically.
 2. Check "speed" in the group box "cadence / speed", the reverse calculation from speed to cadence will be available.
 3. Click "Add current curve" button to add current curve to the chart for comparison, multiple curves can be added.
