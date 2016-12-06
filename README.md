@@ -6,12 +6,6 @@ Bicycle Calculator
 
 自行车计算器
 
-运行环境：
-Windows XP/Vista/7/8/8.1 32位/64位
-
-如需安装.NET Framework 4.0可以从微软官网下载：
-http://www.microsoft.com/zh-cn/download/details.aspx?id=17718 
-
 使用说明：
 1. 选择牙盘、飞轮、内变速、轮胎等型号以及踏频，实时计算出齿比、速比、车速等参数并绘制曲线。
 2. 勾选”踏频/车速“中的”车速“，可输入车速，反算所需踏频。
