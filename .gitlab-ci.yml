@@ -12,9 +12,9 @@ bin:
     - devenv "%CI_PROJECT_DIR%/%SLN_NAME%.sln" /Build "Release"
   artifacts:
     paths:
-      - "%SLN_NAME%/bin/x86/Release/*.exe"
-#      - "%SLN_NAME%/bin/x86/Release/zh-Hans/*.*"
-      - "%SLN_NAME%/bin/x86/Release/*.dll"
-      - "%SLN_NAME%/bin/x86/Release/DLL/*.dll"
+      - "%SLN_NAME%/bin/Release/*.exe"
+      - "%SLN_NAME%/bin/Release/zh-Hans/*.*"
+      - "%SLN_NAME%/bin/Release/*.dll"
+      - "%SLN_NAME%/bin/Release/DLL/*.dll"
   tags:
     - CSharp
