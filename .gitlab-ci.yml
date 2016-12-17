@@ -1,25 +1,20 @@
-#stages:
-#  - build
-
-#job:
-#  stage: build
-#  script:
-##  - ls
-#  - echo "Release build..."
-#  - C:\Windows\Microsoft.NET\Framework64\v4.0.30319\msbuild.exe /consoleloggerparameters:ErrorsOnly /maxcpucount /nologo /property:Configuration=Release /verbosity:quiet "BicycleCalculatorWPF.sln"
-#  tags: 
-#  except:
-#  - tags
-  
 stages:
   - build
-
+  
+variables:
+  SLN_NAME: "BicycleCalculatorWPF"
+  
 bin:
   stage: build
   script:
-    - C:\Windows\Microsoft.NET\Framework64\v4.0.30319\msbuild.exe /consoleloggerparameters:ErrorsOnly /maxcpucount /nologo /property:Configuration=Release /verbosity:quiet "BicycleCalculatorWPF.sln"
+    - cd "C:/Program Files (x86)/Microsoft Visual Studio 14.0/Common7/IDE/"
+    - echo "%CI_PROJECT_DIR%/%SLN_NAME%.sln"
+    - devenv "%CI_PROJECT_DIR%/%SLN_NAME%.sln" /Build "Release|x86"
   artifacts:
     paths:
-      - "BicycleCalculatorWPF/bin/Release/*.exe"
-      - "BicycleCalculatorWPF/bin/Release/zh-Hans/*.*"
-      - "BicycleCalculatorWPF/bin/Release/*.dll"
+      - "%SLN_NAME%/bin/x86/Release/*.exe"
+#      - "%SLN_NAME%/bin/x86/Release/zh-Hans/*.*"
+      - "%SLN_NAME%/bin/x86/Release/*.dll"
+      - "%SLN_NAME%/bin/x86/Release/DLL/*.dll"
+  tags:
+    - CSharp
