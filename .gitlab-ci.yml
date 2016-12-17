@@ -9,7 +9,7 @@ bin:
   script:
     - cd "C:/Program Files (x86)/Microsoft Visual Studio 14.0/Common7/IDE/"
     - echo "%CI_PROJECT_DIR%/%SLN_NAME%.sln"
-    - devenv "%CI_PROJECT_DIR%/%SLN_NAME%.sln" /Build "Release|x86"
+    - devenv "%CI_PROJECT_DIR%/%SLN_NAME%.sln" /Build "Release"
   artifacts:
     paths:
       - "%SLN_NAME%/bin/x86/Release/*.exe"
