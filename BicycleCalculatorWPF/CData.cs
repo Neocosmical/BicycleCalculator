@@ -9,7 +9,7 @@ namespace BicycleCalculatorWPF
     {
         public CGearLists frlists = new CGearLists(Properties.Resources.StringCranksets);
         public CGearLists bklists = new CGearLists(Properties.Resources.StringCassette);
-        public CInnerGearLists inlists = new CInnerGearLists(Properties.Resources.StringInternalHub);
+        public CGearLists inlists = new CGearLists(Properties.Resources.StringInternalHub);
         
         public List<CWheel> wheelList;
 
@@ -34,20 +34,20 @@ namespace BicycleCalculatorWPF
             bklists.Lists.Add(new CGearList("11s", 11));
             bklists.Lists.Add(new CGearList("12s", 12));
 
-            inlists.Lists.Add(new CInnerGearList(Properties.Resources.StringNone, 1));
-            inlists.Lists.Add(new CInnerGearList(Properties.Resources.StringInner + "2", 2));
-            inlists.Lists.Add(new CInnerGearList(Properties.Resources.StringInner + "3", 3));
-            inlists.Lists.Add(new CInnerGearList(Properties.Resources.StringInner + "4", 4));
-            inlists.Lists.Add(new CInnerGearList(Properties.Resources.StringInner + "5", 5));
-            inlists.Lists.Add(new CInnerGearList(Properties.Resources.StringInner + "6", 6));
-            inlists.Lists.Add(new CInnerGearList(Properties.Resources.StringInner + "7", 7));
-            inlists.Lists.Add(new CInnerGearList(Properties.Resources.StringInner + "8", 8));
-            inlists.Lists.Add(new CInnerGearList(Properties.Resources.StringInner + "9", 9));
-            inlists.Lists.Add(new CInnerGearList(Properties.Resources.StringInner + "10", 10));
-            inlists.Lists.Add(new CInnerGearList(Properties.Resources.StringInner + "11", 11));
-            inlists.Lists.Add(new CInnerGearList(Properties.Resources.StringInner + "12", 12));
-            inlists.Lists.Add(new CInnerGearList(Properties.Resources.StringInner + "13", 13));
-            inlists.Lists.Add(new CInnerGearList(Properties.Resources.StringInner + "14", 14));
+            inlists.Lists.Add(new CGearList(Properties.Resources.StringNone, 1));
+            inlists.Lists.Add(new CGearList(Properties.Resources.StringInner + "2", 2));
+            inlists.Lists.Add(new CGearList(Properties.Resources.StringInner + "3", 3));
+            inlists.Lists.Add(new CGearList(Properties.Resources.StringInner + "4", 4));
+            inlists.Lists.Add(new CGearList(Properties.Resources.StringInner + "5", 5));
+            inlists.Lists.Add(new CGearList(Properties.Resources.StringInner + "6", 6));
+            inlists.Lists.Add(new CGearList(Properties.Resources.StringInner + "7", 7));
+            inlists.Lists.Add(new CGearList(Properties.Resources.StringInner + "8", 8));
+            inlists.Lists.Add(new CGearList(Properties.Resources.StringInner + "9", 9));
+            inlists.Lists.Add(new CGearList(Properties.Resources.StringInner + "10", 10));
+            inlists.Lists.Add(new CGearList(Properties.Resources.StringInner + "11", 11));
+            inlists.Lists.Add(new CGearList(Properties.Resources.StringInner + "12", 12));
+            inlists.Lists.Add(new CGearList(Properties.Resources.StringInner + "13", 13));
+            inlists.Lists.Add(new CGearList(Properties.Resources.StringInner + "14", 14));
         }
 
         public void DataInit()
@@ -59,92 +59,88 @@ namespace BicycleCalculatorWPF
 
             wheelList = new List<CWheel>();
 
-            frlists.Lists[0].Gears.Add(new CGear("42T", 1, 42, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[0].Gears.Add(new CGear("44T", 1, 44, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[0].Gears.Add(new CGear("46T", 1, 46, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[0].Gears.Add(new CGear("48T", 1, 48, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[0].Gears.Add(new CGear("50T", 1, 50, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[0].Gears.Add(new CGear("52T", 1, 52, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[0].Gears.Add(new CGear("53T", 1, 53, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[0].Gears.Add(new CGear(Properties.Resources.StringOther, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[0].Gears.Add(new CGear(GearType.Front, "42T", 1, 42, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[0].Gears.Add(new CGear(GearType.Front, "44T", 1, 44, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[0].Gears.Add(new CGear(GearType.Front, "46T", 1, 46, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[0].Gears.Add(new CGear(GearType.Front, "48T", 1, 48, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[0].Gears.Add(new CGear(GearType.Front, "50T", 1, 50, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[0].Gears.Add(new CGear(GearType.Front, "52T", 1, 52, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[0].Gears.Add(new CGear(GearType.Front, "53T", 1, 53, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[0].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringOther, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                 
+            frlists.Lists[1].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringMTB + "39/27T", 2, 27, 39, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[1].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringRacing + "50/34T", 2, 34, 50, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[1].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringRacing + "50/36T", 2, 36, 50, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[1].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringRacing + "52/36T", 2, 36, 52, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[1].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringRacing + "53/39T", 2, 39, 53, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[1].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringRacing + "52/39T", 2, 39, 52, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[1].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringRacing + "56/46T", 2, 46, 56, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[1].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringRacing + "56/42T", 2, 42, 56, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[1].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringOther, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                 
+            frlists.Lists[2].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringMTB + "42/32/24T", 3, 24, 32, 42, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[2].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringMTB + "42/34/24T", 3, 24, 34, 42, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[2].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringMTB + "48/38/28T", 3, 28, 38, 48, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[2].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringRacing + "52/39/30T", 3, 30, 39, 52, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[2].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringRacing + "50/39/30T", 3, 30, 39, 50, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[2].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringRacing + "52/42/30T", 3, 30, 42, 52, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            frlists.Lists[2].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringOther, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
 
-            frlists.Lists[1].Gears.Add(new CGear(Properties.Resources.StringMTB + "39/27T", 2, 27, 39, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[1].Gears.Add(new CGear(Properties.Resources.StringRacing + "50/34T", 2, 34, 50, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[1].Gears.Add(new CGear(Properties.Resources.StringRacing + "50/36T", 2, 36, 50, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[1].Gears.Add(new CGear(Properties.Resources.StringRacing + "52/36T", 2, 36, 52, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[1].Gears.Add(new CGear(Properties.Resources.StringRacing + "53/39T", 2, 39, 53, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[1].Gears.Add(new CGear(Properties.Resources.StringRacing + "52/39T", 2, 39, 52, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[1].Gears.Add(new CGear(Properties.Resources.StringRacing + "56/46T", 2, 46, 56, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[1].Gears.Add(new CGear(Properties.Resources.StringRacing + "56/42T", 2, 42, 56, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[1].Gears.Add(new CGear(Properties.Resources.StringOther, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            bklists.Lists[0].Gears.Add(new CGear(GearType.Back, "18T", 1, 18, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            bklists.Lists[0].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                 
+            bklists.Lists[1].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                 
+            bklists.Lists[2].Gears.Add(new CGear(GearType.Back, "Brompton", 3, 17, 15, 13, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            bklists.Lists[2].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
 
-            frlists.Lists[2].Gears.Add(new CGear(Properties.Resources.StringMTB + "42/32/24T", 3, 24, 32, 42, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[2].Gears.Add(new CGear(Properties.Resources.StringMTB + "42/34/24T", 3, 24, 34, 42, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[2].Gears.Add(new CGear(Properties.Resources.StringMTB + "48/38/28T", 3, 28, 38, 48, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[2].Gears.Add(new CGear(Properties.Resources.StringRacing + "52/39/30T", 3, 30, 39, 52, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[2].Gears.Add(new CGear(Properties.Resources.StringRacing + "50/39/30T", 3, 30, 39, 50, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[2].Gears.Add(new CGear(Properties.Resources.StringRacing + "52/42/30T", 3, 30, 42, 52, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            frlists.Lists[2].Gears.Add(new CGear(Properties.Resources.StringOther, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-            bklists.Lists[0].Gears.Add(new CGear("18T", 1, 18, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            bklists.Lists[0].Gears.Add(new CGear(Properties.Resources.StringOther, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-            bklists.Lists[1].Gears.Add(new CGear(Properties.Resources.StringOther, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-            bklists.Lists[2].Gears.Add(new CGear("Brompton", 3, 17, 15, 13, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            bklists.Lists[2].Gears.Add(new CGear(Properties.Resources.StringOther, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-            bklists.Lists[3].Gears.Add(new CGear("14-28T", 6, 28, 24, 21, 18, 16, 14, 1, 1, 1, 1, 1, 1));
-            bklists.Lists[3].Gears.Add(new CGear("14-34T", 6, 34, 24, 21, 18, 16, 14, 1, 1, 1, 1, 1, 1));
-            bklists.Lists[3].Gears.Add(new CGear(Properties.Resources.StringOther, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-            bklists.Lists[4].Gears.Add(new CGear(Properties.Resources.StringMTB + "14-34T", 7, 34, 24, 22, 20, 18, 16, 14, 1, 1, 1, 1, 1));
-            bklists.Lists[4].Gears.Add(new CGear(Properties.Resources.StringMTB + "12-32T", 7, 32, 26, 21, 18, 16, 14, 12, 1, 1, 1, 1, 1));
-            bklists.Lists[4].Gears.Add(new CGear(Properties.Resources.StringRacing + "11-28T", 7, 28, 24, 21, 18, 15, 13, 11, 1, 1, 1, 1, 1));
-            bklists.Lists[4].Gears.Add(new CGear(Properties.Resources.StringRacing + "14-28T", 7, 28, 24, 22, 20, 18, 16, 14, 1, 1, 1, 1, 1));
-            bklists.Lists[4].Gears.Add(new CGear(Properties.Resources.StringOther, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-
-            bklists.Lists[5].Gears.Add(new CGear(Properties.Resources.StringMTB + "11-32T", 8, 32, 28, 24, 21, 18, 15, 13, 11, 1, 1, 1, 1));
-            bklists.Lists[5].Gears.Add(new CGear(Properties.Resources.StringMTB + "13-34T", 8, 34, 28, 24, 21, 19, 17, 15, 13, 1, 1, 1, 1));
-            bklists.Lists[5].Gears.Add(new CGear(Properties.Resources.StringRacing + "12-23T", 8, 23, 21, 19, 17, 15, 14, 13, 12, 1, 1, 1, 1));
-            bklists.Lists[5].Gears.Add(new CGear(Properties.Resources.StringRacing + "11-23T", 8, 23, 21, 19, 17, 15, 13, 12, 11, 1, 1, 1, 1));
-            bklists.Lists[5].Gears.Add(new CGear(Properties.Resources.StringRacing + "12-25T", 8, 25, 23, 21, 19, 17, 15, 13, 12, 1, 1, 1, 1));
-            bklists.Lists[5].Gears.Add(new CGear(Properties.Resources.StringRacing + "11-28T", 8, 28, 24, 21, 19, 17, 15, 13, 11, 1, 1, 1, 1));
-            bklists.Lists[5].Gears.Add(new CGear(Properties.Resources.StringRacing + "11-30T", 8, 30, 26, 23, 20, 17, 15, 13, 11, 1, 1, 1, 1));
-            bklists.Lists[5].Gears.Add(new CGear(Properties.Resources.StringOther, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-
-            bklists.Lists[6].Gears.Add(new CGear(Properties.Resources.StringMTB + "11-32T", 9, 32, 28, 24, 21, 18, 16, 14, 12, 11, 1, 1, 1));
-            bklists.Lists[6].Gears.Add(new CGear(Properties.Resources.StringMTB + "13-32T", 9, 32, 28, 24, 21, 18, 16, 15, 14, 13, 1, 1, 1));
-            bklists.Lists[6].Gears.Add(new CGear(Properties.Resources.StringMTB + "11-34T", 9, 34, 28, 24, 21, 18, 16, 14, 12, 11, 1, 1, 1));
-            bklists.Lists[6].Gears.Add(new CGear(Properties.Resources.StringMTB + "11-36T", 9, 36, 32, 28, 24, 21, 18, 15, 13, 11, 1, 1, 1));
-            bklists.Lists[6].Gears.Add(new CGear(Properties.Resources.StringRacing + "11-25T", 9, 25, 23, 21, 19, 17, 15, 13, 12, 11, 1, 1, 1));
-            bklists.Lists[6].Gears.Add(new CGear(Properties.Resources.StringRacing + "11-28T", 9, 28, 24, 21, 18, 16, 14, 13, 12, 11, 1, 1, 1));
-            bklists.Lists[6].Gears.Add(new CGear(Properties.Resources.StringRacing + "12-27T", 9, 27, 24, 21, 19, 17, 15, 14, 13, 12, 1, 1, 1));
-            bklists.Lists[6].Gears.Add(new CGear(Properties.Resources.StringOther, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-
-            bklists.Lists[7].Gears.Add(new CGear(Properties.Resources.StringMTB + "11-34T", 10, 34, 30, 26, 23, 21, 19, 17, 15, 13, 11, 1, 1));
-            bklists.Lists[7].Gears.Add(new CGear(Properties.Resources.StringMTB + "11-36T", 10, 36, 32, 28, 24, 21, 19, 17, 15, 13, 11, 1, 1));
-            bklists.Lists[7].Gears.Add(new CGear(Properties.Resources.StringMTB + "11-36T PG-1070", 10, 36, 32, 28, 25, 22, 19, 17, 15, 13, 11, 1, 1));
-            bklists.Lists[7].Gears.Add(new CGear(Properties.Resources.StringRacing + "11-25T", 10, 25, 23, 21, 19, 17, 15, 14, 13, 12, 11, 1, 1));
-            bklists.Lists[7].Gears.Add(new CGear(Properties.Resources.StringRacing + "11-28T", 10, 28, 25, 22, 19, 17, 15, 14, 13, 12, 11, 1, 1));
-            bklists.Lists[7].Gears.Add(new CGear(Properties.Resources.StringRacing + "11-28T ultegra", 10, 28, 24, 21, 19, 17, 15, 14, 13, 12, 11, 1, 1));
-            bklists.Lists[7].Gears.Add(new CGear(Properties.Resources.StringRacing + "12-27T", 10, 27, 24, 21, 19, 17, 16, 15, 14, 13, 12, 1, 1));
-            bklists.Lists[7].Gears.Add(new CGear(Properties.Resources.StringOther, 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-
-            bklists.Lists[8].Gears.Add(new CGear(Properties.Resources.StringMTB + "10-42T", 11, 42, 36, 32, 28, 24, 21, 18, 16, 14, 12, 10, 1));
-            bklists.Lists[8].Gears.Add(new CGear(Properties.Resources.StringRacing + "11-23T", 11, 23, 21, 19, 18, 17, 16, 15, 14, 13, 12, 11, 1));
-            bklists.Lists[8].Gears.Add(new CGear(Properties.Resources.StringRacing + "11-25T", 11, 25, 23, 21, 19, 17, 16, 15, 14, 13, 12, 11, 1));
-            bklists.Lists[8].Gears.Add(new CGear(Properties.Resources.StringRacing + "11-26T", 11, 26, 23, 21, 19, 17, 16, 15, 14, 13, 12, 11, 1));
-            bklists.Lists[8].Gears.Add(new CGear(Properties.Resources.StringRacing + "11-28T", 11, 28, 25, 23, 21, 19, 17, 15, 14, 13, 12, 11, 1));
-            bklists.Lists[8].Gears.Add(new CGear(Properties.Resources.StringRacing + "11-32T", 11, 32, 28, 25, 22, 20, 18, 16, 14, 13, 12, 11, 1));
-            bklists.Lists[8].Gears.Add(new CGear(Properties.Resources.StringRacing + "12-25T", 11, 25, 23, 21, 19, 18, 17, 16, 15, 14, 13, 12, 1));
-            bklists.Lists[8].Gears.Add(new CGear(Properties.Resources.StringOther, 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-            bklists.Lists[9].Gears.Add(new CGear(Properties.Resources.StringOther, 12, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            bklists.Lists[3].Gears.Add(new CGear(GearType.Back, "14-28T", 6, 28, 24, 21, 18, 16, 14, 1, 1, 1, 1, 1, 1));
+            bklists.Lists[3].Gears.Add(new CGear(GearType.Back, "14-34T", 6, 34, 24, 21, 18, 16, 14, 1, 1, 1, 1, 1, 1));
+            bklists.Lists[3].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                              
+            bklists.Lists[4].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "14-34T", 7, 34, 24, 22, 20, 18, 16, 14, 1, 1, 1, 1, 1));
+            bklists.Lists[4].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "12-32T", 7, 32, 26, 21, 18, 16, 14, 12, 1, 1, 1, 1, 1));
+            bklists.Lists[4].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-28T", 7, 28, 24, 21, 18, 15, 13, 11, 1, 1, 1, 1, 1));
+            bklists.Lists[4].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "14-28T", 7, 28, 24, 22, 20, 18, 16, 14, 1, 1, 1, 1, 1));
+            bklists.Lists[4].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                 
+            bklists.Lists[5].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "11-32T", 8, 32, 28, 24, 21, 18, 15, 13, 11, 1, 1, 1, 1));
+            bklists.Lists[5].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "13-34T", 8, 34, 28, 24, 21, 19, 17, 15, 13, 1, 1, 1, 1));
+            bklists.Lists[5].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "12-23T", 8, 23, 21, 19, 17, 15, 14, 13, 12, 1, 1, 1, 1));
+            bklists.Lists[5].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-23T", 8, 23, 21, 19, 17, 15, 13, 12, 11, 1, 1, 1, 1));
+            bklists.Lists[5].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "12-25T", 8, 25, 23, 21, 19, 17, 15, 13, 12, 1, 1, 1, 1));
+            bklists.Lists[5].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-28T", 8, 28, 24, 21, 19, 17, 15, 13, 11, 1, 1, 1, 1));
+            bklists.Lists[5].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-30T", 8, 30, 26, 23, 20, 17, 15, 13, 11, 1, 1, 1, 1));
+            bklists.Lists[5].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                 
+            bklists.Lists[6].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "11-32T", 9, 32, 28, 24, 21, 18, 16, 14, 12, 11, 1, 1, 1));
+            bklists.Lists[6].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "13-32T", 9, 32, 28, 24, 21, 18, 16, 15, 14, 13, 1, 1, 1));
+            bklists.Lists[6].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "11-34T", 9, 34, 28, 24, 21, 18, 16, 14, 12, 11, 1, 1, 1));
+            bklists.Lists[6].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "11-36T", 9, 36, 32, 28, 24, 21, 18, 15, 13, 11, 1, 1, 1));
+            bklists.Lists[6].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-25T", 9, 25, 23, 21, 19, 17, 15, 13, 12, 11, 1, 1, 1));
+            bklists.Lists[6].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-28T", 9, 28, 24, 21, 18, 16, 14, 13, 12, 11, 1, 1, 1));
+            bklists.Lists[6].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "12-27T", 9, 27, 24, 21, 19, 17, 15, 14, 13, 12, 1, 1, 1));
+            bklists.Lists[6].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                 
+            bklists.Lists[7].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "11-34T", 10, 34, 30, 26, 23, 21, 19, 17, 15, 13, 11, 1, 1));
+            bklists.Lists[7].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "11-36T", 10, 36, 32, 28, 24, 21, 19, 17, 15, 13, 11, 1, 1));
+            bklists.Lists[7].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "11-36T PG-1070", 10, 36, 32, 28, 25, 22, 19, 17, 15, 13, 11, 1, 1));
+            bklists.Lists[7].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-25T", 10, 25, 23, 21, 19, 17, 15, 14, 13, 12, 11, 1, 1));
+            bklists.Lists[7].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-28T", 10, 28, 25, 22, 19, 17, 15, 14, 13, 12, 11, 1, 1));
+            bklists.Lists[7].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-28T ultegra", 10, 28, 24, 21, 19, 17, 15, 14, 13, 12, 11, 1, 1));
+            bklists.Lists[7].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "12-27T", 10, 27, 24, 21, 19, 17, 16, 15, 14, 13, 12, 1, 1));
+            bklists.Lists[7].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                 
+            bklists.Lists[8].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "10-42T", 11, 42, 36, 32, 28, 24, 21, 18, 16, 14, 12, 10, 1));
+            bklists.Lists[8].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-23T", 11, 23, 21, 19, 18, 17, 16, 15, 14, 13, 12, 11, 1));
+            bklists.Lists[8].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-25T", 11, 25, 23, 21, 19, 17, 16, 15, 14, 13, 12, 11, 1));
+            bklists.Lists[8].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-26T", 11, 26, 23, 21, 19, 17, 16, 15, 14, 13, 12, 11, 1));
+            bklists.Lists[8].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-28T", 11, 28, 25, 23, 21, 19, 17, 15, 14, 13, 12, 11, 1));
+            bklists.Lists[8].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-32T", 11, 32, 28, 25, 22, 20, 18, 16, 14, 13, 12, 11, 1));
+            bklists.Lists[8].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "12-25T", 11, 25, 23, 21, 19, 18, 17, 16, 15, 14, 13, 12, 1));
+            bklists.Lists[8].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                
+            bklists.Lists[9].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 12, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
 
 
             /*
@@ -158,47 +154,47 @@ namespace BicycleCalculatorWPF
 
                 4 Shimano Nexus 4 SG-4C30
              */
-            inlists.Lists[0].Gears.Add(new CInnerGear(Properties.Resources.StringNone, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            inlists.Lists[0].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringNone, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
 
-            inlists.Lists[1].Gears.Add(new CInnerGear("SRAM AUTOMATIX", 2, 1, 1.37, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            inlists.Lists[1].Gears.Add(new CInnerGear(Properties.Resources.StringOther, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            inlists.Lists[1].Gears.Add(new CGear(GearType.Inner, "SRAM AUTOMATIX", 2, 1, 1.37, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            inlists.Lists[1].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                
+            inlists.Lists[2].Gears.Add(new CGear(GearType.Inner, "Nexus SG-3S40", 3, 0.75, 1, 1.37, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            inlists.Lists[2].Gears.Add(new CGear(GearType.Inner, "SRAM SPECTRO T3", 3, 0.73, 1, 1.36, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            inlists.Lists[2].Gears.Add(new CGear(GearType.Inner, "SRAM DualDrive3", 3, 0.73, 1, 1.36, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            inlists.Lists[2].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                 
+            inlists.Lists[3].Gears.Add(new CGear(GearType.Inner, "SRAM SPARC", 4, 0.630, 0.780, 1.000, 1.280, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            inlists.Lists[3].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                 
+            inlists.Lists[4].Gears.Add(new CGear(GearType.Inner, "SRAM SPECTRO P5", 5, 0.630, 0.780, 1.000, 1.280, 1.580, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            inlists.Lists[4].Gears.Add(new CGear(GearType.Inner, "SRAM SPECTRO P5 CARGO", 5, 0.670, 0.780, 1.000, 1.280, 1.500, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            inlists.Lists[4].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                
+            inlists.Lists[5].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                 
+            inlists.Lists[6].Gears.Add(new CGear(GearType.Inner, "Nexus SG-7R46", 7, 0.632, 0.741, 0.843, 0.989, 1.145, 1.335, 1.545, 1, 1, 1, 1, 1, 1, 1));
+            inlists.Lists[6].Gears.Add(new CGear(GearType.Inner, "SRAM Spectro S7", 7, 0.570, 0.680, 0.810, 1.000, 1.240, 1.480, 1.740, 1, 1, 1, 1, 1, 1, 1));
+            inlists.Lists[6].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                 
+            inlists.Lists[7].Gears.Add(new CGear(GearType.Inner, "Nexus SG-8R(C)31", 8, 0.527, 0.644, 0.748, 0.851, 1.00, 1.223, 1.419, 1.615, 1, 1, 1, 1, 1, 1));
+            inlists.Lists[7].Gears.Add(new CGear(GearType.Inner, "ALFINE SG-S501", 8, 0.527, 0.644, 0.748, 0.851, 1.00, 1.223, 1.419, 1.615, 1, 1, 1, 1, 1, 1));
+            inlists.Lists[7].Gears.Add(new CGear(GearType.Inner, "SRAM G8", 8, 0.609, 0.710, 0.803, 0.903, 1.054, 1.204, 1.355, 1.581, 1, 1, 1, 1, 1, 1));
+            inlists.Lists[7].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                 
+            inlists.Lists[8].Gears.Add(new CGear(GearType.Inner, "SRAM G9", 9, 0.541, 0.609, 0.710, 0.803, 0.903, 1.054, 1.204, 1.355, 1.581, 1, 1, 1, 1, 1));
+            inlists.Lists[8].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                 
+            inlists.Lists[9].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
 
-            inlists.Lists[2].Gears.Add(new CInnerGear("Nexus SG-3S40", 3, 0.75, 1, 1.37, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            inlists.Lists[2].Gears.Add(new CInnerGear("SRAM SPECTRO T3", 3, 0.73, 1, 1.36, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            inlists.Lists[2].Gears.Add(new CInnerGear("SRAM DualDrive3", 3, 0.73, 1, 1.36, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            inlists.Lists[2].Gears.Add(new CInnerGear(Properties.Resources.StringOther, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-            inlists.Lists[3].Gears.Add(new CInnerGear("SRAM SPARC", 4, 0.630, 0.780, 1.000, 1.280, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            inlists.Lists[3].Gears.Add(new CInnerGear(Properties.Resources.StringOther, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-            inlists.Lists[4].Gears.Add(new CInnerGear("SRAM SPECTRO P5", 5, 0.630, 0.780, 1.000, 1.280, 1.580, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            inlists.Lists[4].Gears.Add(new CInnerGear("SRAM SPECTRO P5 CARGO", 5, 0.670, 0.780, 1.000, 1.280, 1.500, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            inlists.Lists[4].Gears.Add(new CInnerGear(Properties.Resources.StringOther, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-            inlists.Lists[5].Gears.Add(new CInnerGear(Properties.Resources.StringOther, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-            inlists.Lists[6].Gears.Add(new CInnerGear("Nexus SG-7R46", 7, 0.632, 0.741, 0.843, 0.989, 1.145, 1.335, 1.545, 1, 1, 1, 1, 1, 1, 1));
-            inlists.Lists[6].Gears.Add(new CInnerGear("SRAM Spectro S7", 7, 0.570, 0.680, 0.810, 1.000, 1.240, 1.480, 1.740, 1, 1, 1, 1, 1, 1, 1));
-            inlists.Lists[6].Gears.Add(new CInnerGear(Properties.Resources.StringOther, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-            inlists.Lists[7].Gears.Add(new CInnerGear("Nexus SG-8R(C)31", 8, 0.527, 0.644, 0.748, 0.851, 1.00, 1.223, 1.419, 1.615, 1, 1, 1, 1, 1, 1));
-            inlists.Lists[7].Gears.Add(new CInnerGear("ALFINE SG-S501", 8, 0.527, 0.644, 0.748, 0.851, 1.00, 1.223, 1.419, 1.615, 1, 1, 1, 1, 1, 1));
-            inlists.Lists[7].Gears.Add(new CInnerGear("SRAM G8", 8, 0.609, 0.710, 0.803, 0.903, 1.054, 1.204, 1.355, 1.581, 1, 1, 1, 1, 1, 1));
-            inlists.Lists[7].Gears.Add(new CInnerGear(Properties.Resources.StringOther, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-            inlists.Lists[8].Gears.Add(new CInnerGear("SRAM G9", 9, 0.541, 0.609, 0.710, 0.803, 0.903, 1.054, 1.204, 1.355, 1.581, 1, 1, 1, 1, 1));
-            inlists.Lists[8].Gears.Add(new CInnerGear(Properties.Resources.StringOther, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-            inlists.Lists[9].Gears.Add(new CInnerGear(Properties.Resources.StringOther, 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-            inlists.Lists[10].Gears.Add(new CInnerGear("ALFINE SG-S700", 11, 0.527, 0.681, 0.770, 0.878, 0.995, 1.134, 1.292, 1.462, 1.667, 1.888, 2.153, 1, 1, 1));
-            inlists.Lists[10].Gears.Add(new CInnerGear(Properties.Resources.StringOther, 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-            inlists.Lists[11].Gears.Add(new CInnerGear(Properties.Resources.StringOther, 12, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            inlists.Lists[11].Gears.Add(new CInnerGear(Properties.Resources.StringOther, 13, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
-            inlists.Lists[12].Gears.Add(new CInnerGear("Rohloff Speedhub", 14, 0.279, 0.316, 0.360, 0.409, 0.464, 0.528, 0.600, 0.682, 0.774, 0.881, 1.000, 1.135, 1.292, 1.467));
-            inlists.Lists[12].Gears.Add(new CInnerGear(Properties.Resources.StringOther, 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            inlists.Lists[10].Gears.Add(new CGear(GearType.Inner, "ALFINE SG-S700", 11, 0.527, 0.681, 0.770, 0.878, 0.995, 1.134, 1.292, 1.462, 1.667, 1.888, 2.153, 1, 1, 1));
+            inlists.Lists[10].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                  
+            inlists.Lists[11].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 12, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            inlists.Lists[12].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 13, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+                                                  
+            inlists.Lists[13].Gears.Add(new CGear(GearType.Inner, "Rohloff Speedhub", 14, 0.279, 0.316, 0.360, 0.409, 0.464, 0.528, 0.600, 0.682, 0.774, 0.881, 1.000, 1.135, 1.292, 1.467));
+            inlists.Lists[13].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
 
 
 

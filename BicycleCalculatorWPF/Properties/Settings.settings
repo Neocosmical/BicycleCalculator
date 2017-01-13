@@ -8,40 +8,40 @@
     <Setting Name="IsMPH" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="frnow1" Type="System.Int32" Scope="User">
+    <Setting Name="frnow1" Type="System.Double" Scope="User">
       <Value Profile="(Default)">24</Value>
     </Setting>
-    <Setting Name="frnow2" Type="System.Int32" Scope="User">
+    <Setting Name="frnow2" Type="System.Double" Scope="User">
       <Value Profile="(Default)">34</Value>
     </Setting>
-    <Setting Name="frnow3" Type="System.Int32" Scope="User">
+    <Setting Name="frnow3" Type="System.Double" Scope="User">
       <Value Profile="(Default)">42</Value>
     </Setting>
-    <Setting Name="frnow4" Type="System.Int32" Scope="User">
+    <Setting Name="frnow4" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="frnow5" Type="System.Int32" Scope="User">
+    <Setting Name="frnow5" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="frnow6" Type="System.Int32" Scope="User">
+    <Setting Name="frnow6" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="frnow7" Type="System.Int32" Scope="User">
+    <Setting Name="frnow7" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="frnow8" Type="System.Int32" Scope="User">
+    <Setting Name="frnow8" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="frnow9" Type="System.Int32" Scope="User">
+    <Setting Name="frnow9" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="frnow10" Type="System.Int32" Scope="User">
+    <Setting Name="frnow10" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="frnow11" Type="System.Int32" Scope="User">
+    <Setting Name="frnow11" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="frnow12" Type="System.Int32" Scope="User">
+    <Setting Name="frnow12" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="frnumid" Type="System.Int32" Scope="User">
@@ -50,40 +50,40 @@
     <Setting Name="frmodid" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="bknow1" Type="System.Int32" Scope="User">
+    <Setting Name="bknow1" Type="System.Double" Scope="User">
       <Value Profile="(Default)">32</Value>
     </Setting>
-    <Setting Name="bknow2" Type="System.Int32" Scope="User">
+    <Setting Name="bknow2" Type="System.Double" Scope="User">
       <Value Profile="(Default)">28</Value>
     </Setting>
-    <Setting Name="bknow3" Type="System.Int32" Scope="User">
+    <Setting Name="bknow3" Type="System.Double" Scope="User">
       <Value Profile="(Default)">24</Value>
     </Setting>
-    <Setting Name="bknow4" Type="System.Int32" Scope="User">
+    <Setting Name="bknow4" Type="System.Double" Scope="User">
       <Value Profile="(Default)">21</Value>
     </Setting>
-    <Setting Name="bknow5" Type="System.Int32" Scope="User">
+    <Setting Name="bknow5" Type="System.Double" Scope="User">
       <Value Profile="(Default)">18</Value>
     </Setting>
-    <Setting Name="bknow6" Type="System.Int32" Scope="User">
+    <Setting Name="bknow6" Type="System.Double" Scope="User">
       <Value Profile="(Default)">16</Value>
     </Setting>
-    <Setting Name="bknow7" Type="System.Int32" Scope="User">
+    <Setting Name="bknow7" Type="System.Double" Scope="User">
       <Value Profile="(Default)">14</Value>
     </Setting>
-    <Setting Name="bknow8" Type="System.Int32" Scope="User">
+    <Setting Name="bknow8" Type="System.Double" Scope="User">
       <Value Profile="(Default)">12</Value>
     </Setting>
-    <Setting Name="bknow9" Type="System.Int32" Scope="User">
+    <Setting Name="bknow9" Type="System.Double" Scope="User">
       <Value Profile="(Default)">11</Value>
     </Setting>
-    <Setting Name="bknow10" Type="System.Int32" Scope="User">
+    <Setting Name="bknow10" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="bknow11" Type="System.Int32" Scope="User">
+    <Setting Name="bknow11" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="bknow12" Type="System.Int32" Scope="User">
+    <Setting Name="bknow12" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="bknumid" Type="System.Int32" Scope="User">

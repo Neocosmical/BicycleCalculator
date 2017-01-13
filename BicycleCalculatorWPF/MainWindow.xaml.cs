@@ -204,7 +204,7 @@ namespace BicycleCalculatorWPF
             foreach (CGearList list in data.bklists.Lists)
                 BkNumcomboBox.Items.Add(list);
 
-            foreach (CInnerGearList list in data.inlists.Lists)
+            foreach (CGearList list in data.inlists.Lists)
                 InNumcomboBox.Items.Add(list);
 
 
@@ -378,7 +378,7 @@ namespace BicycleCalculatorWPF
             ready = false;
             InModelcomboBox.Items.Clear();
 
-            foreach (CInnerGear gear in ((CInnerGearList)InNumcomboBox.SelectedItem).Gears)
+            foreach (CGear gear in ((CGearList)InNumcomboBox.SelectedItem).Gears)
                 InModelcomboBox.Items.Add(gear);
             InModelcomboBox.SelectedIndex = 0;
             ready = rtemp;
@@ -413,13 +413,13 @@ namespace BicycleCalculatorWPF
             Calculate();
         }
 
-        CInnerGear innow;
+        CGear innow;
         private void InModelcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
         {
             if (InModelcomboBox.SelectedItem == null) return;
             bool rtemp = ready;
             ready = false;
-            innow = (CInnerGear)((CInnerGear)InModelcomboBox.SelectedItem).Clone();
+            innow = (CGear)((CGear)InModelcomboBox.SelectedItem).Clone();
             dataGridViewIn.Items.Clear();
             for (int i = 0; i < innow.num; i++) dataGridViewIn.Items.Add(innow.teeth[i]);
             if (innow.num <= 1) dataGridViewIn.IsEnabled = false;
@@ -438,7 +438,7 @@ namespace BicycleCalculatorWPF
             pm.Axes[0].MajorStep = double.NaN;
             CGear frtemp = frnow;
             CGear bktemp = bknow;
-            CInnerGear intemp = innow;
+            CGear intemp = innow;
             CWheel whtemp = (CWheel)((CWheel)WheelcomboBox.SelectedItem).Clone();
             try
             {
@@ -659,7 +659,7 @@ namespace BicycleCalculatorWPF
         {
             CGear frtemp = (CGear)FrModelcomboBox.SelectedItem;
             CGear bktemp = (CGear)BkModelcomboBox.SelectedItem;
-            CInnerGear intemp = (CInnerGear)((CInnerGear)InModelcomboBox.SelectedItem).Clone();
+            CGear intemp = (CGear)((CGear)InModelcomboBox.SelectedItem).Clone();
             CWheel whtemp = (CWheel)WheelcomboBox.SelectedItem;
 
             whtemp.lenth = Convert.ToInt32(WheelLenthtextBox.Text);
@@ -802,7 +802,7 @@ namespace BicycleCalculatorWPF
 
             CGear frtemp = (CGear)((CGear)FrModelcomboBox.SelectedItem).Clone();
             CGear bktemp = (CGear)((CGear)BkModelcomboBox.SelectedItem).Clone();
-            CInnerGear intemp = (CInnerGear)((CInnerGear)InModelcomboBox.SelectedItem).Clone();
+            CGear intemp = (CGear)((CGear)InModelcomboBox.SelectedItem).Clone();
             CWheel whtemp = (CWheel)((CWheel)WheelcomboBox.SelectedItem).Clone();
 
             for (int i = 0; i < dataGridViewFr.Items.Count; i++)
@@ -810,7 +810,7 @@ namespace BicycleCalculatorWPF
             for (int i = 0; i < dataGridViewBk.Items.Count; i++)
                 bktemp.teeth[i].teeth = ((CTeeth)dataGridViewBk.Items[i]).Teeth;
             for (int i = 0; i < dataGridViewIn.Items.Count; i++)
-                intemp.teeth[i].teeth = ((CInnerTeeth)dataGridViewIn.Items[i]).Teeth;
+                intemp.teeth[i].teeth = ((CTeeth)dataGridViewIn.Items[i]).Teeth;
 
             whtemp.lenth = Convert.ToInt32(WheelLenthtextBox.Text);
             System.IO.StreamWriter swriter;
@@ -884,7 +884,7 @@ namespace BicycleCalculatorWPF
 
             CGear frtemp = (CGear)((CGear)FrModelcomboBox.SelectedItem).Clone();
             CGear bktemp = (CGear)((CGear)BkModelcomboBox.SelectedItem).Clone();
-            CInnerGear intemp = (CInnerGear)((CInnerGear)InModelcomboBox.SelectedItem).Clone();
+            CGear intemp = (CGear)((CGear)InModelcomboBox.SelectedItem).Clone();
 
             double max = 0;
             double min = 100000000;
@@ -894,7 +894,7 @@ namespace BicycleCalculatorWPF
                 int f = n / (bktemp.num * intemp.num);
                 int i = (n % (bktemp.num * intemp.num)) / bktemp.num;
                 int b = (n - f * bktemp.num * intemp.num - i * bktemp.num);
-                double gtemp = Convert.ToDouble(((CTeeth)dataGridViewFr.Items[f]).Teeth) / Convert.ToDouble(((CTeeth)dataGridViewBk.Items[b]).Teeth) * ((CInnerTeeth)dataGridViewIn.Items[intemp.num - 1 - i]).Teeth;
+                double gtemp = Convert.ToDouble(((CTeeth)dataGridViewFr.Items[f]).Teeth) / Convert.ToDouble(((CTeeth)dataGridViewBk.Items[b]).Teeth) * ((CTeeth)dataGridViewIn.Items[intemp.num - 1 - i]).Teeth;
                 if (gtemp > max) max = gtemp;
                 if (gtemp < min) min = gtemp;
                 dataGridViewFr.SelectedIndex = f;
@@ -1188,8 +1188,8 @@ namespace BicycleCalculatorWPF
         {
             RepeatButton b = sender as RepeatButton;
             int id = Convert.ToInt32(b.CommandParameter);
-            if (((CInnerTeeth)dataGridViewIn.Items[id - 1]).teeth > 0.01)
-                ((CInnerTeeth)dataGridViewIn.Items[id - 1]).teeth -= 0.01;
+            if (((CTeeth)dataGridViewIn.Items[id - 1]).teeth > 0.01)
+                ((CTeeth)dataGridViewIn.Items[id - 1]).teeth -= 0.01;
             dataGridViewIn.Items.Refresh();
             Calculate();
         }
@@ -1198,8 +1198,8 @@ namespace BicycleCalculatorWPF
         {
             RepeatButton b = sender as RepeatButton;
             int id = Convert.ToInt32(b.CommandParameter);
-            if (((CInnerTeeth)dataGridViewIn.Items[id - 1]).teeth < 20.0)
-                ((CInnerTeeth)dataGridViewIn.Items[id - 1]).teeth += 0.01;
+            if (((CTeeth)dataGridViewIn.Items[id - 1]).teeth < 20.0)
+                ((CTeeth)dataGridViewIn.Items[id - 1]).teeth += 0.01;
             dataGridViewIn.Items.Refresh();
             Calculate();
         }
@@ -1295,10 +1295,10 @@ namespace BicycleCalculatorWPF
         private void TextBox_MouseWheel_In(object sender, MouseWheelEventArgs e)
         {
             int id = (int)(((TextBox)sender).Tag);
-            if (((CInnerTeeth)dataGridViewIn.Items[id - 1]).Teeth > 0.01 && e.Delta < 0)
-                ((CInnerTeeth)dataGridViewIn.Items[id - 1]).Teeth -= 0.01;
-            if (((CInnerTeeth)dataGridViewIn.Items[id - 1]).Teeth < 20.0 && e.Delta > 0)
-                ((CInnerTeeth)dataGridViewIn.Items[id - 1]).Teeth += 0.01;
+            if (((CTeeth)dataGridViewIn.Items[id - 1]).Teeth > 0.01 && e.Delta < 0)
+                ((CTeeth)dataGridViewIn.Items[id - 1]).Teeth -= 0.01;
+            if (((CTeeth)dataGridViewIn.Items[id - 1]).Teeth < 20.0 && e.Delta > 0)
+                ((CTeeth)dataGridViewIn.Items[id - 1]).Teeth += 0.01;
 
             dataGridViewIn.Items.Refresh();
             Calculate();
@@ -1307,7 +1307,7 @@ namespace BicycleCalculatorWPF
         private void TextBox_LostKeyboardFocus_Fr(object sender, KeyboardFocusChangedEventArgs e)
         {
             int id = (int)(((TextBox)sender).Tag);
-            int teethtemp = ((CTeeth)dataGridViewFr.Items[id - 1]).Teeth;
+            double teethtemp = ((CTeeth)dataGridViewFr.Items[id - 1]).Teeth;
             try
             {
                 teethtemp = Convert.ToInt16(((TextBox)sender).Text);
@@ -1324,7 +1324,7 @@ namespace BicycleCalculatorWPF
         private void TextBox_LostKeyboardFocus_Bk(object sender, KeyboardFocusChangedEventArgs e)
         {
             int id = (int)(((TextBox)sender).Tag);
-            int teethtemp = ((CTeeth)dataGridViewBk.Items[id - 1]).Teeth;
+            double teethtemp = ((CTeeth)dataGridViewBk.Items[id - 1]).Teeth;
             try
             {
                 teethtemp = Convert.ToInt16(((TextBox)sender).Text);
@@ -1341,7 +1341,7 @@ namespace BicycleCalculatorWPF
         private void TextBox_LostKeyboardFocus_In(object sender, KeyboardFocusChangedEventArgs e)
         {
             int id = (int)(((TextBox)sender).Tag);
-            double teethtemp = ((CInnerTeeth)dataGridViewIn.Items[id - 1]).Teeth;
+            double teethtemp = ((CTeeth)dataGridViewIn.Items[id - 1]).Teeth;
             try
             {
                 teethtemp = Convert.ToDouble(((TextBox)sender).Text);
@@ -1350,7 +1350,7 @@ namespace BicycleCalculatorWPF
             { }
             if (teethtemp > 20.0) teethtemp = 20.0;
             if (teethtemp < 0.01) teethtemp = 0.01;
-            ((CInnerTeeth)dataGridViewIn.Items[id - 1]).Teeth = teethtemp;
+            ((CTeeth)dataGridViewIn.Items[id - 1]).Teeth = teethtemp;
             dataGridViewIn.Items.Refresh();
             Calculate();
         }
