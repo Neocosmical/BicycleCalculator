@@ -135,11 +135,13 @@ namespace BicycleCalculatorWPF
     class CGearList
     {
         public string name;
+        public int speeds = 1;
         public List<CGear> Gears = new List<CGear>();
 
-        public CGearList(string _name)
+        public CGearList(string _name, int _speeds)
         {
             name = _name;
+            speeds = _speeds;
         }
 
         public override string ToString()
@@ -151,11 +153,13 @@ namespace BicycleCalculatorWPF
     class CInnerGearList
     {
         public string name;
+        public int speeds = 1;
         public List<CInnerGear> Gears = new List<CInnerGear>();
 
-        public CInnerGearList(string _name)
+        public CInnerGearList(string _name, int _speeds)
         {
             name = _name;
+            speeds = _speeds;
         }
 
         public override string ToString()
@@ -221,6 +225,40 @@ namespace BicycleCalculatorWPF
         {
             get { return Remark; }
             set { Remark = value; }
+        }
+    }
+
+    class CGearLists
+    {
+        public string name;
+        public List<CGearList> Lists = new List<CGearList>();
+
+        public CGearLists(string _name)
+        {
+            name = _name;
+            Lists = new List<CGearList>();
+        }
+
+        public override string ToString()
+        {
+            return name;
+        }
+    }
+
+    class CInnerGearLists
+    {
+        public string name;
+        public List<CInnerGearList> Lists = new List<CInnerGearList>();
+
+        public CInnerGearLists(string _name)
+        {
+            name = _name;
+            Lists = new List<CInnerGearList>();
+        }
+
+        public override string ToString()
+        {
+            return name;
         }
     }
 }

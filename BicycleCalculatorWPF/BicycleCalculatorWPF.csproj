@@ -100,6 +100,7 @@
     <Compile Include="AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CData.cs" />
     <Compile Include="CHub.cs" />
     <Compile Include="CRim.cs" />
     <Compile Include="DonateWindow.xaml.cs">
