@@ -6,7 +6,7 @@ using System.Text;
 namespace BicycleCalculatorWPF
 {
     class CHub : ICloneable
-    {       
+    {
         private string name = "";
 
         public string Name
@@ -58,6 +58,16 @@ namespace BicycleCalculatorWPF
             vals.Add(new CValue(4, Properties.Resources.StringSpokeHole, _spokeHole));
         }
 
+        public CHub(string data)
+        {
+            vals.Add(new CValue(0, Properties.Resources.StringFlangeL, 0));
+            vals.Add(new CValue(1, Properties.Resources.StringFlangeR, 0));
+            vals.Add(new CValue(2, Properties.Resources.StringCenterL, 0));
+            vals.Add(new CValue(3, Properties.Resources.StringCenterR, 0));
+            vals.Add(new CValue(4, Properties.Resources.StringSpokeHole, 0));
+            Decode(data);
+        }
+
         public override string ToString()
         {
             return name;
@@ -68,8 +78,32 @@ namespace BicycleCalculatorWPF
             CHub p = new CHub(name, LeftFlange, RightFlange, CenterToLeft, CenterToRight, SpokeHole);
             return p;
         }
-    }
 
+        public string Encode()
+        {
+            string str = "";
+            str += "Hub,";
+            str += name.Replace(",","") + ",";
+            str += LeftFlange.ToString() + ",";
+            str += RightFlange.ToString() + ",";
+            str += CenterToLeft.ToString() + ",";
+            str += CenterToRight.ToString() + ",";
+            str += SpokeHole.ToString() + ",";
+            return str;
+        }
+
+        public void Decode(string str)
+        {
+            string[] strs = str.Split(',');
+            if (strs[0] != "Hub") return;
+            name = strs[1];
+            LeftFlange = Convert.ToDouble(strs[2]);
+            RightFlange = Convert.ToDouble(strs[3]);
+            CenterToLeft = Convert.ToDouble(strs[4]);
+            CenterToRight = Convert.ToDouble(strs[5]);
+            SpokeHole = Convert.ToDouble(strs[6]);
+        }
+    }
     class CHubList
     {
         string name = "";

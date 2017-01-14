@@ -394,7 +394,7 @@ namespace BicycleCalculatorWPF
             ready = false;
             frnow = (CGear)((CGear)FrModelcomboBox.SelectedItem).Clone();
             dataGridViewFr.Items.Clear();
-            for (int i = 0; i < frnow.num; i++) dataGridViewFr.Items.Add(frnow.teeth[i]);
+            for (int i = 0; i < frnow.speeds; i++) dataGridViewFr.Items.Add(frnow.teeth[i]);
             ready = rtemp;
             Calculate();
         }
@@ -408,7 +408,7 @@ namespace BicycleCalculatorWPF
             ready = false;
             bknow = (CGear)((CGear)BkModelcomboBox.SelectedItem).Clone();
             dataGridViewBk.Items.Clear();
-            for (int i = 0; i < bknow.num; i++) dataGridViewBk.Items.Add(bknow.teeth[i]);
+            for (int i = 0; i < bknow.speeds; i++) dataGridViewBk.Items.Add(bknow.teeth[i]);
             ready = rtemp;
             Calculate();
         }
@@ -421,8 +421,8 @@ namespace BicycleCalculatorWPF
             ready = false;
             innow = (CGear)((CGear)InModelcomboBox.SelectedItem).Clone();
             dataGridViewIn.Items.Clear();
-            for (int i = 0; i < innow.num; i++) dataGridViewIn.Items.Add(innow.teeth[i]);
-            if (innow.num <= 1) dataGridViewIn.IsEnabled = false;
+            for (int i = 0; i < innow.speeds; i++) dataGridViewIn.Items.Add(innow.teeth[i]);
+            if (innow.speeds <= 1) dataGridViewIn.IsEnabled = false;
             else dataGridViewIn.IsEnabled = true;
             ready = rtemp;
             Calculate();
@@ -456,23 +456,23 @@ namespace BicycleCalculatorWPF
 
             int num = 1;
             NaNNumber.Clear();
-            for (int i = 0; i < frtemp.num; i++)
+            for (int i = 0; i < frtemp.speeds; i++)
             {
-                for (int k = 0; k < intemp.num; k++)
+                for (int k = 0; k < intemp.speeds; k++)
                 {
-                    for (int j = 0; j < bktemp.num; j++)
+                    for (int j = 0; j < bktemp.speeds; j++)
                     {
                         CResult resulttemp = new CResult();
                         resulttemp.No1 = num;
                         num++;
                         resulttemp.Gear1 = "";
                         resulttemp.GearT1 = "";
-                        if (frtemp.num != 1)
+                        if (frtemp.speeds != 1)
                         {
                             resulttemp.Gear1 += (i + 1).ToString();
                             resulttemp.GearT1 += frtemp.teeth[i].teeth.ToString() + "T";
                         }
-                        if (bktemp.num != 1)
+                        if (bktemp.speeds != 1)
                         {
                             if (resulttemp.Gear1 != "")
                             {
@@ -482,7 +482,7 @@ namespace BicycleCalculatorWPF
                             resulttemp.Gear1 += (j + 1).ToString();
                             resulttemp.GearT1 += bktemp.teeth[j].teeth.ToString() + "T";
                         }
-                        if (intemp.num != 1)
+                        if (intemp.speeds != 1)
                         {
                             if (resulttemp.Gear1 != "")
                             {
@@ -523,13 +523,13 @@ namespace BicycleCalculatorWPF
                         toothrateold = toothrate;
 
                         resulttemp.Remark1 = "";
-                        if (frtemp.num != 1 && bktemp.num != 1)
+                        if (frtemp.speeds != 1 && bktemp.speeds != 1)
                         {
-                            if (i == frtemp.num - 1 && j == 0) resulttemp.Remark1 += Properties.Resources.StringLFLB;
-                            if (i == 0 && j == bktemp.num - 1) resulttemp.Remark1 += Properties.Resources.StringSFSB;
+                            if (i == frtemp.speeds - 1 && j == 0) resulttemp.Remark1 += Properties.Resources.StringLFLB;
+                            if (i == 0 && j == bktemp.speeds - 1) resulttemp.Remark1 += Properties.Resources.StringSFSB;
                         }
 
-                        if (intemp.num != 1)
+                        if (intemp.speeds != 1)
                         {
                             if (toothrateout < 1.5) resulttemp.Remark1 += Properties.Resources.StringTorque;
                         }
@@ -545,13 +545,13 @@ namespace BicycleCalculatorWPF
                                 tempx = num - 1;
                                 break;
                             case 1://按牙盘
-                                tempx = bktemp.num * k + j + 1;
+                                tempx = bktemp.speeds * k + j + 1;
                                 break;
                             case 2://按飞轮
-                                tempx = i * frtemp.num + k + 1;
+                                tempx = i * frtemp.speeds + k + 1;
                                 break;
                             case 3://按内变速
-                                tempx = i * bktemp.num + j + 1;
+                                tempx = i * bktemp.speeds + j + 1;
                                 break;
                         }
 
@@ -630,7 +630,7 @@ namespace BicycleCalculatorWPF
                 (Convert.ToInt32(toothratemax / toothratemin * 100.0)).ToString() +
                 "%";
             labelinfo1.Content = Properties.Resources.StringTotalCap + ": " +
-                (frtemp.teeth[frtemp.num - 1].teeth - frtemp.teeth[0].teeth - bktemp.teeth[bktemp.num - 1].teeth + bktemp.teeth[0].teeth).ToString() + "T";
+                (frtemp.teeth[frtemp.speeds - 1].teeth - frtemp.teeth[0].teeth - bktemp.teeth[bktemp.speeds - 1].teeth + bktemp.teeth[0].teeth).ToString() + "T";
 
             if (checkBox1.IsChecked.Value)
             {
@@ -668,7 +668,7 @@ namespace BicycleCalculatorWPF
             tempstr += pm.Axes[0].Title;
             tempstr += " " + frtemp.name;
             tempstr += "& " + bktemp.name;
-            if (intemp.num != 1)
+            if (intemp.speeds != 1)
                 tempstr += "& " + intemp.name;
             string chartname = tempstr + "& " + whtemp.lenth.ToString()+"mm";
             /*
@@ -831,19 +831,19 @@ namespace BicycleCalculatorWPF
             swriter.WriteLine(Properties.Resources.StringTire + "," + whtemp.name + "," + whtemp.lenth.ToString() + "mm");
 
             string frstr = "";
-            for (int i = 0; i < frtemp.num; i++)
+            for (int i = 0; i < frtemp.speeds; i++)
                 frstr += frtemp.teeth[i].teeth.ToString() + "/";
             frstr += "T";
             swriter.WriteLine(Properties.Resources.StringCranksets + "," + frtemp.name + "," + frstr);
 
             string bkstr = "";
-            for (int i = 0; i < bktemp.num; i++)
+            for (int i = 0; i < bktemp.speeds; i++)
                 bkstr += bktemp.teeth[i].teeth.ToString() + "/";
             bkstr += "T";
             swriter.WriteLine(Properties.Resources.StringCassette + "," + bktemp.name + "," + bkstr);
 
             string instr = "";
-            for (int i = 0; i < intemp.num; i++)
+            for (int i = 0; i < intemp.speeds; i++)
                 instr += intemp.teeth[i].teeth.ToString("0.00") + "/";
             swriter.WriteLine(Properties.Resources.StringInternalHub + "," + intemp.name + "," + instr);
 
@@ -891,10 +891,10 @@ namespace BicycleCalculatorWPF
             foreach (CResult item in listBox1.SelectedItems)
             {
                 int n = item.No1 - 1;
-                int f = n / (bktemp.num * intemp.num);
-                int i = (n % (bktemp.num * intemp.num)) / bktemp.num;
-                int b = (n - f * bktemp.num * intemp.num - i * bktemp.num);
-                double gtemp = Convert.ToDouble(((CTeeth)dataGridViewFr.Items[f]).Teeth) / Convert.ToDouble(((CTeeth)dataGridViewBk.Items[b]).Teeth) * ((CTeeth)dataGridViewIn.Items[intemp.num - 1 - i]).Teeth;
+                int f = n / (bktemp.speeds * intemp.speeds);
+                int i = (n % (bktemp.speeds * intemp.speeds)) / bktemp.speeds;
+                int b = (n - f * bktemp.speeds * intemp.speeds - i * bktemp.speeds);
+                double gtemp = Convert.ToDouble(((CTeeth)dataGridViewFr.Items[f]).Teeth) / Convert.ToDouble(((CTeeth)dataGridViewBk.Items[b]).Teeth) * ((CTeeth)dataGridViewIn.Items[intemp.speeds - 1 - i]).Teeth;
                 if (gtemp > max) max = gtemp;
                 if (gtemp < min) min = gtemp;
                 dataGridViewFr.SelectedIndex = f;

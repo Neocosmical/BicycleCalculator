@@ -11,11 +11,11 @@ namespace BicycleCalculatorWPF
         public CGearLists bklists = new CGearLists(Properties.Resources.StringCassette);
         public CGearLists inlists = new CGearLists(Properties.Resources.StringInternalHub);
         
-        public List<CWheel> wheelList;
+        public List<CWheel> wheelList = new List<CWheel>();
 
 
-        public List<CRim> rimlist;
-        public List<CHub> hublist;
+        public List<CRim> rimlist = new List<CRim>();
+        public List<CHub> hublist = new List<CHub>();
 
         public CData()
         {
@@ -48,16 +48,150 @@ namespace BicycleCalculatorWPF
             inlists.Lists.Add(new CGearList(Properties.Resources.StringInner + "12", 12));
             inlists.Lists.Add(new CGearList(Properties.Resources.StringInner + "13", 13));
             inlists.Lists.Add(new CGearList(Properties.Resources.StringInner + "14", 14));
+
+        }
+
+
+        public void SaveDate()
+        {
+            System.IO.FileStream fs = new System.IO.FileStream("Data.csv", System.IO.FileMode.Create);
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(fs, Encoding.Unicode);
+            //开始写入
+            foreach (CGearList list in frlists.Lists)
+            {
+                foreach (CGear gear in list.Gears)
+                {
+                    sw.WriteLine(gear.Encode());
+                }
+            }
+            foreach (CGearList list in bklists.Lists)
+            {
+                foreach (CGear gear in list.Gears)
+                {
+                    sw.WriteLine(gear.Encode());
+                }
+            }
+            foreach (CGearList list in inlists.Lists)
+            {
+                foreach (CGear gear in list.Gears)
+                {
+                    sw.WriteLine(gear.Encode());
+                }
+            }
+            foreach (CWheel wheel in wheelList)
+            {
+                sw.WriteLine(wheel.Encode());
+            }
+            foreach (CHub hub in hublist)
+            {
+                sw.WriteLine(hub.Encode());
+            }
+            foreach (CRim rim in rimlist)
+            {
+                sw.WriteLine(rim.Encode());
+            }
+            //清空缓冲区
+            sw.Flush();
+            //关闭流
+            sw.Close();
+            fs.Close();
+        }
+
+        public void LoadData()
+        {
+            try
+            {
+                System.IO.FileStream fs = new System.IO.FileStream("Data.csv", System.IO.FileMode.Open);
+                System.IO.StreamReader sr = new System.IO.StreamReader(fs, Encoding.Unicode);
+                String line;
+                List<CGear> gearlisttemp = new List<CGear>();
+                List<CWheel> wheellisttemp = new List<CWheel>();
+                List<CHub> hublisttemp = new List<CHub>();
+                List<CRim> rimlisttemp = new List<CRim>();
+
+                while ((line = sr.ReadLine()) != null)
+                {
+                    if (line.StartsWith("Gear"))
+                    {
+                        gearlisttemp.Add(new CGear(line));
+                    }
+                    if (line.StartsWith("Wheel"))
+                    {
+                        wheellisttemp.Add(new CWheel(line));
+                    }
+                    if (line.StartsWith("Hub"))
+                    {
+                        hublisttemp.Add(new CHub(line));
+                    }
+                    if (line.StartsWith("Rim"))
+                    {
+                        rimlisttemp.Add(new CRim(line));
+                    }
+                }
+
+                foreach (CGear gear in gearlisttemp)
+                {
+                    switch (gear.type)
+                    {
+                        case GearType.Front:
+                            foreach (CGearList list in frlists.Lists)
+                            {
+                                if (gear.speeds == list.speeds)
+                                    list.Gears.Add(gear);
+                            }
+                            break;
+                        case GearType.Back:
+                            foreach (CGearList list in bklists.Lists)
+                            {
+                                if (gear.speeds == list.speeds)
+                                    list.Gears.Add(gear);
+                            }
+                            break;
+                        case GearType.Inner:
+                            foreach (CGearList list in inlists.Lists)
+                            {
+                                if (gear.speeds == list.speeds)
+                                    list.Gears.Add(gear);
+                            }
+                            break;
+                    }
+                }
+
+                foreach (CWheel wheel in wheellisttemp)
+                {
+                    wheelList.Add(wheel);
+                }
+
+                foreach (CHub hub in hublisttemp)
+                {
+                    hublist.Add(hub);
+                }
+                foreach (CRim rim in rimlisttemp)
+                {
+                    rimlist.Add(rim);
+                }
+
+
+                //System.Windows.MessageBox.Show("读取数据完成。");
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("读取数据失败。\r\n" + ex.Message);
+            }
+
         }
 
         public void DataInit()
         {
+            LoadData();
 
-            rimlist = new List<CRim>();
-            hublist = new List<CHub>();
+            //LoadRawData();
 
+            //SaveDate();
+        }
 
-            wheelList = new List<CWheel>();
+        private void LoadRawData()
+        {
 
             frlists.Lists[0].Gears.Add(new CGear(GearType.Front, "42T", 1, 42, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             frlists.Lists[0].Gears.Add(new CGear(GearType.Front, "44T", 1, 44, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
@@ -67,7 +201,7 @@ namespace BicycleCalculatorWPF
             frlists.Lists[0].Gears.Add(new CGear(GearType.Front, "52T", 1, 52, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             frlists.Lists[0].Gears.Add(new CGear(GearType.Front, "53T", 1, 53, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             frlists.Lists[0].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringOther, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                 
+
             frlists.Lists[1].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringMTB + "39/27T", 2, 27, 39, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             frlists.Lists[1].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringRacing + "50/34T", 2, 34, 50, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             frlists.Lists[1].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringRacing + "50/36T", 2, 36, 50, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
@@ -77,7 +211,7 @@ namespace BicycleCalculatorWPF
             frlists.Lists[1].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringRacing + "56/46T", 2, 46, 56, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             frlists.Lists[1].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringRacing + "56/42T", 2, 42, 56, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             frlists.Lists[1].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringOther, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                 
+
             frlists.Lists[2].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringMTB + "42/32/24T", 3, 24, 32, 42, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             frlists.Lists[2].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringMTB + "42/34/24T", 3, 24, 34, 42, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             frlists.Lists[2].Gears.Add(new CGear(GearType.Front, Properties.Resources.StringMTB + "48/38/28T", 3, 28, 38, 48, 1, 1, 1, 1, 1, 1, 1, 1, 1));
@@ -88,22 +222,22 @@ namespace BicycleCalculatorWPF
 
             bklists.Lists[0].Gears.Add(new CGear(GearType.Back, "18T", 1, 18, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             bklists.Lists[0].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                 
+
             bklists.Lists[1].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                 
+
             bklists.Lists[2].Gears.Add(new CGear(GearType.Back, "Brompton", 3, 17, 15, 13, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             bklists.Lists[2].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
 
             bklists.Lists[3].Gears.Add(new CGear(GearType.Back, "14-28T", 6, 28, 24, 21, 18, 16, 14, 1, 1, 1, 1, 1, 1));
             bklists.Lists[3].Gears.Add(new CGear(GearType.Back, "14-34T", 6, 34, 24, 21, 18, 16, 14, 1, 1, 1, 1, 1, 1));
             bklists.Lists[3].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                              
+
             bklists.Lists[4].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "14-34T", 7, 34, 24, 22, 20, 18, 16, 14, 1, 1, 1, 1, 1));
             bklists.Lists[4].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "12-32T", 7, 32, 26, 21, 18, 16, 14, 12, 1, 1, 1, 1, 1));
             bklists.Lists[4].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-28T", 7, 28, 24, 21, 18, 15, 13, 11, 1, 1, 1, 1, 1));
             bklists.Lists[4].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "14-28T", 7, 28, 24, 22, 20, 18, 16, 14, 1, 1, 1, 1, 1));
             bklists.Lists[4].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                 
+
             bklists.Lists[5].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "11-32T", 8, 32, 28, 24, 21, 18, 15, 13, 11, 1, 1, 1, 1));
             bklists.Lists[5].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "13-34T", 8, 34, 28, 24, 21, 19, 17, 15, 13, 1, 1, 1, 1));
             bklists.Lists[5].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "12-23T", 8, 23, 21, 19, 17, 15, 14, 13, 12, 1, 1, 1, 1));
@@ -112,7 +246,7 @@ namespace BicycleCalculatorWPF
             bklists.Lists[5].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-28T", 8, 28, 24, 21, 19, 17, 15, 13, 11, 1, 1, 1, 1));
             bklists.Lists[5].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-30T", 8, 30, 26, 23, 20, 17, 15, 13, 11, 1, 1, 1, 1));
             bklists.Lists[5].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                 
+
             bklists.Lists[6].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "11-32T", 9, 32, 28, 24, 21, 18, 16, 14, 12, 11, 1, 1, 1));
             bklists.Lists[6].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "13-32T", 9, 32, 28, 24, 21, 18, 16, 15, 14, 13, 1, 1, 1));
             bklists.Lists[6].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "11-34T", 9, 34, 28, 24, 21, 18, 16, 14, 12, 11, 1, 1, 1));
@@ -121,7 +255,7 @@ namespace BicycleCalculatorWPF
             bklists.Lists[6].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-28T", 9, 28, 24, 21, 18, 16, 14, 13, 12, 11, 1, 1, 1));
             bklists.Lists[6].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "12-27T", 9, 27, 24, 21, 19, 17, 15, 14, 13, 12, 1, 1, 1));
             bklists.Lists[6].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                 
+
             bklists.Lists[7].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "11-34T", 10, 34, 30, 26, 23, 21, 19, 17, 15, 13, 11, 1, 1));
             bklists.Lists[7].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "11-36T", 10, 36, 32, 28, 24, 21, 19, 17, 15, 13, 11, 1, 1));
             bklists.Lists[7].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "11-36T PG-1070", 10, 36, 32, 28, 25, 22, 19, 17, 15, 13, 11, 1, 1));
@@ -130,7 +264,7 @@ namespace BicycleCalculatorWPF
             bklists.Lists[7].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-28T ultegra", 10, 28, 24, 21, 19, 17, 15, 14, 13, 12, 11, 1, 1));
             bklists.Lists[7].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "12-27T", 10, 27, 24, 21, 19, 17, 16, 15, 14, 13, 12, 1, 1));
             bklists.Lists[7].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                 
+
             bklists.Lists[8].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringMTB + "10-42T", 11, 42, 36, 32, 28, 24, 21, 18, 16, 14, 12, 10, 1));
             bklists.Lists[8].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-23T", 11, 23, 21, 19, 18, 17, 16, 15, 14, 13, 12, 11, 1));
             bklists.Lists[8].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-25T", 11, 25, 23, 21, 19, 17, 16, 15, 14, 13, 12, 11, 1));
@@ -139,63 +273,51 @@ namespace BicycleCalculatorWPF
             bklists.Lists[8].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "11-32T", 11, 32, 28, 25, 22, 20, 18, 16, 14, 13, 12, 11, 1));
             bklists.Lists[8].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringRacing + "12-25T", 11, 25, 23, 21, 19, 18, 17, 16, 15, 14, 13, 12, 1));
             bklists.Lists[8].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                
+
             bklists.Lists[9].Gears.Add(new CGear(GearType.Back, Properties.Resources.StringOther, 12, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
 
 
-            /*
-             *  3 SRAM DualDrive DD3
-                3 SRAM DualDrive II 
-                3 SRAM i-MOTION 3
-                5 SRAM P5            
-                7 SRAM S7             
-                8 SRAM G8
-                9 SRAM i-MOTION 9      
-
-                4 Shimano Nexus 4 SG-4C30
-             */
             inlists.Lists[0].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringNone, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
 
             inlists.Lists[1].Gears.Add(new CGear(GearType.Inner, "SRAM AUTOMATIX", 2, 1, 1.37, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             inlists.Lists[1].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                
+
             inlists.Lists[2].Gears.Add(new CGear(GearType.Inner, "Nexus SG-3S40", 3, 0.75, 1, 1.37, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             inlists.Lists[2].Gears.Add(new CGear(GearType.Inner, "SRAM SPECTRO T3", 3, 0.73, 1, 1.36, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             inlists.Lists[2].Gears.Add(new CGear(GearType.Inner, "SRAM DualDrive3", 3, 0.73, 1, 1.36, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             inlists.Lists[2].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                 
+
             inlists.Lists[3].Gears.Add(new CGear(GearType.Inner, "SRAM SPARC", 4, 0.630, 0.780, 1.000, 1.280, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             inlists.Lists[3].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                 
+
             inlists.Lists[4].Gears.Add(new CGear(GearType.Inner, "SRAM SPECTRO P5", 5, 0.630, 0.780, 1.000, 1.280, 1.580, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             inlists.Lists[4].Gears.Add(new CGear(GearType.Inner, "SRAM SPECTRO P5 CARGO", 5, 0.670, 0.780, 1.000, 1.280, 1.500, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             inlists.Lists[4].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                
+
             inlists.Lists[5].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                 
+
             inlists.Lists[6].Gears.Add(new CGear(GearType.Inner, "Nexus SG-7R46", 7, 0.632, 0.741, 0.843, 0.989, 1.145, 1.335, 1.545, 1, 1, 1, 1, 1, 1, 1));
             inlists.Lists[6].Gears.Add(new CGear(GearType.Inner, "SRAM Spectro S7", 7, 0.570, 0.680, 0.810, 1.000, 1.240, 1.480, 1.740, 1, 1, 1, 1, 1, 1, 1));
             inlists.Lists[6].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                 
+
             inlists.Lists[7].Gears.Add(new CGear(GearType.Inner, "Nexus SG-8R(C)31", 8, 0.527, 0.644, 0.748, 0.851, 1.00, 1.223, 1.419, 1.615, 1, 1, 1, 1, 1, 1));
             inlists.Lists[7].Gears.Add(new CGear(GearType.Inner, "ALFINE SG-S501", 8, 0.527, 0.644, 0.748, 0.851, 1.00, 1.223, 1.419, 1.615, 1, 1, 1, 1, 1, 1));
             inlists.Lists[7].Gears.Add(new CGear(GearType.Inner, "SRAM G8", 8, 0.609, 0.710, 0.803, 0.903, 1.054, 1.204, 1.355, 1.581, 1, 1, 1, 1, 1, 1));
             inlists.Lists[7].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                 
+
             inlists.Lists[8].Gears.Add(new CGear(GearType.Inner, "SRAM G9", 9, 0.541, 0.609, 0.710, 0.803, 0.903, 1.054, 1.204, 1.355, 1.581, 1, 1, 1, 1, 1));
             inlists.Lists[8].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                 
+
             inlists.Lists[9].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
 
             inlists.Lists[10].Gears.Add(new CGear(GearType.Inner, "ALFINE SG-S700", 11, 0.527, 0.681, 0.770, 0.878, 0.995, 1.134, 1.292, 1.462, 1.667, 1.888, 2.153, 1, 1, 1));
             inlists.Lists[10].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                  
+
             inlists.Lists[11].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 12, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             inlists.Lists[12].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 13, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-                                                  
+
             inlists.Lists[13].Gears.Add(new CGear(GearType.Inner, "Rohloff Speedhub", 14, 0.279, 0.316, 0.360, 0.409, 0.464, 0.528, 0.600, 0.682, 0.774, 0.881, 1.000, 1.135, 1.292, 1.467));
             inlists.Lists[13].Gears.Add(new CGear(GearType.Inner, Properties.Resources.StringOther, 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-
 
 
             wheelList.Add(new CWheel("37-298 14x1 1/4", 1169));
@@ -246,8 +368,8 @@ namespace BicycleCalculatorWPF
             wheelList.Add(new CWheel("37-540 24x1 3/8", 1948));
             wheelList.Add(new CWheel("47-507 24x1.75", 1900));
 
-            wheelList.Add(new CWheel("37-584 26x1 3/8,650STD", 2086));
-            wheelList.Add(new CWheel("37-590 26x1 3/8,650x35A", 2100));
+            wheelList.Add(new CWheel("37-584 26x1 3/8 650STD", 2086));
+            wheelList.Add(new CWheel("37-590 26x1 3/8 650x35A", 2100));
             wheelList.Add(new CWheel("28-559 26x1.10 DURANO", 1932));
             wheelList.Add(new CWheel("35-559 26x1.35 MARATHON", 1976));
             wheelList.Add(new CWheel("40-559 26x1.50 MARATHON", 2007));
@@ -262,12 +384,12 @@ namespace BicycleCalculatorWPF
             wheelList.Add(new CWheel("28-630 27x1 1/4", 2174));
             wheelList.Add(new CWheel("32-630 27x1 1/4", 2220));
             wheelList.Add(new CWheel("40-635 28x1 1/2", 2265));
-            wheelList.Add(new CWheel("32-622 28x1.25, 700x32C", 2170));
-            wheelList.Add(new CWheel("35-622 28x1.35, 700x35C", 2185));
-            wheelList.Add(new CWheel("37-622 28x1.40, 700x35C", 2200));
-            wheelList.Add(new CWheel("37-622 28x1.40, 700x37C", 2200));
-            wheelList.Add(new CWheel("40-622 28x1.50, 700x38C", 2220));
-            wheelList.Add(new CWheel("42-622 28x1.60, 700x40C", 2230));
+            wheelList.Add(new CWheel("32-622 28x1.25 700x32C", 2170));
+            wheelList.Add(new CWheel("35-622 28x1.35 700x35C", 2185));
+            wheelList.Add(new CWheel("37-622 28x1.40 700x35C", 2200));
+            wheelList.Add(new CWheel("37-622 28x1.40 700x37C", 2200));
+            wheelList.Add(new CWheel("40-622 28x1.50 700x38C", 2220));
+            wheelList.Add(new CWheel("42-622 28x1.60 700x40C", 2230));
             wheelList.Add(new CWheel("47-622 28x1.75 MARATHON", 2249));
             wheelList.Add(new CWheel("50-622 29x2.00", 2280));
             wheelList.Add(new CWheel("54-622 29x2.10", 2295));
@@ -285,50 +407,50 @@ namespace BicycleCalculatorWPF
             hublist.Add(new CHub("AC APX Rear 135", 48.0, 48.0, 35.0, 20.0, 2.6));
             hublist.Add(new CHub("ACCESS 4培林 Rear 130", 49.0, 49.0, 35.0, 19.0, 2.6));
             hublist.Add(new CHub("American Classic HD-140 disc Front 100", 56.5, 56.5, 23.0, 36.0, 2.6));
-            hublist.Add(new CHub("American Classic HD-240 Ultra-Light, 135mm Disk Rear 135", 66.2, 66.2, 29.0, 19.0, 2.6));
+            hublist.Add(new CHub("American Classic HD-240 Ultra-Light 135mm Disk Rear 135", 66.2, 66.2, 29.0, 19.0, 2.6));
             hublist.Add(new CHub("American Classic HH-120 suspension Front 100", 47.0, 47.0, 36.0, 36.0, 2.6));
-            hublist.Add(new CHub("American Classic Micro, newer wider version Front 100", 30.0, 30.0, 33.5, 33.5, 2.6));
+            hublist.Add(new CHub("American Classic Micro newer wider version Front 100", 30.0, 30.0, 33.5, 33.5, 2.6));
             hublist.Add(new CHub("American Classic Rear 126", 42.0, 42.0, 38.5, 18.5, 2.4));
             hublist.Add(new CHub("American Classic Rear 130", 42.0, 42.0, 36.5, 20.5, 2.4));
             hublist.Add(new CHub("American Classic Rear 130", 42.0, 42.0, 41.0, 16.0, 2.4));
             hublist.Add(new CHub("American Classic Rear 135", 42.0, 42.0, 34.0, 23.0, 2.4));
             hublist.Add(new CHub("American Classic Rear 135", 42.0, 42.0, 39.0, 18.0, 2.4));
             hublist.Add(new CHub("American Classic Rear 140", 42.0, 42.0, 36.5, 20.5, 2.4));
-            hublist.Add(new CHub("American Classic Speedster, older narrow version Front 100", 30.0, 30.0, 25.0, 25.0, 2.4));
+            hublist.Add(new CHub("American Classic Speedster older narrow version Front 100", 30.0, 30.0, 25.0, 25.0, 2.4));
             hublist.Add(new CHub("American Classic Suspension small flange Front 100", 47.0, 47.0, 36.0, 36.0, 2.4));
             hublist.Add(new CHub("American Classic track Front 100", 42.0, 42.0, 34.5, 34.5, 2.6));
             hublist.Add(new CHub("American Classic track Rear 121", 42.0, 42.0, 30.5, 30.5, 2.6));
-            hublist.Add(new CHub("American Classic Ultra-Light, 130mm Rear 130", 66.2, 66.2, 31.0, 17.0, 2.4));
-            hublist.Add(new CHub("American Classic Ultra-Light, 135mm Rear 135", 66.2, 66.2, 29.0, 19.0, 2.4));
-            hublist.Add(new CHub("American Classic Ultra-Light, CHECK DIAMETER! Rear 135", 42.0, 42.0, 29.0, 19.0, 2.4));
+            hublist.Add(new CHub("American Classic Ultra-Light 130mm Rear 130", 66.2, 66.2, 31.0, 17.0, 2.4));
+            hublist.Add(new CHub("American Classic Ultra-Light 135mm Rear 135", 66.2, 66.2, 29.0, 19.0, 2.4));
+            hublist.Add(new CHub("American Classic Ultra-Light CHECK DIAMETER! Rear 135", 42.0, 42.0, 29.0, 19.0, 2.4));
             hublist.Add(new CHub("Ariel Rear 135", 45.0, 45.0, 35.0, 20.0, 2.6));
             hublist.Add(new CHub("ASSESS(RIMNETE)4培林公路花鼓 Rear 130", 49.0, 49.0, 35.0, 19.0, 2.6));
             hublist.Add(new CHub("Bees Rear 135", 45.0, 45.0, 32.0, 19.0, 2.6));
             hublist.Add(new CHub("BikeE 16 hole disc hub Front 100", 62.2, 45.3, 20.2, 38.2, 2.4));
-            hublist.Add(new CHub("Bontrager ATB PN 200128 Superstock  Front 100", 38.0, 38.0, 34.1, 34.1, 2.5));
-            hublist.Add(new CHub("Bontrager ATB PN 200129 Superstock  Rear 135", 45.0, 45.0, 33.3, 20.3, 2.5));
+            hublist.Add(new CHub("Bontrager ATB PN 200128 Superstock Front 100", 38.0, 38.0, 34.1, 34.1, 2.5));
+            hublist.Add(new CHub("Bontrager ATB PN 200129 Superstock Rear 135", 45.0, 45.0, 33.3, 20.3, 2.5));
             hublist.Add(new CHub("Bontrager ATB PN 200171 Race by Formula (semi-sealed bearings) Front 100", 38.0, 38.0, 35.0, 35.0, 2.5));
-            hublist.Add(new CHub("Bontrager ATB PN 210240 Race  Rear 135", 45.0, 45.0, 38.7, 20.3, 2.5));
+            hublist.Add(new CHub("Bontrager ATB PN 210240 Race Rear 135", 45.0, 45.0, 38.7, 20.3, 2.5));
             hublist.Add(new CHub("Bontrager ATB PN 210248 Race Mod Disc by DT Swiss (Onyx) Front 100", 58.0, 45.0, 23.3, 35.3, 2.5));
             hublist.Add(new CHub("Bontrager ATB PN 210249 Race Mod Disc by DT Swiss (Onyx) Rear 135", 58.0, 58.0, 33.8, 20.4, 2.5));
-            hublist.Add(new CHub("Bontrager ATB PN 220028 Select Disc  Front 100", 58.0, 58.0, 22.4, 32.5, 2.5));
-            hublist.Add(new CHub("Bontrager ATB PN 220029 Select Disc  Rear 135", 58.0, 58.0, 34.4, 20.4, 2.5));
+            hublist.Add(new CHub("Bontrager ATB PN 220028 Select Disc Front 100", 58.0, 58.0, 22.4, 32.5, 2.5));
+            hublist.Add(new CHub("Bontrager ATB PN 220029 Select Disc Rear 135", 58.0, 58.0, 34.4, 20.4, 2.5));
             hublist.Add(new CHub("Bontrager ATB PN 220196 Race by Formula (sealed bearings) Front 100", 42.0, 42.0, 32.8, 32.8, 2.5));
             hublist.Add(new CHub("Bontrager ATB PN 220197 Race by Formula (sealed bearings) Rear 135", 45.0, 58.0, 38.5, 20.3, 2.5));
             hublist.Add(new CHub("Bontrager ATB PN 220200 Race Disc by Formula Front 100", 58.0, 45.0, 16.7, 27.2, 2.5));
             hublist.Add(new CHub("Bontrager ATB PN 220201 Race Disc by Formula Rear 135", 58.0, 58.0, 33.9, 20.3, 2.5));
-            hublist.Add(new CHub("Bontrager ATB PN 220628 Select  Front 100", 38.0, 38.0, 34.1, 34.1, 2.5));
-            hublist.Add(new CHub("Bontrager ATB PN 220629 Select  Rear 135", 45.0, 45.0, 33.3, 20.3, 2.5));
+            hublist.Add(new CHub("Bontrager ATB PN 220628 Select Front 100", 38.0, 38.0, 34.1, 34.1, 2.5));
+            hublist.Add(new CHub("Bontrager ATB PN 220629 Select Rear 135", 45.0, 45.0, 33.3, 20.3, 2.5));
             hublist.Add(new CHub("Bontrager ATB PN 220864 Race Lite by DT Rear 135", 44.0, 53.0, 39.0, 20.5, 2.5));
-            hublist.Add(new CHub("Bontrager ATB PN 220864 Race Lite by DT, 130mm Rear 130", 44.0, 53.0, 36.5, 23.0, 2.5));
+            hublist.Add(new CHub("Bontrager ATB PN 220864 Race Lite by DT 130mm Rear 130", 44.0, 53.0, 36.5, 23.0, 2.5));
             hublist.Add(new CHub("Bontrager ATB PN 220865 Race Modified by DT Swiss (Onyx) Rear 135", 45.0, 58.0, 38.5, 20.2, 2.5));
             hublist.Add(new CHub("Bontrager ATB PN 220866 Race Lite by DT Front 100", 40.5, 40.5, 37.4, 37.4, 2.5));
             hublist.Add(new CHub("Bontrager ATB PN 220867 Race Modified by DT Swiss (Onyx)  Front 100", 38.0, 38.0, 35.0, 35.0, 2.5));
             hublist.Add(new CHub("Bontrager ATB PN 230044 sealed bearings Front 100", 38.0, 38.0, 35.0, 35.0, 2.5));
             hublist.Add(new CHub("Bontrager ATB PN 230515 sealed bearings disc Front 100", 45.0, 58.0, 36.3, 22.3, 2.5));
             hublist.Add(new CHub("Bontrager ATB PN 230516 sealed bearings disc Rear 135", 58.0, 58.0, 33.9, 20.3, 2.5));
-            hublist.Add(new CHub("Bontrager ATB PN 240141 Disc, Team Front 100", 58.0, 46.0, 22.4, 35.35, 2.5));
-            hublist.Add(new CHub("Bontrager ATB PN 240175 Disc, Team Rear 135", 58.0, 46.0, 34.0, 19.45, 2.5));
+            hublist.Add(new CHub("Bontrager ATB PN 240141 Disc Team Front 100", 58.0, 46.0, 22.4, 35.35, 2.5));
+            hublist.Add(new CHub("Bontrager ATB PN 240175 Disc Team Rear 135", 58.0, 46.0, 34.0, 19.45, 2.5));
             hublist.Add(new CHub("Bontrager ATB PN 242146 Race X Lite centerlock Front 100", 47.0, 40.0, 22.8, 33.4, 2.5));
             hublist.Add(new CHub("Bontrager ATB PN 242147 Race X Lite centerlock Rear 135", 47.0, 47.0, 29.0, 24.7, 2.5));
             hublist.Add(new CHub("Bontrager ATB PN 990704 Yellow or red seals Rear 135", 45.0, 58.0, 38.6, 20.3, 2.6));
@@ -2158,6 +2280,5 @@ namespace BicycleCalculatorWPF
             rimlist.Add(new CRim("见泰DWS009小刀圈(比较难扒胎） 20X1.5 406", 392.0, 0.0));
 
         }
-
     }
 }

@@ -38,6 +38,14 @@ namespace BicycleCalculatorWPF
 
         }
 
+        public CRim(string data)
+        {
+            vals.Add(new CValue(0, "ERD", 0));
+            vals.Add(new CValue(1, "OSB", 0));
+            Decode(data);
+        }
+
+
         public override string ToString()
         {
             return name;
@@ -47,6 +55,25 @@ namespace BicycleCalculatorWPF
         {
             CRim p = new CRim(name, ERD, OSB);
             return p;
+        }
+
+        public string Encode()
+        {
+            string str = "";
+            str += "Rim,";
+            str += name.Replace(",", "") + ",";
+            str += ERD.ToString() + ",";
+            str += OSB.ToString() + ",";
+            return str;
+        }
+
+        public void Decode(string str)
+        {
+            string[] strs = str.Split(',');
+            if (strs[0] != "Rim") return;
+            name = strs[1];
+            ERD = Convert.ToDouble(strs[2]);
+            OSB = Convert.ToDouble(strs[3]);
         }
     }
 
