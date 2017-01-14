@@ -1,0 +1,63 @@
+﻿<Window x:Class="BicycleCalculatorWPF.GearsEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BicycleCalculatorWPF"
+        xmlns:res="clr-namespace:BicycleCalculatorWPF.Properties"
+        mc:Ignorable="d"
+        Title="GearsEditor" Height="430" Width="600" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <ListView x:Name="listBox1" Grid.Row="0" Margin="3" SelectionChanged="listBox1_SelectedIndexChanged" ButtonBase.Click="GridViewColumnHeader_Click" ContextMenuOpening="listBox1_ContextMenuOpening" MouseDoubleClick="listBox1_MouseDoubleClick">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <!--<MenuItem Header="KM/H" Click="kMHToolStripMenuItem_Click"/>-->
+                    <!--<MenuItem Header="MPH" Click="mPHToolStripMenuItem_Click"/>-->
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.View>
+                <GridView x:Name="listBox1Grid">
+                    <GridView.ColumnHeaderContextMenu>
+                        <ContextMenu/>
+                    </GridView.ColumnHeaderContextMenu>
+                    <!--<GridViewColumn Header="No." DisplayMemberBinding="{Binding No1}"/>-->
+                    <GridViewColumn Header="{x:Static res:Resources.StringType}" DisplayMemberBinding="{Binding Type}"/>
+                    <GridViewColumn Header="{x:Static res:Resources.StringModel}" DisplayMemberBinding="{Binding Name}" Width="130"/>
+                    <GridViewColumn Header="{x:Static res:Resources.StringSpeeds}" DisplayMemberBinding="{Binding Speeds, StringFormat=\{0:F0\}}"/>
+                    <GridViewColumn Header="{x:Static res:Resources.StringTeeth}" DisplayMemberBinding="{Binding TeethStr}" Width="300"/>
+                    <!--<GridViewColumn Header="1th" DisplayMemberBinding="{Binding GearRatio1, StringFormat=\{0:F0\}}"/>
+                    <GridViewColumn Header="2th" DisplayMemberBinding="{Binding GearRatio1, StringFormat=\{0:F0\}}"/>
+                    <GridViewColumn Header="3th" DisplayMemberBinding="{Binding GearRatio1, StringFormat=\{0:F0\}}"/>
+                    <GridViewColumn Header="4th" DisplayMemberBinding="{Binding GearRatio1, StringFormat=\{0:F0\}}"/>
+                    <GridViewColumn Header="5th" DisplayMemberBinding="{Binding GearRatio1, StringFormat=\{0:F0\}}"/>
+                    <GridViewColumn Header="6th" DisplayMemberBinding="{Binding GearRatio1, StringFormat=\{0:F0\}}"/>
+                    <GridViewColumn Header="7th" DisplayMemberBinding="{Binding GearRatio1, StringFormat=\{0:F0\}}"/>
+                    <GridViewColumn Header="8th" DisplayMemberBinding="{Binding GearRatio1, StringFormat=\{0:F0\}}"/>
+                    <GridViewColumn Header="9th" DisplayMemberBinding="{Binding GearRatio1, StringFormat=\{0:F0\}}"/>
+                    <GridViewColumn Header="10th" DisplayMemberBinding="{Binding GearRatio1, StringFormat=\{0:F0\}}"/>
+                    <GridViewColumn Header="11th" DisplayMemberBinding="{Binding GearRatio1, StringFormat=\{0:F0\}}"/>
+                    <GridViewColumn Header="12th" DisplayMemberBinding="{Binding GearRatio1, StringFormat=\{0:F0\}}"/>-->
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="{x:Static res:Resources.StringAdd}" Grid.Column="1" Margin="5"/>
+            <Button Content="{x:Static res:Resources.StringDelete}" Grid.Column="2" Margin="5"/>
+            <Button Content="{x:Static res:Resources.StringModify}" Grid.Column="3" Margin="5"/>
+            <Button Content="{x:Static res:Resources.StringSave}" Grid.Column="4" Margin="5"/>
+            <Button Content="{x:Static res:Resources.StringClose}" Grid.Column="5" Margin="5" Click="ButtonClose_Click"/>
+        </Grid>
+    </Grid>
+</Window>

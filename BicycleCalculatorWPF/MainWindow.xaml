@@ -22,6 +22,14 @@
             <MenuItem Header="{x:Static res:Resources.StringFile}" Padding="8,2,8,1">
                 <MenuItem Header="{x:Static res:Resources.StringOpen}" Visibility="Collapsed"/>
                 <MenuItem x:Name="saveToolStripMenuItem" Header="{x:Static res:Resources.StringExport}" Click="saveToolStripMenuItem_Click"/>
+                <MenuItem Header="{x:Static res:Resources.StringEditDataSet}">
+                    <MenuItem Header = "{x:Static res:Resources.StringCassette}" Click="EditCassetteMenuItem_Click"/>
+                    <MenuItem Header = "{x:Static res:Resources.StringCranksets}" Click="EditCranksetsMenuItem_Click"/>
+                    <MenuItem Header = "{x:Static res:Resources.StringInternalHub}" Click="EditInternalHubMenuItem_Click"/>
+                    <Separator/>
+                    <MenuItem Header = "{x:Static res:Resources.StringHubs}" Click="EditHubsMenuItem_Click"/>
+                    <MenuItem Header = "{x:Static res:Resources.StringRims}" Click="EditRimsMenuItem_Click"/>
+                </MenuItem>
                 <MenuItem Header="{x:Static res:Resources.StringLanguage}" SubmenuOpened="LanguageMenuItem_Click">
                     <MenuItem Header = "{x:Static res:Resources.StringDefault}" Click="DftLanguageMenuItem_Click"/>
                     <Separator/>

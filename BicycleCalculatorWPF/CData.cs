@@ -131,26 +131,26 @@ namespace BicycleCalculatorWPF
 
                 foreach (CGear gear in gearlisttemp)
                 {
-                    switch (gear.type)
+                    switch (gear.Type)
                     {
                         case GearType.Front:
                             foreach (CGearList list in frlists.Lists)
                             {
-                                if (gear.speeds == list.speeds)
+                                if (gear.Speeds == list.speeds)
                                     list.Gears.Add(gear);
                             }
                             break;
                         case GearType.Back:
                             foreach (CGearList list in bklists.Lists)
                             {
-                                if (gear.speeds == list.speeds)
+                                if (gear.Speeds == list.speeds)
                                     list.Gears.Add(gear);
                             }
                             break;
                         case GearType.Inner:
                             foreach (CGearList list in inlists.Lists)
                             {
-                                if (gear.speeds == list.speeds)
+                                if (gear.Speeds == list.speeds)
                                     list.Gears.Add(gear);
                             }
                             break;

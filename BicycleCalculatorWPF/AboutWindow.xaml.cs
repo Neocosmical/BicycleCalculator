@@ -116,7 +116,7 @@ namespace BicycleCalculatorWPF
 
         private void TextBlock_MouseUp_2(object sender, MouseButtonEventArgs e)
         {
-            System.Diagnostics.Process.Start("mailto:neocosmical@gmail.com");
+            System.Diagnostics.Process.Start("mailto:neocosmical@qq.com");
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

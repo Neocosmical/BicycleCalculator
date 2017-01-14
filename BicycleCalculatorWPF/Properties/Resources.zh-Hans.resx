@@ -373,7 +373,7 @@ carrotkk@sina.com</value>
   </data>
   <data name="StringAcknow" xml:space="preserve">
     <value>感谢:
-hachi, heiyaa, 楚狂声, bingol, xuchux, 落星, azuretears, blocked, babyfish79, dolphinic, coolsear, 骑楼街5号, enstan007, namrisgan, harvey.hung, pheather, 咸鱼, Seor, kuye</value>
+德满, 嘻哈, 淘淘爸, citysa, hachi, heiyaa, 楚狂声, bingol, xuchux, 落星, azuretears, blocked, babyfish79, dolphinic, coolsear, 骑楼街5号, enstan007, namrisgan, harvey.hung, pheather, 咸鱼, Seor, kuye</value>
   </data>
   <data name="StringOK" xml:space="preserve">
     <value>确定</value>
@@ -498,5 +498,26 @@ http://bbs.77bike.com/read.php?tid=58657</value>
   </data>
   <data name="StringModel" xml:space="preserve">
     <value>型号</value>
+  </data>
+  <data name="StringEditDataSet" xml:space="preserve">
+    <value>数据集编辑</value>
+  </data>
+  <data name="StringType" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="StringAdd" xml:space="preserve">
+    <value>增加</value>
+  </data>
+  <data name="StringClose" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="StringDelete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="StringModify" xml:space="preserve">
+    <value>修改</value>
+  </data>
+  <data name="StringSave" xml:space="preserve">
+    <value>保存</value>
   </data>
 </root>

@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("Bicycle Calculator")]
 [assembly: AssemblyDescription("Bicycle Transmission data and Spokes calculation.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("neocosmical@gmail.com")]
+[assembly: AssemblyCompany("neocosmical@qq.com")]
 [assembly: AssemblyProduct("Bicycle Calculator")]
 [assembly: AssemblyCopyright("Copyright © 2017 Neocosmical")]
 [assembly: AssemblyTrademark("")]

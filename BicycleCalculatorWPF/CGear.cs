@@ -12,7 +12,7 @@ namespace BicycleCalculatorWPF
         Inner,
     }
 
-    class CTeeth
+    public class CTeeth
     {
         public int id;
 
@@ -37,19 +37,72 @@ namespace BicycleCalculatorWPF
         }
     }
 
-    class CGear:ICloneable
+    public class CGear:ICloneable
     {
-        public GearType type;
-        public string name;
-        public int speeds;
+        private GearType type;
+        private string name;
+        private int speeds;
         //public int[] teeth = new int[12];
         public List<CTeeth> teeth = new List<CTeeth>();
 
+        public string TeethStr
+        {
+            get
+            {
+                string str = "";
+                foreach (CTeeth t in teeth)
+                {
+                    if (t.id <= speeds)
+                        str += "[" + t.Teeth.ToString() + "] ";
+                }
+                return str;
+            }
+        }
+
+        public GearType Type
+        {
+            get
+            {
+                return type;
+            }
+
+            set
+            {
+                type = value;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+
+            set
+            {
+                name = value;
+            }
+        }
+
+        public int Speeds
+        {
+            get
+            {
+                return speeds;
+            }
+
+            set
+            {
+                speeds = value;
+            }
+        }
+
         public CGear(GearType _type, string _name, int _speeds)
         {
-            type = _type;
-            name = _name;
-            speeds = _speeds;
+            Type = _type;
+            Name = _name;
+            Speeds = _speeds;
         }
 
         public CGear(string data)
@@ -59,9 +112,9 @@ namespace BicycleCalculatorWPF
 
         public CGear(GearType _type, string _name, int _speeds, double t1, double t2, double t3, double t4, double t5, double t6, double t7, double t8, double t9, double t10, double t11, double t12)
         {
-            type = _type;
-            name = _name;
-            speeds = _speeds;
+            Type = _type;
+            Name = _name;
+            Speeds = _speeds;
             teeth.Add(new CTeeth(1, t1));
             teeth.Add(new CTeeth(2, t2));
             teeth.Add(new CTeeth(3, t3));
@@ -78,9 +131,9 @@ namespace BicycleCalculatorWPF
 
         public CGear(GearType _type, string _name, int _speeds, double t1, double t2, double t3, double t4, double t5, double t6, double t7, double t8, double t9, double t10, double t11, double t12, double t13, double t14)
         {
-            type = _type;
-            name = _name;
-            speeds = _speeds;
+            Type = _type;
+            Name = _name;
+            Speeds = _speeds;
             teeth.Add(new CTeeth(1, t1));
             teeth.Add(new CTeeth(2, t2));
             teeth.Add(new CTeeth(3, t3));
@@ -99,24 +152,33 @@ namespace BicycleCalculatorWPF
 
         public override string ToString()
         {
-            return name;
+            return Name;
         }
 
         public object Clone()
         {
-            CGear p = new CGear(type, name, speeds);
+            CGear p = new CGear(Type, Name, Speeds);
             foreach (CTeeth _teeth in teeth)
                 p.teeth.Add(new CTeeth(_teeth.Id, _teeth.Teeth));
             return p;
+        }
+
+        public void CopyTo(CGear gearpt)
+        {
+            gearpt.Name = name;
+            gearpt.Speeds = speeds;
+            gearpt.type = type;
+            gearpt.teeth.Clear();
+            gearpt.teeth.AddRange(teeth);
         }
 
         public string Encode()
         {
             string str = "";
             str += "Gear,";
-            str += type.ToString() + ",";
-            str += name.Replace(",", "") + ",";
-            str += speeds.ToString() + ",";
+            str += Type.ToString() + ",";
+            str += Name.Replace(",", "") + ",";
+            str += Speeds.ToString() + ",";
             foreach (CTeeth _teeth in teeth)
                 str += _teeth.Teeth.ToString() + ",";
             return str;
@@ -129,17 +191,17 @@ namespace BicycleCalculatorWPF
             switch(strs[1])
             {
                 case "Front":
-                    type = GearType.Front;
+                    Type = GearType.Front;
                     break;
                 case "Back":
-                    type = GearType.Back;
+                    Type = GearType.Back;
                     break;
                 case "Inner":
-                    type = GearType.Inner;
+                    Type = GearType.Inner;
                     break;
             }
-            name = strs[2];
-            speeds = Convert.ToInt32(strs[3]);
+            Name = strs[2];
+            Speeds = Convert.ToInt32(strs[3]);
             teeth.Clear();
             for (int i = 4; i < strs.Length; i++)
             {
@@ -155,7 +217,7 @@ namespace BicycleCalculatorWPF
         }
     }
 
-    class CGearList
+    public class CGearList
     {
         public string name;
         public int speeds = 1;
@@ -233,7 +295,7 @@ namespace BicycleCalculatorWPF
         }
     }
 
-    class CGearLists
+    public class CGearLists
     {
         public string name;
         public List<CGearList> Lists = new List<CGearList>();

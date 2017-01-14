@@ -26,7 +26,7 @@
         <TextBlock x:Name="labelVersion" Grid.Column="1" Margin="3" TextWrapping="Wrap" Text="版本" Grid.Row="1"/>
         <TextBlock x:Name="labelCopyright" Grid.Column="1" Margin="3" TextWrapping="Wrap" Text="版权" Grid.Row="2"/>
         <TextBlock Grid.Column="1" Margin="3" TextWrapping="Wrap" Text="{x:Static res:Resources.StringUpdate}" Grid.Row="3" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" MouseUp="TextBlock_MouseUp_1"/>
-        <TextBlock x:Name="labelCompanyName" Grid.Column="1" Margin="3" TextWrapping="Wrap" Text="neocosmical@gmail.com" Grid.Row="4" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" MouseUp="TextBlock_MouseUp_2"/>
+        <TextBlock x:Name="labelCompanyName" Grid.Column="1" Margin="3" TextWrapping="Wrap" Text="neocosmical@qq.com" Grid.Row="4" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" MouseUp="TextBlock_MouseUp_2"/>
         <ScrollViewer Margin="3" Grid.Column="1" Grid.Row="5" Background="White" BorderThickness="10" BorderBrush="Black" Padding="3">
             <StackPanel Margin="3" Grid.Column="1" Grid.Row="5" Background="White" CanVerticallyScroll="True">
                 <TextBlock TextWrapping="Wrap" Text="{x:Static res:Resources.StringAcknow}"/>

@@ -111,11 +111,20 @@ namespace BicycleCalculatorWPF.Properties {
         
         /// <summary>
         ///   查找类似 Acknowledgement:
-        ///hachi, heiyaa, 楚狂声, bingol, xuchux, 落星, azuretears, blocked, babyfish79, dolphinic, coolsear, 骑楼街5号, enstan007, namrisgan, harvey.hung, pheather, 咸鱼, Seor, kuye 的本地化字符串。
+        ///德满, 嘻哈, 淘淘爸, citysa, hachi, heiyaa, 楚狂声, bingol, xuchux, 落星, azuretears, blocked, babyfish79, dolphinic, coolsear, 骑楼街5号, enstan007, namrisgan, harvey.hung, pheather, 咸鱼, Seor, kuye 的本地化字符串。
         /// </summary>
         public static string StringAcknow {
             get {
                 return ResourceManager.GetString("StringAcknow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Add 的本地化字符串。
+        /// </summary>
+        public static string StringAdd {
+            get {
+                return ResourceManager.GetString("StringAdd", resourceCulture);
             }
         }
         
@@ -237,6 +246,15 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Close 的本地化字符串。
+        /// </summary>
+        public static string StringClose {
+            get {
+                return ResourceManager.GetString("StringClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Empty Curves 的本地化字符串。
         /// </summary>
         public static string StringClrCurve {
@@ -300,6 +318,15 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Delete 的本地化字符串。
+        /// </summary>
+        public static string StringDelete {
+            get {
+                return ResourceManager.GetString("StringDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Display All 的本地化字符串。
         /// </summary>
         public static string StringDisAll {
@@ -342,6 +369,15 @@ namespace BicycleCalculatorWPF.Properties {
         public static string StringDonateContent {
             get {
                 return ResourceManager.GetString("StringDonateContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Data Set Edit 的本地化字符串。
+        /// </summary>
+        public static string StringEditDataSet {
+            get {
+                return ResourceManager.GetString("StringEditDataSet", resourceCulture);
             }
         }
         
@@ -622,6 +658,15 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Modify 的本地化字符串。
+        /// </summary>
+        public static string StringModify {
+            get {
+                return ResourceManager.GetString("StringModify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 MTB 的本地化字符串。
         /// </summary>
         public static string StringMTB {
@@ -804,6 +849,15 @@ namespace BicycleCalculatorWPF.Properties {
         public static string StringRims {
             get {
                 return ResourceManager.GetString("StringRims", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Save 的本地化字符串。
+        /// </summary>
+        public static string StringSave {
+            get {
+                return ResourceManager.GetString("StringSave", resourceCulture);
             }
         }
         
@@ -1057,6 +1111,15 @@ namespace BicycleCalculatorWPF.Properties {
         public static string StringTransmission {
             get {
                 return ResourceManager.GetString("StringTransmission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Type 的本地化字符串。
+        /// </summary>
+        public static string StringType {
+            get {
+                return ResourceManager.GetString("StringType", resourceCulture);
             }
         }
         

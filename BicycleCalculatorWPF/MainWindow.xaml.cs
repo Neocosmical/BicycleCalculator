@@ -394,7 +394,7 @@ namespace BicycleCalculatorWPF
             ready = false;
             frnow = (CGear)((CGear)FrModelcomboBox.SelectedItem).Clone();
             dataGridViewFr.Items.Clear();
-            for (int i = 0; i < frnow.speeds; i++) dataGridViewFr.Items.Add(frnow.teeth[i]);
+            for (int i = 0; i < frnow.Speeds; i++) dataGridViewFr.Items.Add(frnow.teeth[i]);
             ready = rtemp;
             Calculate();
         }
@@ -408,7 +408,7 @@ namespace BicycleCalculatorWPF
             ready = false;
             bknow = (CGear)((CGear)BkModelcomboBox.SelectedItem).Clone();
             dataGridViewBk.Items.Clear();
-            for (int i = 0; i < bknow.speeds; i++) dataGridViewBk.Items.Add(bknow.teeth[i]);
+            for (int i = 0; i < bknow.Speeds; i++) dataGridViewBk.Items.Add(bknow.teeth[i]);
             ready = rtemp;
             Calculate();
         }
@@ -421,8 +421,8 @@ namespace BicycleCalculatorWPF
             ready = false;
             innow = (CGear)((CGear)InModelcomboBox.SelectedItem).Clone();
             dataGridViewIn.Items.Clear();
-            for (int i = 0; i < innow.speeds; i++) dataGridViewIn.Items.Add(innow.teeth[i]);
-            if (innow.speeds <= 1) dataGridViewIn.IsEnabled = false;
+            for (int i = 0; i < innow.Speeds; i++) dataGridViewIn.Items.Add(innow.teeth[i]);
+            if (innow.Speeds <= 1) dataGridViewIn.IsEnabled = false;
             else dataGridViewIn.IsEnabled = true;
             ready = rtemp;
             Calculate();
@@ -456,23 +456,23 @@ namespace BicycleCalculatorWPF
 
             int num = 1;
             NaNNumber.Clear();
-            for (int i = 0; i < frtemp.speeds; i++)
+            for (int i = 0; i < frtemp.Speeds; i++)
             {
-                for (int k = 0; k < intemp.speeds; k++)
+                for (int k = 0; k < intemp.Speeds; k++)
                 {
-                    for (int j = 0; j < bktemp.speeds; j++)
+                    for (int j = 0; j < bktemp.Speeds; j++)
                     {
                         CResult resulttemp = new CResult();
                         resulttemp.No1 = num;
                         num++;
                         resulttemp.Gear1 = "";
                         resulttemp.GearT1 = "";
-                        if (frtemp.speeds != 1)
+                        if (frtemp.Speeds != 1)
                         {
                             resulttemp.Gear1 += (i + 1).ToString();
                             resulttemp.GearT1 += frtemp.teeth[i].teeth.ToString() + "T";
                         }
-                        if (bktemp.speeds != 1)
+                        if (bktemp.Speeds != 1)
                         {
                             if (resulttemp.Gear1 != "")
                             {
@@ -482,7 +482,7 @@ namespace BicycleCalculatorWPF
                             resulttemp.Gear1 += (j + 1).ToString();
                             resulttemp.GearT1 += bktemp.teeth[j].teeth.ToString() + "T";
                         }
-                        if (intemp.speeds != 1)
+                        if (intemp.Speeds != 1)
                         {
                             if (resulttemp.Gear1 != "")
                             {
@@ -523,13 +523,13 @@ namespace BicycleCalculatorWPF
                         toothrateold = toothrate;
 
                         resulttemp.Remark1 = "";
-                        if (frtemp.speeds != 1 && bktemp.speeds != 1)
+                        if (frtemp.Speeds != 1 && bktemp.Speeds != 1)
                         {
-                            if (i == frtemp.speeds - 1 && j == 0) resulttemp.Remark1 += Properties.Resources.StringLFLB;
-                            if (i == 0 && j == bktemp.speeds - 1) resulttemp.Remark1 += Properties.Resources.StringSFSB;
+                            if (i == frtemp.Speeds - 1 && j == 0) resulttemp.Remark1 += Properties.Resources.StringLFLB;
+                            if (i == 0 && j == bktemp.Speeds - 1) resulttemp.Remark1 += Properties.Resources.StringSFSB;
                         }
 
-                        if (intemp.speeds != 1)
+                        if (intemp.Speeds != 1)
                         {
                             if (toothrateout < 1.5) resulttemp.Remark1 += Properties.Resources.StringTorque;
                         }
@@ -545,13 +545,13 @@ namespace BicycleCalculatorWPF
                                 tempx = num - 1;
                                 break;
                             case 1://按牙盘
-                                tempx = bktemp.speeds * k + j + 1;
+                                tempx = bktemp.Speeds * k + j + 1;
                                 break;
                             case 2://按飞轮
-                                tempx = i * frtemp.speeds + k + 1;
+                                tempx = i * frtemp.Speeds + k + 1;
                                 break;
                             case 3://按内变速
-                                tempx = i * bktemp.speeds + j + 1;
+                                tempx = i * bktemp.Speeds + j + 1;
                                 break;
                         }
 
@@ -630,7 +630,7 @@ namespace BicycleCalculatorWPF
                 (Convert.ToDouble(toothratemax / toothratemin * 100.0)).ToString("F0") +
                 "%";
             labelinfo1.Content = Properties.Resources.StringTotalCap + ": " +
-                (frtemp.teeth[frtemp.speeds - 1].teeth - frtemp.teeth[0].teeth - bktemp.teeth[bktemp.speeds - 1].teeth + bktemp.teeth[0].teeth).ToString() + "T";
+                (frtemp.teeth[frtemp.Speeds - 1].teeth - frtemp.teeth[0].teeth - bktemp.teeth[bktemp.Speeds - 1].teeth + bktemp.teeth[0].teeth).ToString() + "T";
 
             if (checkBox1.IsChecked.Value)
             {
@@ -666,10 +666,10 @@ namespace BicycleCalculatorWPF
 
             string tempstr = "";
             tempstr += pm.Axes[0].Title;
-            tempstr += " " + frtemp.name;
-            tempstr += "& " + bktemp.name;
-            if (intemp.speeds != 1)
-                tempstr += "& " + intemp.name;
+            tempstr += " " + frtemp.Name;
+            tempstr += "& " + bktemp.Name;
+            if (intemp.Speeds != 1)
+                tempstr += "& " + intemp.Name;
             string chartname = tempstr + "& " + whtemp.lenth.ToString()+"mm";
             /*
             while (Chart1.Series.FindByName(chartname) != null)
@@ -831,21 +831,21 @@ namespace BicycleCalculatorWPF
             swriter.WriteLine(Properties.Resources.StringTire + "," + whtemp.name + "," + whtemp.lenth.ToString() + "mm");
 
             string frstr = "";
-            for (int i = 0; i < frtemp.speeds; i++)
+            for (int i = 0; i < frtemp.Speeds; i++)
                 frstr += frtemp.teeth[i].teeth.ToString() + "/";
             frstr += "T";
-            swriter.WriteLine(Properties.Resources.StringCranksets + "," + frtemp.name + "," + frstr);
+            swriter.WriteLine(Properties.Resources.StringCranksets + "," + frtemp.Name + "," + frstr);
 
             string bkstr = "";
-            for (int i = 0; i < bktemp.speeds; i++)
+            for (int i = 0; i < bktemp.Speeds; i++)
                 bkstr += bktemp.teeth[i].teeth.ToString() + "/";
             bkstr += "T";
-            swriter.WriteLine(Properties.Resources.StringCassette + "," + bktemp.name + "," + bkstr);
+            swriter.WriteLine(Properties.Resources.StringCassette + "," + bktemp.Name + "," + bkstr);
 
             string instr = "";
-            for (int i = 0; i < intemp.speeds; i++)
+            for (int i = 0; i < intemp.Speeds; i++)
                 instr += intemp.teeth[i].teeth.ToString("0.00") + "/";
-            swriter.WriteLine(Properties.Resources.StringInternalHub + "," + intemp.name + "," + instr);
+            swriter.WriteLine(Properties.Resources.StringInternalHub + "," + intemp.Name + "," + instr);
 
             swriter.WriteLine("");
             string strtemp = "";
@@ -891,10 +891,10 @@ namespace BicycleCalculatorWPF
             foreach (CResult item in listBox1.SelectedItems)
             {
                 int n = item.No1 - 1;
-                int f = n / (bktemp.speeds * intemp.speeds);
-                int i = (n % (bktemp.speeds * intemp.speeds)) / bktemp.speeds;
-                int b = (n - f * bktemp.speeds * intemp.speeds - i * bktemp.speeds);
-                double gtemp = Convert.ToDouble(((CTeeth)dataGridViewFr.Items[f]).Teeth) / Convert.ToDouble(((CTeeth)dataGridViewBk.Items[b]).Teeth) * ((CTeeth)dataGridViewIn.Items[intemp.speeds - 1 - i]).Teeth;
+                int f = n / (bktemp.Speeds * intemp.Speeds);
+                int i = (n % (bktemp.Speeds * intemp.Speeds)) / bktemp.Speeds;
+                int b = (n - f * bktemp.Speeds * intemp.Speeds - i * bktemp.Speeds);
+                double gtemp = Convert.ToDouble(((CTeeth)dataGridViewFr.Items[f]).Teeth) / Convert.ToDouble(((CTeeth)dataGridViewBk.Items[b]).Teeth) * ((CTeeth)dataGridViewIn.Items[intemp.Speeds - 1 - i]).Teeth;
                 if (gtemp > max) max = gtemp;
                 if (gtemp < min) min = gtemp;
                 dataGridViewFr.SelectedIndex = f;
@@ -2421,8 +2421,35 @@ namespace BicycleCalculatorWPF
                 return ((AssemblyCompanyAttribute)attributes[0]).Company;
             }
         }
+
         #endregion
 
+        private void EditCassetteMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            GearsEditor geditor = new BicycleCalculatorWPF.GearsEditor(data.bklists, Properties.Resources.StringCassette + Properties.Resources.StringEditDataSet);
+            geditor.Show();
+        }
 
+        private void EditCranksetsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            GearsEditor geditor = new BicycleCalculatorWPF.GearsEditor(data.frlists, Properties.Resources.StringCranksets + Properties.Resources.StringEditDataSet);
+            geditor.Show();
+        }
+
+        private void EditInternalHubMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            GearsEditor geditor = new BicycleCalculatorWPF.GearsEditor(data.inlists, Properties.Resources.StringInternalHub + Properties.Resources.StringEditDataSet);
+            geditor.Show();
+        }
+
+        private void EditHubsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditRimsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

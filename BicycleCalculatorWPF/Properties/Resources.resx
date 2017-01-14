@@ -376,7 +376,7 @@ carrotkk@sina.com</value>
   </data>
   <data name="StringAcknow" xml:space="preserve">
     <value>Acknowledgement:
-hachi, heiyaa, 楚狂声, bingol, xuchux, 落星, azuretears, blocked, babyfish79, dolphinic, coolsear, 骑楼街5号, enstan007, namrisgan, harvey.hung, pheather, 咸鱼, Seor, kuye</value>
+德满, 嘻哈, 淘淘爸, citysa, hachi, heiyaa, 楚狂声, bingol, xuchux, 落星, azuretears, blocked, babyfish79, dolphinic, coolsear, 骑楼街5号, enstan007, namrisgan, harvey.hung, pheather, 咸鱼, Seor, kuye</value>
   </data>
   <data name="StringOK" xml:space="preserve">
     <value>OK</value>
@@ -512,5 +512,26 @@ http://bbs.77bike.com/read.php?tid=58657</value>
   </data>
   <data name="StringModel" xml:space="preserve">
     <value>Model</value>
+  </data>
+  <data name="StringEditDataSet" xml:space="preserve">
+    <value>Data Set Edit</value>
+  </data>
+  <data name="StringType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="StringAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StringClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="StringDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StringModify" xml:space="preserve">
+    <value>Modify</value>
+  </data>
+  <data name="StringSave" xml:space="preserve">
+    <value>Save</value>
   </data>
 </root>
