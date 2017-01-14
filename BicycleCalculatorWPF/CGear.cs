@@ -141,8 +141,17 @@ namespace BicycleCalculatorWPF
             name = strs[2];
             speeds = Convert.ToInt32(strs[3]);
             teeth.Clear();
-            for (int i = 4; i < strs.Length - 1; i++)
-                teeth.Add(new CTeeth(i - 3, Convert.ToDouble(strs[i])));
+            for (int i = 4; i < strs.Length; i++)
+            {
+                try
+                {
+                    if (strs[i] == "")
+                        teeth.Add(new CTeeth(i - 3, 0));
+                    else
+                        teeth.Add(new CTeeth(i - 3, Convert.ToDouble(strs[i])));
+                }
+                catch { }
+            }
         }
     }
 

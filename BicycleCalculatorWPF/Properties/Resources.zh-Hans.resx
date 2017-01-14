@@ -496,4 +496,7 @@ hachi, heiyaa, 楚狂声, bingol, xuchux, 落星, azuretears, blocked, babyfish7
     <value>轮圈花鼓数据来源: 
 http://bbs.77bike.com/read.php?tid=58657</value>
   </data>
+  <data name="StringModel" xml:space="preserve">
+    <value>型号</value>
+  </data>
 </root>

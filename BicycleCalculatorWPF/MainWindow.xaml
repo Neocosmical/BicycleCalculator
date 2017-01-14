@@ -156,7 +156,7 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <TextBlock Text="{x:Static res:Resources.StringSpeeds}" VerticalAlignment="Center" Margin="3"/>
-                                    <TextBlock Grid.Row="1" Text="{x:Static res:Resources.StringTeeth}" VerticalAlignment="Center" Margin="3"/>
+                                    <TextBlock Grid.Row="1" Text="{x:Static res:Resources.StringModel}" VerticalAlignment="Center" Margin="3"/>
                                     <ComboBox x:Name="BkNumcomboBox" Grid.Column="1" Margin="3" SelectionChanged="BkNumcomboBox_SelectedIndexChanged"/>
                                     <ComboBox x:Name="BkModelcomboBox" Grid.Column="1" Grid.Row="1" Margin="3" SelectionChanged="BkModelcomboBox_SelectedIndexChanged"/>
                                     <DataGrid x:Name="dataGridViewBk" Grid.Row="2" Margin="3" Background="#B2FFFFFF" Grid.ColumnSpan="2" HeadersVisibility="None" GridLinesVisibility="Horizontal" HorizontalScrollBarVisibility="Disabled">
@@ -219,7 +219,7 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <TextBlock Text="{x:Static res:Resources.StringSpeeds}" VerticalAlignment="Center" Margin="3"/>
-                                    <TextBlock Grid.Row="1" Text="{x:Static res:Resources.StringRatio}" VerticalAlignment="Center" Margin="3"/>
+                                    <TextBlock Grid.Row="1" Text="{x:Static res:Resources.StringModel}" VerticalAlignment="Center" Margin="3"/>
                                     <ComboBox x:Name="InNumcomboBox" Grid.Column="1" Margin="3" SelectionChanged="InNumcomboBox_SelectedIndexChanged"/>
                                     <ComboBox x:Name="InModelcomboBox" Grid.Column="1" Grid.Row="1" Margin="3" SelectionChanged="InModelcomboBox_SelectedIndexChanged"/>
                                     <DataGrid x:Name="dataGridViewIn" Grid.Row="2" Margin="3" Background="#B2FFFFFF" Grid.ColumnSpan="2" HeadersVisibility="None" GridLinesVisibility="Horizontal" HorizontalScrollBarVisibility="Disabled">
@@ -296,7 +296,7 @@
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
                                         <TextBlock Text="{x:Static res:Resources.StringSpeeds}" VerticalAlignment="Center" Margin="3"/>
-                                        <TextBlock Grid.Row="1" Text="{x:Static res:Resources.StringTeeth}" VerticalAlignment="Center" Margin="3"/>
+                                        <TextBlock Grid.Row="1" Text="{x:Static res:Resources.StringModel}" VerticalAlignment="Center" Margin="3"/>
                                         <ComboBox x:Name="FrNumcomboBox" Grid.Column="1" Margin="3" SelectionChanged="FrNumcomboBox_SelectedIndexChanged"/>
                                         <ComboBox x:Name="FrModelcomboBox" Grid.Column="1" Grid.Row="1" Margin="3" SelectionChanged="FrModelcomboBox_SelectedIndexChanged"/>
                                         <DataGrid x:Name="dataGridViewFr" Grid.Row="2" Margin="3" Background="#B2FFFFFF" Grid.ColumnSpan="2" HeadersVisibility="None" GridLinesVisibility="Horizontal" HorizontalScrollBarVisibility="Disabled">

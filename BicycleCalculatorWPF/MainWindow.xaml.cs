@@ -627,7 +627,7 @@ namespace BicycleCalculatorWPF
                     SpeedColumn.Header = Properties.Resources.StringSpeed + " km/h";
             }
             labelinfo.Content = Properties.Resources.StringTotaldiff + ": " +
-                (Convert.ToInt32(toothratemax / toothratemin * 100.0)).ToString() +
+                (Convert.ToDouble(toothratemax / toothratemin * 100.0)).ToString("F0") +
                 "%";
             labelinfo1.Content = Properties.Resources.StringTotalCap + ": " +
                 (frtemp.teeth[frtemp.speeds - 1].teeth - frtemp.teeth[0].teeth - bktemp.teeth[bktemp.speeds - 1].teeth + bktemp.teeth[0].teeth).ToString() + "T";

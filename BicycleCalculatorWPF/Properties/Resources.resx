@@ -510,4 +510,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>Data source of rims and hubs: 
 http://bbs.77bike.com/read.php?tid=58657</value>
   </data>
+  <data name="StringModel" xml:space="preserve">
+    <value>Model</value>
+  </data>
 </root>
