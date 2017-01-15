@@ -508,7 +508,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   </data>
   <data name="StringSourceRim" xml:space="preserve">
     <value>Data source of rims and hubs: 
-http://bbs.77bike.com/read.php?tid=58657</value>
+http://bbs.77bike.com/read.php?tid=58657
+Data source of cassettes:
+http://bbs.77bike.com/read.php?tid=233029</value>
   </data>
   <data name="StringModel" xml:space="preserve">
     <value>Model</value>
@@ -540,5 +542,8 @@ Are you sure to save the dataset?</value>
   </data>
   <data name="StringDeleteSelected" xml:space="preserve">
     <value>Are you sure to delete the selected items?</value>
+  </data>
+  <data name="StringDataSource" xml:space="preserve">
+    <value>Data Source:</value>
   </data>
 </root>

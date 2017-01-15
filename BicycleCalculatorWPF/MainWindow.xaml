@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:res="clr-namespace:BicycleCalculatorWPF.Properties"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="MainWindow1" x:Class="BicycleCalculatorWPF.MainWindow"
-        xmlns:oxy="http://oxyplot.codeplex.com"
+        xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:local="clr-namespace:WpfApplication2"
         Title="{x:Static res:Resources.StringTitle}" Height="711" Width="1000" Loaded="Form1_Load" Closed="Window_Closed_1" Icon="Resources/自行车计算器s.ico" FontFamily="Microsoft YaHei UI" Background="#FFF0F0F0" Closing="Window_Closing_1">
     <Window.DataContext>
@@ -104,7 +104,7 @@
 
                     <GridSplitter x:Name="GridSplitterT1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="1" Height="4"/>
 
-                    <oxy:PlotView x:Name="Chart1" Grid.Row="1" PlotAreaBackground="#B2FFFFFF" Margin="0,4,0,0">
+                    <oxy:PlotView x:Name="Chart1" Grid.Row="1" Margin="0,4,0,0">
                         <oxy:PlotView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="{x:Static res:Resources.StringAddCurve}" Click="AddCurveToolStripMenuItem_Click"/>
@@ -130,7 +130,6 @@
                         <oxy:PlotView.Background>
                             <ImageBrush ImageSource="Resources/back.png" Stretch="UniformToFill"/>
                         </oxy:PlotView.Background>
-                        <oxy:LineSeries ItemsSource="{Binding Points}"/>
                     </oxy:PlotView>
 
                     <Grid x:Name="GridUp" Grid.Row="0">
@@ -479,7 +478,7 @@
 
                     <GridSplitter HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="1" Height="4"/>
 
-                    <oxy:PlotView x:Name="Chart2" Title="{Binding Title}" Grid.Row="1" PlotAreaBackground="#B2FFFFFF" Margin="0,4,0,0">
+                    <oxy:PlotView x:Name="Chart2" Grid.Row="1" Margin="0,4,0,0">
                         <oxy:PlotView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="{x:Static res:Resources.StringDisAll}" Click="DisAllToolStripMenuItem_Click"/>
@@ -502,7 +501,6 @@
                         <oxy:PlotView.Background>
                             <ImageBrush ImageSource="Resources/back1.png" Stretch="UniformToFill"/>
                         </oxy:PlotView.Background>
-                        <oxy:LineSeries ItemsSource="{Binding Points}"/>
                     </oxy:PlotView>
 
                     <Grid x:Name="GridUp1" Grid.Row="0">

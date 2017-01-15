@@ -319,6 +319,15 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Data Source: 的本地化字符串。
+        /// </summary>
+        public static string StringDataSource {
+            get {
+                return ResourceManager.GetString("StringDataSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Default 的本地化字符串。
         /// </summary>
         public static string StringDefault {
@@ -909,7 +918,9 @@ namespace BicycleCalculatorWPF.Properties {
         
         /// <summary>
         ///   查找类似 Data source of rims and hubs: 
-        ///http://bbs.77bike.com/read.php?tid=58657 的本地化字符串。
+        ///http://bbs.77bike.com/read.php?tid=58657
+        ///Data source of cassettes:
+        ///http://bbs.77bike.com/read.php?tid=233029 的本地化字符串。
         /// </summary>
         public static string StringSourceRim {
             get {

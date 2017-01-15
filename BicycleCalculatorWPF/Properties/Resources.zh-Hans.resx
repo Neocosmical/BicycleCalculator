@@ -494,7 +494,9 @@ carrotkk@sina.com</value>
   </data>
   <data name="StringSourceRim" xml:space="preserve">
     <value>轮圈花鼓数据来源: 
-http://bbs.77bike.com/read.php?tid=58657</value>
+http://bbs.77bike.com/read.php?tid=58657
+飞轮数据来源:
+http://bbs.77bike.com/read.php?tid=233029</value>
   </data>
   <data name="StringModel" xml:space="preserve">
     <value>型号</value>
@@ -526,5 +528,8 @@ http://bbs.77bike.com/read.php?tid=58657</value>
   </data>
   <data name="StringDeleteSelected" xml:space="preserve">
     <value>确实要删除选中项目吗？</value>
+  </data>
+  <data name="StringDataSource" xml:space="preserve">
+    <value>数据来源:</value>
   </data>
 </root>

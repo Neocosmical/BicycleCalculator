@@ -131,7 +131,7 @@ namespace BicycleCalculatorWPF
 
         private void TextBlock_MouseUp_3(object sender, MouseButtonEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://bbs.77bike.com/read.php?tid=58657");
+            System.Diagnostics.Process.Start(((TextBlock)sender).Text);
         }
     }
 }

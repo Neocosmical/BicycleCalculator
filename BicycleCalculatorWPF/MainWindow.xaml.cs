@@ -1966,10 +1966,9 @@ namespace BicycleCalculatorWPF
             double spokeslenthraw = 0;
             for (int i = 0; i < Spokes / 2; i++)
             {
-                DataPoint p1 = new DataPoint();
-                DataPoint p2 = new DataPoint();
-                p1.X = hubhole.Points[i].X;
-                p1.Y = hubhole.Points[i].Y;
+                DataPoint p1 = new DataPoint(hubhole.Points[i].X, hubhole.Points[i].Y);
+                //p1.X = hubhole.Points[i].X;
+                //p1.Y = hubhole.Points[i].Y;
                 int j = 0;
                 if (i % 2 == 0)
                 {
@@ -1981,8 +1980,10 @@ namespace BicycleCalculatorWPF
                 }
                 while (j < 0) j += Spokes / 2;
                 j = j % (Spokes / 2);
-                p2.X = rimhole.Points[j].X;
-                p2.Y = rimhole.Points[j].Y;
+
+                DataPoint p2 = new DataPoint(rimhole.Points[j].X, rimhole.Points[j].Y);
+                //p2.X = rimhole.Points[j].X;
+                //p2.Y = rimhole.Points[j].Y;
                 if (spokeslenthraw == 0)
                     spokeslenthraw = (p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y);
                 spokesline.Points.Add(p1);
@@ -2024,10 +2025,9 @@ namespace BicycleCalculatorWPF
             double spokeslenthrawr = 0;
             for (int i = 0; i < Spokes / 2; i++)
             {
-                DataPoint p1 = new DataPoint();
-                DataPoint p2 = new DataPoint();
-                p1.X = hubholer.Points[i].X;
-                p1.Y = hubholer.Points[i].Y;
+                DataPoint p1 = new DataPoint(hubholer.Points[i].X, hubholer.Points[i].Y);
+                //p1.X = hubholer.Points[i].X;
+                //p1.Y = hubholer.Points[i].Y;
                 int j = 0;
                 if (i % 2 == 0)
                 {
@@ -2039,8 +2039,10 @@ namespace BicycleCalculatorWPF
                 }
                 while (j < 0) j += Spokes / 2;
                 j = j % (Spokes / 2);
-                p2.X = rimholer.Points[j].X;
-                p2.Y = rimholer.Points[j].Y;
+
+                DataPoint p2 = new DataPoint(rimholer.Points[j].X, rimholer.Points[j].Y);
+                //p2.X = rimholer.Points[j].X;
+                //p2.Y = rimholer.Points[j].Y;
                 if (spokeslenthrawr == 0)
                     spokeslenthrawr = (p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y);
                 spokesliner.Points.Add(p1);
@@ -2064,22 +2066,24 @@ namespace BicycleCalculatorWPF
 
             for (int i = 0; i < 6; i++)
             {
-                DataPoint p1 = new DataPoint();
-                DataPoint p2 = new DataPoint();
-                p1.X = hubhole.Points[0].X;
-                p1.Y = hubhole.Points[0].Y;
+                DataPoint p1 = new DataPoint(hubhole.Points[0].X, hubhole.Points[0].Y);
+                //p1.X = hubhole.Points[0].X;
+                //p1.Y = hubhole.Points[0].Y;
                 while (i < 0) i += Spokes / 2;
                 int j = i % (Spokes / 2);
-                p2.X = rimhole.Points[j].X;
-                p2.Y = rimhole.Points[j].Y;
+                DataPoint p2 = new DataPoint(rimhole.Points[j].X, rimhole.Points[j].Y);
+                //p2.X = rimhole.Points[j].X;
+                //p2.Y = rimhole.Points[j].Y;
                 spokeslenthraw = (p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y);
 
-                p1.X = hubholer.Points[0].X;
-                p1.Y = hubholer.Points[0].Y;
+                p1 = new DataPoint(hubhole.Points[0].X, hubhole.Points[0].Y);
+                //p1.X = hubholer.Points[0].X;
+                //p1.Y = hubholer.Points[0].Y;
                 while (i < 0) i += Spokes / 2;
                 j = i % (Spokes / 2);
-                p2.X = rimholer.Points[j].X;
-                p2.Y = rimholer.Points[j].Y;
+                p2 = new DataPoint(rimhole.Points[j].X, rimhole.Points[j].Y);
+                //p2.X = rimholer.Points[j].X;
+                //p2.Y = rimholer.Points[j].Y;
                 spokeslenthrawr = (p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y);
 
 
@@ -2099,22 +2103,25 @@ namespace BicycleCalculatorWPF
             if (Crosses > 5)
             {
                 int i = Crosses;
-                DataPoint p1 = new DataPoint();
-                DataPoint p2 = new DataPoint();
-                p1.X = hubhole.Points[0].X;
-                p1.Y = hubhole.Points[0].Y;
+                DataPoint p1 = new DataPoint(hubhole.Points[0].X, hubhole.Points[0].Y);
+                //p1.X = hubhole.Points[0].X;
+                //p1.Y = hubhole.Points[0].Y;
                 while (i < 0) i += Spokes / 2;
                 int j = i % (Spokes / 2);
-                p2.X = rimhole.Points[j].X;
-                p2.Y = rimhole.Points[j].Y;
+
+                DataPoint p2 = new DataPoint(rimhole.Points[j].X, rimhole.Points[j].Y);
+                //p2.X = rimhole.Points[j].X;
+                //p2.Y = rimhole.Points[j].Y;
                 spokeslenthraw = (p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y);
 
-                p1.X = hubholer.Points[0].X;
-                p1.Y = hubholer.Points[0].Y;
+                p1 = new DataPoint(hubhole.Points[0].X, hubhole.Points[0].Y);
+                //p1.X = hubholer.Points[0].X;
+                //p1.Y = hubholer.Points[0].Y;
                 while (i < 0) i += Spokes / 2;
                 j = i % (Spokes / 2);
-                p2.X = rimholer.Points[j].X;
-                p2.Y = rimholer.Points[j].Y;
+                p2 = new DataPoint(rimhole.Points[j].X, rimhole.Points[j].Y);
+                //p2.X = rimholer.Points[j].X;
+                //p2.Y = rimholer.Points[j].Y;
                 spokeslenthrawr = (p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y);
 
 
