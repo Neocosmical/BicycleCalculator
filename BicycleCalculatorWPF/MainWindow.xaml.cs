@@ -2538,7 +2538,7 @@ namespace BicycleCalculatorWPF
 
         private void EditHubsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            HubsEditor heditor = new HubsEditor(data.hublist, data, Properties.Resources.StringTire + Properties.Resources.StringEditDataSet);
+            HubsEditor heditor = new HubsEditor(data.hublist, data, Properties.Resources.StringHubs + Properties.Resources.StringEditDataSet);
             heditor.ShowDialog();
             data.LoadData();
             RefreshData();
@@ -2546,7 +2546,8 @@ namespace BicycleCalculatorWPF
 
         private void EditRimsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-
+            RimsEditor reditor = new RimsEditor(data.rimlist, data, Properties.Resources.StringRims + Properties.Resources.StringEditDataSet);
+            reditor.ShowDialog();
             data.LoadData();
             RefreshData();
         }

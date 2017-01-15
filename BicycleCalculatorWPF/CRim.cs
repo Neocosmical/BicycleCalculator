@@ -57,6 +57,13 @@ namespace BicycleCalculatorWPF
             return p;
         }
 
+        public void CopyTo(CRim pt)
+        {
+            pt.ERD = ERD;
+            pt.Name = name;
+            pt.OSB = OSB;
+        }
+
         public string Encode()
         {
             string str = "";

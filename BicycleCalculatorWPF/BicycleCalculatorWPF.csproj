@@ -127,6 +127,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="RimEditor.xaml.cs">
+      <DependentUpon>RimEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RimsEditor.xaml.cs">
+      <DependentUpon>RimsEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="TireEditor.xaml.cs">
       <DependentUpon>TireEditor.xaml</DependentUpon>
@@ -190,6 +196,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="RimEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RimsEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TireEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

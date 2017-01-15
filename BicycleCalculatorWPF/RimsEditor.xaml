@@ -1,0 +1,51 @@
+﻿<Window x:Class="BicycleCalculatorWPF.RimsEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:res="clr-namespace:BicycleCalculatorWPF.Properties"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BicycleCalculatorWPF"
+        mc:Ignorable="d"
+        Title="RimsEditor" Height="430" Width="600" Loaded="Window_Loaded" Icon="Resources/自行车计算器s.ico">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <ListView x:Name="listBox1" Grid.Row="0" Margin="3" SelectionChanged="listBox1_SelectedIndexChanged" ButtonBase.Click="GridViewColumnHeader_Click" ContextMenuOpening="listBox1_ContextMenuOpening" MouseDoubleClick="listBox1_MouseDoubleClick" KeyUp="listBox1_KeyUp">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="{x:Static res:Resources.StringAdd}" Click="ButtonAdd_Click"/>
+                    <MenuItem x:Name="MenuItemDelete" IsEnabled="False" Header="{x:Static res:Resources.StringDelete}" Click="ButtonDelete_Click"/>
+                    <MenuItem x:Name="MenuItemModify" IsEnabled="False" Header="{x:Static res:Resources.StringModify}" Click="ButtonModify_Click"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.View>
+                <GridView x:Name="listBox1Grid">
+                    <GridView.ColumnHeaderContextMenu>
+                        <ContextMenu/>
+                    </GridView.ColumnHeaderContextMenu>
+                    <!--<GridViewColumn Header="No." DisplayMemberBinding="{Binding No1}"/>-->
+                    <GridViewColumn Header="{x:Static res:Resources.StringModel}" DisplayMemberBinding="{Binding Name}" Width="250"/>
+                    <GridViewColumn Header="ERD" DisplayMemberBinding="{Binding ERD}" Width="100"/>
+                    <GridViewColumn Header="OSB" DisplayMemberBinding="{Binding OSB}" Width="100"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="{x:Static res:Resources.StringAdd}" Grid.Column="1" Margin="5" Click="ButtonAdd_Click"/>
+            <Button x:Name="ButtonDelete" IsEnabled="False" Content="{x:Static res:Resources.StringDelete}" Grid.Column="2" Margin="5" Click="ButtonDelete_Click"/>
+            <Button x:Name="ButtonModify" IsEnabled="False" Content="{x:Static res:Resources.StringModify}" Grid.Column="3" Margin="5" Click="ButtonModify_Click"/>
+            <Button x:Name="ButtonSave" IsEnabled="False" Content="{x:Static res:Resources.StringSave}" Grid.Column="4" Margin="5,5,0,5" HorizontalAlignment="Left" Width="70" Click="ButtonSave_Click"/>
+            <Button Content="{x:Static res:Resources.StringClose}" Grid.Column="5" Margin="5" Click="ButtonClose_Click"/>
+        </Grid>
+    </Grid>
+</Window>
