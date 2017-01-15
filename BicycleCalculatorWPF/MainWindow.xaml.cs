@@ -442,7 +442,7 @@ namespace BicycleCalculatorWPF
             CWheel whtemp = (CWheel)((CWheel)WheelcomboBox.SelectedItem).Clone();
             try
             {
-                whtemp.lenth = Convert.ToInt32(WheelLenthtextBox.Text);
+                whtemp.Lenth = Convert.ToInt32(WheelLenthtextBox.Text);
             }
             catch { }
 
@@ -501,21 +501,21 @@ namespace BicycleCalculatorWPF
                         if (toothrate > toothratemax) toothratemax = toothrate;
 
                         resulttemp.GearRatio1 = toothrate;
-                        resulttemp.SpeedRatio1 = toothrate * whtemp.lenth / 3.1415926535 / 25.4;
+                        resulttemp.SpeedRatio1 = toothrate * whtemp.Lenth / 3.1415926535 / 25.4;
 
                         if (checkBox1.IsChecked.Value)
                         {
                             if (Properties.Settings.Default.IsMPH)
-                                resulttemp.Speed1 = cad * 1.609344 / 2.0 * 1000000.0 / 60.0 / whtemp.lenth / toothrate;
+                                resulttemp.Speed1 = cad * 1.609344 / 2.0 * 1000000.0 / 60.0 / whtemp.Lenth / toothrate;
                             else
-                                resulttemp.Speed1 = cad / 2.0 * 1000000.0 / 60.0 / whtemp.lenth / toothrate;
+                                resulttemp.Speed1 = cad / 2.0 * 1000000.0 / 60.0 / whtemp.Lenth / toothrate;
                         }
                         else
                         {
                             if (Properties.Settings.Default.IsMPH)
-                                resulttemp.Speed1 = toothrate * cad * whtemp.lenth * 60 / 1000000.0 * 0.6213712;
+                                resulttemp.Speed1 = toothrate * cad * whtemp.Lenth * 60 / 1000000.0 * 0.6213712;
                             else
-                                resulttemp.Speed1 = toothrate * cad * whtemp.lenth * 60 / 1000000.0;
+                                resulttemp.Speed1 = toothrate * cad * whtemp.Lenth * 60 / 1000000.0;
                         }
 
                         if (num >= 3)
@@ -559,10 +559,10 @@ namespace BicycleCalculatorWPF
                         switch (CurveY)
                         {
                             case 1://走距速比
-                                tempy = toothrate * whtemp.lenth / 1000.0;
+                                tempy = toothrate * whtemp.Lenth / 1000.0;
                                 break;
                             case 2://GI速比
-                                tempy = toothrate * whtemp.lenth / 3.1415926535 / 25.4;
+                                tempy = toothrate * whtemp.Lenth / 3.1415926535 / 25.4;
                                 break;
                             case 3://齿比
                                 tempy = toothrate;
@@ -662,7 +662,7 @@ namespace BicycleCalculatorWPF
             CGear intemp = (CGear)((CGear)InModelcomboBox.SelectedItem).Clone();
             CWheel whtemp = (CWheel)WheelcomboBox.SelectedItem;
 
-            whtemp.lenth = Convert.ToInt32(WheelLenthtextBox.Text);
+            whtemp.Lenth = Convert.ToInt32(WheelLenthtextBox.Text);
 
             string tempstr = "";
             tempstr += pm.Axes[0].Title;
@@ -670,7 +670,7 @@ namespace BicycleCalculatorWPF
             tempstr += "& " + bktemp.Name;
             if (intemp.Speeds != 1)
                 tempstr += "& " + intemp.Name;
-            string chartname = tempstr + "& " + whtemp.lenth.ToString()+"mm";
+            string chartname = tempstr + "& " + whtemp.Lenth.ToString()+"mm";
             /*
             while (Chart1.Series.FindByName(chartname) != null)
             {
@@ -711,7 +711,7 @@ namespace BicycleCalculatorWPF
         {
             CWheel temp = (CWheel)WheelcomboBox.SelectedItem;
             if (temp != null)
-                WheelLenthtextBox.Text = temp.lenth.ToString();
+                WheelLenthtextBox.Text = temp.Lenth.ToString();
         }
 
         private void WheelLenthtextBox_ValueChanged(object sender, EventArgs e)
@@ -812,7 +812,7 @@ namespace BicycleCalculatorWPF
             for (int i = 0; i < dataGridViewIn.Items.Count; i++)
                 intemp.teeth[i].teeth = ((CTeeth)dataGridViewIn.Items[i]).Teeth;
 
-            whtemp.lenth = Convert.ToInt32(WheelLenthtextBox.Text);
+            whtemp.Lenth = Convert.ToInt32(WheelLenthtextBox.Text);
             System.IO.StreamWriter swriter;
             string _filename = saveFileDialog1.FileName;
             try
@@ -828,7 +828,7 @@ namespace BicycleCalculatorWPF
             swriter.WriteLine("");
 
 
-            swriter.WriteLine(Properties.Resources.StringTire + "," + whtemp.name + "," + whtemp.lenth.ToString() + "mm");
+            swriter.WriteLine(Properties.Resources.StringTire + "," + whtemp.Name + "," + whtemp.Lenth.ToString() + "mm");
 
             string frstr = "";
             for (int i = 0; i < frtemp.Speeds; i++)
@@ -960,7 +960,7 @@ namespace BicycleCalculatorWPF
             {
                 CWheel temp = (CWheel)WheelcomboBox.SelectedItem;
                 if(temp != null)
-                WheelLenthtextBox.Text = temp.lenth.ToString("D"); ;
+                WheelLenthtextBox.Text = temp.Lenth.ToString("D"); ;
             }
         }
 
@@ -2426,28 +2426,29 @@ namespace BicycleCalculatorWPF
 
         private void EditCassetteMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            GearsEditor geditor = new BicycleCalculatorWPF.GearsEditor(data.bklists, data, Properties.Resources.StringCassette + Properties.Resources.StringEditDataSet);
+            GearsEditor geditor = new GearsEditor(data.bklists, data, Properties.Resources.StringCassette + Properties.Resources.StringEditDataSet);
             geditor.ShowDialog();
             data.LoadData();
         }
 
         private void EditCranksetsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            GearsEditor geditor = new BicycleCalculatorWPF.GearsEditor(data.frlists, data, Properties.Resources.StringCranksets + Properties.Resources.StringEditDataSet);
+            GearsEditor geditor = new GearsEditor(data.frlists, data, Properties.Resources.StringCranksets + Properties.Resources.StringEditDataSet);
             geditor.ShowDialog();
             data.LoadData();
         }
 
         private void EditInternalHubMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            GearsEditor geditor = new BicycleCalculatorWPF.GearsEditor(data.inlists, data, Properties.Resources.StringInternalHub + Properties.Resources.StringEditDataSet);
+            GearsEditor geditor = new GearsEditor(data.inlists, data, Properties.Resources.StringInternalHub + Properties.Resources.StringEditDataSet);
             geditor.ShowDialog();
             data.LoadData();
         }
 
         private void EditTireMenuItem_Click(object sender, RoutedEventArgs e)
         {
-
+            TiresEditor teditor = new TiresEditor(data.wheelList, data, Properties.Resources.StringTire + Properties.Resources.StringEditDataSet);
+            teditor.ShowDialog();
             data.LoadData();
         }
 

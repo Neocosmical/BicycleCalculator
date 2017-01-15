@@ -7,13 +7,39 @@ namespace BicycleCalculatorWPF
 {
     public class CWheel:ICloneable
     {
-        public string name;
-        public int lenth;
+        private string name;
+        private int lenth;
+
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+
+            set
+            {
+                name = value;
+            }
+        }
+
+        public int Lenth
+        {
+            get
+            {
+                return lenth;
+            }
+
+            set
+            {
+                lenth = value;
+            }
+        }
 
         public CWheel(string _name, int _lenth)
         {
-            name = _name;
-            lenth = _lenth;
+            Name = _name;
+            Lenth = _lenth;
         }
 
         public CWheel(string data)
@@ -23,12 +49,12 @@ namespace BicycleCalculatorWPF
 
         public override string ToString()
         {
-            return name;
+            return Name;
         }
 
         public object Clone()
         {
-            CWheel p = new CWheel(name, lenth);
+            CWheel p = new CWheel(Name, Lenth);
             return p;
         }
 
@@ -36,8 +62,8 @@ namespace BicycleCalculatorWPF
         {
             string str = "";
             str += "Wheel,";
-            str += name.Replace(",", "") + ",";
-            str += lenth.ToString() + ",";
+            str += Name.Replace(",", "") + ",";
+            str += Lenth.ToString() + ",";
             return str;
         }
 
@@ -45,8 +71,8 @@ namespace BicycleCalculatorWPF
         {
             string[] strs = str.Split(',');
             if (strs[0] != "Wheel") return;
-            name = strs[1];
-            lenth = Convert.ToInt32(strs[2]);
+            Name = strs[1];
+            Lenth = Convert.ToInt32(strs[2]);
         }
     }
 }
