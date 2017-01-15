@@ -103,11 +103,13 @@ namespace BicycleCalculatorWPF
         private void ButtonOK_Click(object sender, RoutedEventArgs e)
         {
             gear.CopyTo(gearpt);
+            this.DialogResult = true;
             this.Close();
         }
 
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
+            this.DialogResult = false;
             this.Close();
         }
 

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BicycleCalculatorWPF
 {
-    class CRim : ICloneable
+    public class CRim : ICloneable
     {
         private string name = "";
 
@@ -77,7 +77,7 @@ namespace BicycleCalculatorWPF
         }
     }
 
-    class CValue
+    public class CValue
     {
         private int no;
 

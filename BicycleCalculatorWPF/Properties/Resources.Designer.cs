@@ -273,6 +273,16 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
+        ///   查找类似 This will overwrite the original dataset. It is recommended to backup Data.csv first.
+        ///Are you sure to save the dataset? 的本地化字符串。
+        /// </summary>
+        public static string StringConfirmSave {
+            get {
+                return ResourceManager.GetString("StringConfirmSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Cranksets 的本地化字符串。
         /// </summary>
         public static string StringCranksets {
@@ -323,6 +333,15 @@ namespace BicycleCalculatorWPF.Properties {
         public static string StringDelete {
             get {
                 return ResourceManager.GetString("StringDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Are you sure to delete the selected items? 的本地化字符串。
+        /// </summary>
+        public static string StringDeleteSelected {
+            get {
+                return ResourceManager.GetString("StringDeleteSelected", resourceCulture);
             }
         }
         

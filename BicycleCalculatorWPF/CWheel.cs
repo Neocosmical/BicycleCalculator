@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BicycleCalculatorWPF
 {
-    class CWheel:ICloneable
+    public class CWheel:ICloneable
     {
         public string name;
         public int lenth;

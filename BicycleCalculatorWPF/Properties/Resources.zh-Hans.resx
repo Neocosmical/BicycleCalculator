@@ -520,4 +520,11 @@ http://bbs.77bike.com/read.php?tid=58657</value>
   <data name="StringSave" xml:space="preserve">
     <value>保存</value>
   </data>
+  <data name="StringConfirmSave" xml:space="preserve">
+    <value>这将覆盖原有数据集，建议备份 Data.csv 后再进行保存。
+确实要保存数据集吗？</value>
+  </data>
+  <data name="StringDeleteSelected" xml:space="preserve">
+    <value>确实要删除选中项目吗？</value>
+  </data>
 </root>

@@ -2426,30 +2426,41 @@ namespace BicycleCalculatorWPF
 
         private void EditCassetteMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            GearsEditor geditor = new BicycleCalculatorWPF.GearsEditor(data.bklists, Properties.Resources.StringCassette + Properties.Resources.StringEditDataSet);
-            geditor.Show();
+            GearsEditor geditor = new BicycleCalculatorWPF.GearsEditor(data.bklists, data, Properties.Resources.StringCassette + Properties.Resources.StringEditDataSet);
+            geditor.ShowDialog();
+            data.LoadData();
         }
 
         private void EditCranksetsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            GearsEditor geditor = new BicycleCalculatorWPF.GearsEditor(data.frlists, Properties.Resources.StringCranksets + Properties.Resources.StringEditDataSet);
-            geditor.Show();
+            GearsEditor geditor = new BicycleCalculatorWPF.GearsEditor(data.frlists, data, Properties.Resources.StringCranksets + Properties.Resources.StringEditDataSet);
+            geditor.ShowDialog();
+            data.LoadData();
         }
 
         private void EditInternalHubMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            GearsEditor geditor = new BicycleCalculatorWPF.GearsEditor(data.inlists, Properties.Resources.StringInternalHub + Properties.Resources.StringEditDataSet);
-            geditor.Show();
+            GearsEditor geditor = new BicycleCalculatorWPF.GearsEditor(data.inlists, data, Properties.Resources.StringInternalHub + Properties.Resources.StringEditDataSet);
+            geditor.ShowDialog();
+            data.LoadData();
+        }
+
+        private void EditTireMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+            data.LoadData();
         }
 
         private void EditHubsMenuItem_Click(object sender, RoutedEventArgs e)
         {
 
+            data.LoadData();
         }
 
         private void EditRimsMenuItem_Click(object sender, RoutedEventArgs e)
         {
 
+            data.LoadData();
         }
     }
 }

@@ -5,11 +5,11 @@ using System.Text;
 
 namespace BicycleCalculatorWPF
 {
-    class CData
+    public class CData
     {
-        public CGearLists frlists = new CGearLists(Properties.Resources.StringCranksets);
-        public CGearLists bklists = new CGearLists(Properties.Resources.StringCassette);
-        public CGearLists inlists = new CGearLists(Properties.Resources.StringInternalHub);
+        public CGearLists frlists = new CGearLists(Properties.Resources.StringCranksets, GearType.Front);
+        public CGearLists bklists = new CGearLists(Properties.Resources.StringCassette, GearType.Back);
+        public CGearLists inlists = new CGearLists(Properties.Resources.StringInternalHub, GearType.Inner);
         
         public List<CWheel> wheelList = new List<CWheel>();
 
@@ -97,6 +97,102 @@ namespace BicycleCalculatorWPF
             fs.Close();
         }
 
+        public void AddGear(CGear gear)
+        {
+            switch (gear.Type)
+            {
+                case GearType.Front:
+                    foreach (CGearList list in frlists.Lists)
+                    {
+                        if (gear.Speeds == list.speeds)
+                        {
+                            gear.Parent = list;
+                            list.Gears.Add(gear);
+                        }
+                    }
+                    break;
+                case GearType.Back:
+                    foreach (CGearList list in bklists.Lists)
+                    {
+                        if (gear.Speeds == list.speeds)
+                        {
+                            gear.Parent = list;
+                            list.Gears.Add(gear);
+                        }
+                    }
+                    break;
+                case GearType.Inner:
+                    foreach (CGearList list in inlists.Lists)
+                    {
+                        if (gear.Speeds == list.speeds)
+                        {
+                            gear.Parent = list;
+                            list.Gears.Add(gear);
+                        }
+                    }
+                    break;
+            }
+        }
+
+        public void AddGear(List<CGear> gears)
+        {
+            foreach (CGear gear in gears)
+            {
+                switch (gear.Type)
+                {
+                    case GearType.Front:
+                        foreach (CGearList list in frlists.Lists)
+                        {
+                            if (gear.Speeds == list.speeds)
+                            {
+                                gear.Parent = list;
+                                list.Gears.Add(gear);
+                            }
+                        }
+                        break;
+                    case GearType.Back:
+                        foreach (CGearList list in bklists.Lists)
+                        {
+                            if (gear.Speeds == list.speeds)
+                            {
+                                gear.Parent = list;
+                                list.Gears.Add(gear);
+                            }
+                        }
+                        break;
+                    case GearType.Inner:
+                        foreach (CGearList list in inlists.Lists)
+                        {
+                            if (gear.Speeds == list.speeds)
+                            {
+                                gear.Parent = list;
+                                list.Gears.Add(gear);
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+
+        public void ClearAll()
+        {
+            foreach (CGearList list in frlists.Lists)
+            {
+                list.Gears.Clear();
+            }
+            foreach (CGearList list in bklists.Lists)
+            {
+                list.Gears.Clear();
+            }
+            foreach (CGearList list in inlists.Lists)
+            {
+                list.Gears.Clear();
+            }
+            wheelList.Clear();
+            hublist.Clear();
+            rimlist.Clear();
+        }
+
         public void LoadData()
         {
             try
@@ -129,34 +225,10 @@ namespace BicycleCalculatorWPF
                     }
                 }
 
-                foreach (CGear gear in gearlisttemp)
-                {
-                    switch (gear.Type)
-                    {
-                        case GearType.Front:
-                            foreach (CGearList list in frlists.Lists)
-                            {
-                                if (gear.Speeds == list.speeds)
-                                    list.Gears.Add(gear);
-                            }
-                            break;
-                        case GearType.Back:
-                            foreach (CGearList list in bklists.Lists)
-                            {
-                                if (gear.Speeds == list.speeds)
-                                    list.Gears.Add(gear);
-                            }
-                            break;
-                        case GearType.Inner:
-                            foreach (CGearList list in inlists.Lists)
-                            {
-                                if (gear.Speeds == list.speeds)
-                                    list.Gears.Add(gear);
-                            }
-                            break;
-                    }
-                }
+                ClearAll();
 
+                AddGear(gearlisttemp);
+                
                 foreach (CWheel wheel in wheellisttemp)
                 {
                     wheelList.Add(wheel);

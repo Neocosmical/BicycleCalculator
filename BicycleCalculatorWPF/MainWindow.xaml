@@ -26,6 +26,7 @@
                     <MenuItem Header = "{x:Static res:Resources.StringCassette}" Click="EditCassetteMenuItem_Click"/>
                     <MenuItem Header = "{x:Static res:Resources.StringCranksets}" Click="EditCranksetsMenuItem_Click"/>
                     <MenuItem Header = "{x:Static res:Resources.StringInternalHub}" Click="EditInternalHubMenuItem_Click"/>
+                    <MenuItem Header = "{x:Static res:Resources.StringTire}" Click="EditTireMenuItem_Click"/>
                     <Separator/>
                     <MenuItem Header = "{x:Static res:Resources.StringHubs}" Click="EditHubsMenuItem_Click"/>
                     <MenuItem Header = "{x:Static res:Resources.StringRims}" Click="EditRimsMenuItem_Click"/>

@@ -44,6 +44,7 @@ namespace BicycleCalculatorWPF
         private int speeds;
         //public int[] teeth = new int[12];
         public List<CTeeth> teeth = new List<CTeeth>();
+        public CGearList Parent;
 
         public string TeethStr
         {
@@ -297,12 +298,14 @@ namespace BicycleCalculatorWPF
 
     public class CGearLists
     {
+        public GearType type;
         public string name;
         public List<CGearList> Lists = new List<CGearList>();
 
-        public CGearLists(string _name)
+        public CGearLists(string _name, GearType _type)
         {
             name = _name;
+            type = _type;
             Lists = new List<CGearList>();
         }
 
