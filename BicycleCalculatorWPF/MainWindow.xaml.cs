@@ -194,9 +194,24 @@ namespace BicycleCalculatorWPF
         private delegate void outputDelegate();
 
 
-        System.Timers.Timer timerload1;
-        private void outputAction()
+        private void RefreshData()
         {
+            ready = false;
+
+            int temp0 = WheelcomboBox.SelectedIndex;
+            int temp1 = FrNumcomboBox.SelectedIndex;
+            int temp2 = FrModelcomboBox.SelectedIndex;
+            int temp3 = BkNumcomboBox.SelectedIndex;
+            int temp4 = BkModelcomboBox.SelectedIndex;
+            int temp5 = InNumcomboBox.SelectedIndex;
+            int temp6 = InModelcomboBox.SelectedIndex;
+            int temp7 = HubNumcomboBox.SelectedIndex;
+            int temp8 = RimNumcomboBox.SelectedIndex;
+            
+            FrNumcomboBox.Items.Clear();
+            BkNumcomboBox.Items.Clear();
+            InNumcomboBox.Items.Clear();
+            WheelcomboBox.Items.Clear();
 
             foreach (CGearList list in data.frlists.Lists)
                 FrNumcomboBox.Items.Add(list);
@@ -212,11 +227,73 @@ namespace BicycleCalculatorWPF
             {
                 WheelcomboBox.Items.Add(wheel);
             }
-            WheelcomboBox.SelectedIndex = Properties.Settings.Default.wheelid;
 
-            //FrNumcomboBox.SelectedIndex = 2;
-            //BkNumcomboBox.SelectedIndex = 6;
-            //InNumcomboBox.SelectedIndex = 0;
+            HubNumcomboBox.Items.Refresh();
+            RimNumcomboBox.Items.Refresh();
+
+            WheelcomboBox.SelectedIndex = 0;
+            FrNumcomboBox.SelectedIndex = 0;
+            FrModelcomboBox.SelectedIndex = 0;
+            BkNumcomboBox.SelectedIndex = 0;
+            BkModelcomboBox.SelectedIndex = 0;
+            InNumcomboBox.SelectedIndex = 0;
+            InModelcomboBox.SelectedIndex = 0;
+            HubNumcomboBox.SelectedIndex = 0;
+            RimNumcomboBox.SelectedIndex = 0;
+
+            WheelcomboBox.SelectedIndex   = temp0;
+            FrNumcomboBox.SelectedIndex   = temp1;
+            FrModelcomboBox.SelectedIndex = temp2;
+            BkNumcomboBox.SelectedIndex   = temp3;
+            BkModelcomboBox.SelectedIndex = temp4;
+            InNumcomboBox.SelectedIndex   = temp5;
+            InModelcomboBox.SelectedIndex = temp6;
+            HubNumcomboBox.SelectedIndex  = temp7;
+            RimNumcomboBox.SelectedIndex  = temp8;
+
+            ready = true;
+            Calculate();
+            CalculateSpoke();
+        }
+
+        System.Timers.Timer timerload1;
+        private void outputAction()
+        {
+            ready = false;
+
+            FrNumcomboBox.Items.Clear();
+            BkNumcomboBox.Items.Clear();
+            InNumcomboBox.Items.Clear();
+            WheelcomboBox.Items.Clear();
+
+            foreach (CGearList list in data.frlists.Lists)
+                FrNumcomboBox.Items.Add(list);
+
+            foreach (CGearList list in data.bklists.Lists)
+                BkNumcomboBox.Items.Add(list);
+
+            foreach (CGearList list in data.inlists.Lists)
+                InNumcomboBox.Items.Add(list);
+
+
+            foreach (CWheel wheel in data.wheelList)
+            {
+                WheelcomboBox.Items.Add(wheel);
+            }
+
+            WheelcomboBox.SelectedIndex = 0;
+            FrNumcomboBox.SelectedIndex = 0;
+            FrModelcomboBox.SelectedIndex = 0;
+            BkNumcomboBox.SelectedIndex = 0;
+            BkModelcomboBox.SelectedIndex = 0;
+            InNumcomboBox.SelectedIndex = 0;
+            InModelcomboBox.SelectedIndex = 0;
+            HubNumcomboBox.SelectedIndex = 0;
+            RimNumcomboBox.SelectedIndex = 0;
+
+
+            WheelcomboBox.SelectedIndex = Properties.Settings.Default.wheelid;
+            
             FrNumcomboBox.SelectedIndex = Properties.Settings.Default.frnumid;
             FrModelcomboBox.SelectedIndex = Properties.Settings.Default.frmodid;
             BkNumcomboBox.SelectedIndex = Properties.Settings.Default.bknumid;
@@ -345,6 +422,7 @@ namespace BicycleCalculatorWPF
 
         private void FrNumcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (FrNumcomboBox.SelectedItem == null) return;
             bool rtemp = ready;
             ready = false;
             FrModelcomboBox.Items.Clear();
@@ -360,6 +438,7 @@ namespace BicycleCalculatorWPF
 
         private void BkNumcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (BkNumcomboBox.SelectedItem == null) return;
             bool rtemp = ready;
             ready = false;
             BkModelcomboBox.Items.Clear();
@@ -374,6 +453,7 @@ namespace BicycleCalculatorWPF
 
         private void InNumcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (InNumcomboBox.SelectedItem == null) return;
             bool rtemp = ready;
             ready = false;
             InModelcomboBox.Items.Clear();
@@ -2429,6 +2509,7 @@ namespace BicycleCalculatorWPF
             GearsEditor geditor = new GearsEditor(data.bklists, data, Properties.Resources.StringCassette + Properties.Resources.StringEditDataSet);
             geditor.ShowDialog();
             data.LoadData();
+            RefreshData();
         }
 
         private void EditCranksetsMenuItem_Click(object sender, RoutedEventArgs e)
@@ -2436,6 +2517,7 @@ namespace BicycleCalculatorWPF
             GearsEditor geditor = new GearsEditor(data.frlists, data, Properties.Resources.StringCranksets + Properties.Resources.StringEditDataSet);
             geditor.ShowDialog();
             data.LoadData();
+            RefreshData();
         }
 
         private void EditInternalHubMenuItem_Click(object sender, RoutedEventArgs e)
@@ -2443,6 +2525,7 @@ namespace BicycleCalculatorWPF
             GearsEditor geditor = new GearsEditor(data.inlists, data, Properties.Resources.StringInternalHub + Properties.Resources.StringEditDataSet);
             geditor.ShowDialog();
             data.LoadData();
+            RefreshData();
         }
 
         private void EditTireMenuItem_Click(object sender, RoutedEventArgs e)
@@ -2450,18 +2533,21 @@ namespace BicycleCalculatorWPF
             TiresEditor teditor = new TiresEditor(data.wheelList, data, Properties.Resources.StringTire + Properties.Resources.StringEditDataSet);
             teditor.ShowDialog();
             data.LoadData();
+            RefreshData();
         }
 
         private void EditHubsMenuItem_Click(object sender, RoutedEventArgs e)
         {
 
             data.LoadData();
+            RefreshData();
         }
 
         private void EditRimsMenuItem_Click(object sender, RoutedEventArgs e)
         {
 
             data.LoadData();
+            RefreshData();
         }
     }
 }

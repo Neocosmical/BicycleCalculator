@@ -67,7 +67,7 @@ namespace BicycleCalculatorWPF
             double teethtemp = ((CTeeth)dataGridView.Items[id - 1]).Teeth;
             try
             {
-                teethtemp = Convert.ToInt16(((TextBox)sender).Text);
+                teethtemp = Convert.ToDouble(((TextBox)sender).Text);
             }
             catch
             { }

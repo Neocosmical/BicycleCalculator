@@ -60,10 +60,9 @@ namespace BicycleCalculatorWPF
         private void LoadData()
         {
             listBox1.Items.Clear();
-            foreach (CWheel gear in list)
+            foreach (CWheel item in list)
             {
-                listBox1.Items.Add(gear);
-                //gear.speeds
+                listBox1.Items.Add(item);
             }
         }
 
@@ -75,16 +74,16 @@ namespace BicycleCalculatorWPF
         private void listBox1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (listBox1.SelectedIndex == -1) return;
-            //GearEditor geditor = new GearEditor(this.Title, (CWheel)listBox1.SelectedItem, false, false);
-            //if (geditor.ShowDialog() == true) ButtonSave.IsEnabled = true;
+            TireEditor editor = new TireEditor(this.Title, (CWheel)listBox1.SelectedItem);
+            if (editor.ShowDialog() == true) ButtonSave.IsEnabled = true;
             listBox1.Items.Refresh();
         }
 
         private void ButtonModify_Click(object sender, RoutedEventArgs e)
         {
             if (listBox1.SelectedIndex == -1) return;
-            //GearEditor geditor = new GearEditor(this.Title, (CWheel)listBox1.SelectedItem, false, false);
-            //if (geditor.ShowDialog() == true) ButtonSave.IsEnabled = true;
+            TireEditor editor = new TireEditor(this.Title, (CWheel)listBox1.SelectedItem);
+            if (editor.ShowDialog() == true) ButtonSave.IsEnabled = true;
             listBox1.Items.Refresh();
         }
 
@@ -99,10 +98,10 @@ namespace BicycleCalculatorWPF
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            //CWheel newgear = new BicycleCalculatorWPF.CWheel(gearlists.type, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-            //GearEditor geditor = new GearEditor(this.Title, newgear, true, false);
-            //if (geditor.ShowDialog() != true) return;
-            //data.AddGear(newgear);
+            CWheel newitem = new CWheel("", 1590);
+            TireEditor geditor = new TireEditor(this.Title, newitem);
+            if (geditor.ShowDialog() != true) return;
+            data.wheelList.Add(newitem);
             ButtonSave.IsEnabled = true;
             LoadData();
         }

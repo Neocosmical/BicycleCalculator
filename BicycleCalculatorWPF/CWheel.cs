@@ -74,5 +74,11 @@ namespace BicycleCalculatorWPF
             Name = strs[1];
             Lenth = Convert.ToInt32(strs[2]);
         }
+
+        public void CopyTo(CWheel pt)
+        {
+            pt.Lenth = lenth;
+            pt.Name = name;
+        }
     }
 }
