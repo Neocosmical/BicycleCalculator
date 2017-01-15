@@ -112,6 +112,12 @@
     <Compile Include="GearsEditor.xaml.cs">
       <DependentUpon>GearsEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HubEditor.xaml.cs">
+      <DependentUpon>HubEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HubsEditor.xaml.cs">
+      <DependentUpon>HubsEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InputWindow.xaml.cs">
       <DependentUpon>InputWindow.xaml</DependentUpon>
     </Compile>
@@ -145,6 +151,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="HelpWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HubEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HubsEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

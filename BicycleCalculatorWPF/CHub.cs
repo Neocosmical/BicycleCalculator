@@ -79,6 +79,16 @@ namespace BicycleCalculatorWPF
             return p;
         }
 
+        public void CopyTo(CHub pt)
+        {
+            pt.CenterToLeft = CenterToLeft;
+            pt.CenterToRight = CenterToRight;
+            pt.LeftFlange = LeftFlange;
+            pt.Name = Name;
+            pt.RightFlange = RightFlange;
+            pt.SpokeHole = SpokeHole;
+        }
+
         public string Encode()
         {
             string str = "";
@@ -102,28 +112,6 @@ namespace BicycleCalculatorWPF
             CenterToLeft = Convert.ToDouble(strs[4]);
             CenterToRight = Convert.ToDouble(strs[5]);
             SpokeHole = Convert.ToDouble(strs[6]);
-        }
-    }
-    class CHubList
-    {
-        string name = "";
-
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
-
-        public List<CHub> list = new List<CHub>();
-
-        public CHubList(string _name)
-        {
-            name = _name;
-        }
-
-        public override string ToString()
-        {
-            return name;
         }
     }
 
