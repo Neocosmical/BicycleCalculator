@@ -25,67 +25,11 @@ namespace BicycleCalculatorWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static PlotModel LineSeries()
-        {
-            var plotModel1 = new PlotModel();
-            plotModel1.LegendSymbolLength = 24;
-            plotModel1.LegendPosition = LegendPosition.LeftTop;
-            //plotModel1.Title = "LineSeries";
-            var linearAxis1 = new LinearAxis(); 
-            linearAxis1.MajorGridlineStyle = LineStyle.Solid;
-            //linearAxis1.MaximumPadding = 0;
-            //linearAxis1.MinimumPadding = 0;
-            linearAxis1.MinorGridlineStyle = LineStyle.Dot;
-            linearAxis1.Position = AxisPosition.Bottom; 
-            linearAxis1.TickStyle = TickStyle.Inside;
-            plotModel1.Axes.Add(linearAxis1);
-            var linearAxis2 = new LinearAxis();
-            linearAxis2.MajorGridlineStyle = LineStyle.Solid; 
-            linearAxis2.TickStyle = TickStyle.Inside;
-            //linearAxis2.MaximumPadding = 0;
-            //linearAxis2.MinimumPadding = 0;
-            linearAxis2.MinorGridlineStyle = LineStyle.Dot;
-            plotModel1.Axes.Add(linearAxis2);
-            plotModel1.PlotAreaBackground = OxyColor.FromArgb(220, 255, 255, 255);
-            plotModel1.LegendBorder = OxyColors.Black;
-            plotModel1.LegendBorderThickness = 1;
-            plotModel1.LegendBackground = OxyColor.FromArgb(200, 255, 255, 255);
-            return plotModel1;
-        }
 
-        public static PlotModel LineSeries1()
-        {
-            var plotModel1 = new PlotModel();
-            plotModel1.PlotType = PlotType.Cartesian;
-            plotModel1.LegendSymbolLength = 24;
-            plotModel1.LegendPosition = LegendPosition.LeftTop;
-            //plotModel1.Title = "LineSeries";
-            var linearAxis1 = new LinearAxis();
-            linearAxis1.MajorGridlineStyle = LineStyle.Solid;
-            //linearAxis1.MaximumPadding = 0;
-            //linearAxis1.MinimumPadding = 0;
-            linearAxis1.MinorGridlineStyle = LineStyle.Dot;
-            linearAxis1.Position = AxisPosition.Bottom;
-            linearAxis1.TickStyle = TickStyle.Inside;
-            plotModel1.Axes.Add(linearAxis1);
-            var linearAxis2 = new LinearAxis();
-            linearAxis2.MajorGridlineStyle = LineStyle.Solid;
-            linearAxis2.TickStyle = TickStyle.Inside;
-            //linearAxis2.MaximumPadding = 0;
-            //linearAxis2.MinimumPadding = 0;
-            linearAxis2.MinorGridlineStyle = LineStyle.Dot;
-            plotModel1.Axes.Add(linearAxis2);
-            plotModel1.PlotAreaBackground = OxyColor.FromArgb(220, 255, 255, 255);
-            plotModel1.LegendBorder = OxyColors.Black;
-            plotModel1.LegendBorderThickness = 1;
-            plotModel1.LegendBackground = OxyColor.FromArgb(200, 255, 255, 255);
-            return plotModel1;
-        }
-
-        PlotModel pm;
-        PlotModel pm1;
-
-        LineSeries lineSeriesCurrent;
+        CTransmissionCal TransmissionCal = new CTransmissionCal();
+        CWheelCal WheelCal = new CWheelCal();
+        
+        CData data = new CData();
 
         public MainWindow()
         {
@@ -101,14 +45,11 @@ namespace BicycleCalculatorWPF
                     break;
             }
             InitializeComponent();
+
         }
 
-        CData data = new CData();
+        
 
-        bool ready = false;
-
-        int CurveX = 0;
-        int CurveY = 1;
 
         System.Timers.Timer timerCAD = new System.Timers.Timer(50);
         System.Diagnostics.Stopwatch CADwatch = new System.Diagnostics.Stopwatch();
@@ -165,11 +106,7 @@ namespace BicycleCalculatorWPF
         private void Init(object obj)
         {
             data.DataInit();
-
-            pm = new PlotModel();
-            pm1 = new PlotModel();
-            lineSeriesCurrent = new LineSeries();
-
+            
             this.Dispatcher.Invoke(new outputDelegate(outputAction));
         }
 
@@ -196,7 +133,8 @@ namespace BicycleCalculatorWPF
 
         private void RefreshData()
         {
-            ready = false;
+            TransmissionCal.ready = false;
+            WheelCal.ready = false;
 
             int temp0 = WheelcomboBox.SelectedIndex;
             int temp1 = FrNumcomboBox.SelectedIndex;
@@ -251,15 +189,17 @@ namespace BicycleCalculatorWPF
             HubNumcomboBox.SelectedIndex  = temp7;
             RimNumcomboBox.SelectedIndex  = temp8;
 
-            ready = true;
-            Calculate();
-            CalculateSpoke();
+            TransmissionCal.ready = true;
+            WheelCal.ready = true;
+            TransmissionCal.Calculate();
+            WheelCal.CalculateSpoke();
         }
 
         System.Timers.Timer timerload1;
         private void outputAction()
         {
-            ready = false;
+            TransmissionCal.ready = false;
+            WheelCal.ready = false;
 
             FrNumcomboBox.Items.Clear();
             BkNumcomboBox.Items.Clear();
@@ -312,21 +252,8 @@ namespace BicycleCalculatorWPF
             numericUpDown2.ToolTip = Properties.Resources.StringRimdiameter + "\r\n" + Properties.Resources.StringRimdiametermm;
             WheelLenthtextBox.ToolTip = Properties.Resources.StringTireCirc + "\r\n" + Properties.Resources.Stringmm;
 
-            pm = LineSeries();
-            pm1 = LineSeries1();
-            Chart1.Model = pm;
-            Chart2.Model = pm1;
-            lineSeriesCurrent.Color = OxyColors.SkyBlue;
-            lineSeriesCurrent.MarkerFill = OxyColors.SkyBlue;
-            lineSeriesCurrent.MarkerSize = 4;
-            lineSeriesCurrent.MarkerStroke = OxyColors.White;
-            lineSeriesCurrent.MarkerStrokeThickness = 1.5;
-            lineSeriesCurrent.MarkerType = MarkerType.Circle;
-            lineSeriesCurrent.Title = Properties.Resources.StringCurrent;
-            Chart1.Model.Series.Add(lineSeriesCurrent);
-
-            pm.Axes[1].Title = Properties.Resources.StringSpdRatio;
-            pm.Axes[0].Title = Properties.Resources.StringGear + " No.";
+            TransmissionCal.Init(Chart1, listBox1, labelinfo, labelinfo1);
+            WheelCal.Init(Chart2, listBox2);
 
             HubNumcomboBox.ItemsSource = data.hublist;
             RimNumcomboBox.ItemsSource = data.rimlist;
@@ -335,52 +262,6 @@ namespace BicycleCalculatorWPF
             RimNumcomboBox.SelectedIndex = 1;
 
 
-            frnow.teeth[0].Teeth = Properties.Settings.Default.frnow1;
-            frnow.teeth[1].Teeth = Properties.Settings.Default.frnow2;
-            frnow.teeth[2].Teeth = Properties.Settings.Default.frnow3;
-            frnow.teeth[3].Teeth = Properties.Settings.Default.frnow4;
-            frnow.teeth[4].Teeth = Properties.Settings.Default.frnow5;
-            frnow.teeth[5].Teeth = Properties.Settings.Default.frnow6;
-            frnow.teeth[6].Teeth = Properties.Settings.Default.frnow7;
-            frnow.teeth[7].Teeth = Properties.Settings.Default.frnow8;
-            frnow.teeth[8].Teeth = Properties.Settings.Default.frnow9;
-            frnow.teeth[9].Teeth = Properties.Settings.Default.frnow10;
-            frnow.teeth[10].Teeth = Properties.Settings.Default.frnow11;
-            frnow.teeth[11].Teeth = Properties.Settings.Default.frnow12;
-            for (int i = 0; i < 12; i++)
-                if (frnow.teeth[i].Teeth == 0) frnow.teeth[i].Teeth = 1;
-
-            bknow.teeth[0].Teeth = Properties.Settings.Default.bknow1;
-            bknow.teeth[1].Teeth = Properties.Settings.Default.bknow2;
-            bknow.teeth[2].Teeth = Properties.Settings.Default.bknow3;
-            bknow.teeth[3].Teeth = Properties.Settings.Default.bknow4;
-            bknow.teeth[4].Teeth = Properties.Settings.Default.bknow5;
-            bknow.teeth[5].Teeth = Properties.Settings.Default.bknow6;
-            bknow.teeth[6].Teeth = Properties.Settings.Default.bknow7;
-            bknow.teeth[7].Teeth = Properties.Settings.Default.bknow8;
-            bknow.teeth[8].Teeth = Properties.Settings.Default.bknow9;
-            bknow.teeth[9].Teeth = Properties.Settings.Default.bknow10;
-            bknow.teeth[10].Teeth = Properties.Settings.Default.bknow11;
-            bknow.teeth[11].Teeth = Properties.Settings.Default.bknow12;
-            for (int i = 0; i < 12; i++)
-                if (bknow.teeth[i].Teeth == 0) bknow.teeth[i].Teeth = 1;
-
-            innow.teeth[0].Teeth = Properties.Settings.Default.innow1;
-            innow.teeth[1].Teeth = Properties.Settings.Default.innow2;
-            innow.teeth[2].Teeth = Properties.Settings.Default.innow3;
-            innow.teeth[3].Teeth = Properties.Settings.Default.innow4;
-            innow.teeth[4].Teeth = Properties.Settings.Default.innow5;
-            innow.teeth[5].Teeth = Properties.Settings.Default.innow6;
-            innow.teeth[6].Teeth = Properties.Settings.Default.innow7;
-            innow.teeth[7].Teeth = Properties.Settings.Default.innow8;
-            innow.teeth[8].Teeth = Properties.Settings.Default.innow9;
-            innow.teeth[9].Teeth = Properties.Settings.Default.innow10;
-            innow.teeth[10].Teeth = Properties.Settings.Default.innow11;
-            innow.teeth[11].Teeth = Properties.Settings.Default.innow12;
-            innow.teeth[12].Teeth = Properties.Settings.Default.innow13;
-            innow.teeth[13].Teeth = Properties.Settings.Default.innow14;
-            for (int i = 0; i < 14; i++)
-                if (innow.teeth[i].Teeth == 0) innow.teeth[i].Teeth = 1;
 
             checkBox1.IsChecked = Properties.Settings.Default.IsSpd;
             trackBar1.Value = Properties.Settings.Default.SpdVal;
@@ -394,9 +275,15 @@ namespace BicycleCalculatorWPF
 
             TabControlMain.SelectedIndex = Properties.Settings.Default.TabSlt;
 
-            ready = true;
-            Calculate();
-            CalculateSpoke();
+            TransmissionCal.ready = true;
+            WheelCal.ready = true;
+
+            checkBox1_Click(null, null);
+
+            TransmissionCal.Calculate();
+            WheelCal.CalculateSpoke();
+
+            
 
             timerload1 = new System.Timers.Timer(200);
             timerload1.Enabled = true;
@@ -423,8 +310,8 @@ namespace BicycleCalculatorWPF
         private void FrNumcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
         {
             if (FrNumcomboBox.SelectedItem == null) return;
-            bool rtemp = ready;
-            ready = false;
+            bool rtemp = TransmissionCal.ready;
+            TransmissionCal.ready = false;
             FrModelcomboBox.Items.Clear();
 
 
@@ -432,530 +319,104 @@ namespace BicycleCalculatorWPF
                 FrModelcomboBox.Items.Add(gear);
 
             FrModelcomboBox.SelectedIndex = 0;
-            ready = rtemp;
-            Calculate();
+            TransmissionCal.ready = rtemp;
+            TransmissionCal.Calculate();
         }
 
         private void BkNumcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
         {
             if (BkNumcomboBox.SelectedItem == null) return;
-            bool rtemp = ready;
-            ready = false;
+            bool rtemp = TransmissionCal.ready;
+            TransmissionCal.ready = false;
             BkModelcomboBox.Items.Clear();
 
             foreach (CGear gear in ((CGearList)BkNumcomboBox.SelectedItem).Gears)
                 BkModelcomboBox.Items.Add(gear);
 
             BkModelcomboBox.SelectedIndex = 0;
-            ready = rtemp;
-            Calculate();
+            TransmissionCal.ready = rtemp;
+            TransmissionCal.Calculate();
         }
 
         private void InNumcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
         {
             if (InNumcomboBox.SelectedItem == null) return;
-            bool rtemp = ready;
-            ready = false;
+            bool rtemp = TransmissionCal.ready;
+            TransmissionCal.ready = false;
             InModelcomboBox.Items.Clear();
 
             foreach (CGear gear in ((CGearList)InNumcomboBox.SelectedItem).Gears)
                 InModelcomboBox.Items.Add(gear);
             InModelcomboBox.SelectedIndex = 0;
-            ready = rtemp;
-            Calculate();
+            TransmissionCal.ready = rtemp;
+            TransmissionCal.Calculate();
         }
 
-        CGear frnow;
         private void FrModelcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
         {
             if (FrModelcomboBox.SelectedItem == null) return;
 
-            bool rtemp = ready;
-            ready = false;
-            frnow = (CGear)((CGear)FrModelcomboBox.SelectedItem).Clone();
+            bool rtemp = TransmissionCal.ready;
+            TransmissionCal.ready = false;
+            TransmissionCal.frnow = (CGear)((CGear)FrModelcomboBox.SelectedItem).Clone();
             dataGridViewFr.Items.Clear();
-            for (int i = 0; i < frnow.Speeds; i++) dataGridViewFr.Items.Add(frnow.teeth[i]);
-            ready = rtemp;
-            Calculate();
+            for (int i = 0; i < TransmissionCal.frnow.Speeds; i++) dataGridViewFr.Items.Add(TransmissionCal.frnow.teeth[i]);
+            TransmissionCal.ready = rtemp;
+            TransmissionCal.Calculate();
         }
 
-        CGear bknow;
         private void BkModelcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
         {
             if (BkModelcomboBox.SelectedItem == null) return;
 
-            bool rtemp = ready;
-            ready = false;
-            bknow = (CGear)((CGear)BkModelcomboBox.SelectedItem).Clone();
+            bool rtemp = TransmissionCal.ready;
+            TransmissionCal.ready = false;
+            TransmissionCal.bknow = (CGear)((CGear)BkModelcomboBox.SelectedItem).Clone();
             dataGridViewBk.Items.Clear();
-            for (int i = 0; i < bknow.Speeds; i++) dataGridViewBk.Items.Add(bknow.teeth[i]);
-            ready = rtemp;
-            Calculate();
+            for (int i = 0; i < TransmissionCal.bknow.Speeds; i++) dataGridViewBk.Items.Add(TransmissionCal.bknow.teeth[i]);
+            TransmissionCal.ready = rtemp;
+            TransmissionCal.Calculate();
         }
 
-        CGear innow;
         private void InModelcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
         {
             if (InModelcomboBox.SelectedItem == null) return;
-            bool rtemp = ready;
-            ready = false;
-            innow = (CGear)((CGear)InModelcomboBox.SelectedItem).Clone();
+            bool rtemp = TransmissionCal.ready;
+            TransmissionCal.ready = false;
+            TransmissionCal.innow = (CGear)((CGear)InModelcomboBox.SelectedItem).Clone();
             dataGridViewIn.Items.Clear();
-            for (int i = 0; i < innow.Speeds; i++) dataGridViewIn.Items.Add(innow.teeth[i]);
-            if (innow.Speeds <= 1) dataGridViewIn.IsEnabled = false;
+            for (int i = 0; i < TransmissionCal.innow.Speeds; i++) dataGridViewIn.Items.Add(TransmissionCal.innow.teeth[i]);
+            if (TransmissionCal.innow.Speeds <= 1) dataGridViewIn.IsEnabled = false;
             else dataGridViewIn.IsEnabled = true;
-            ready = rtemp;
-            Calculate();
+            TransmissionCal.ready = rtemp;
+            TransmissionCal.Calculate();
         }
         
-        double toothrateold = 0;
-        List<CResult> results = new List<CResult>();
-        List<int> NaNNumber = new List<int>();
-        private void Calculate()
-        {
-            if (!ready) return;
-            pm.Axes[0].MinorStep = double.NaN;
-            pm.Axes[0].MajorStep = double.NaN;
-            CGear frtemp = frnow;
-            CGear bktemp = bknow;
-            CGear intemp = innow;
-            CWheel whtemp = (CWheel)((CWheel)WheelcomboBox.SelectedItem).Clone();
-            try
-            {
-                whtemp.Lenth = Convert.ToInt32(WheelLenthtextBox.Text);
-            }
-            catch { }
-
-            double cad = trackBar1.Value;
-
-            listBox1.Items.Clear();
-
-            lineSeriesCurrent.Points.Clear();
-            double toothratemax = 0;
-            double toothratemin = 0;
-
-            int num = 1;
-            NaNNumber.Clear();
-            for (int i = 0; i < frtemp.Speeds; i++)
-            {
-                for (int k = 0; k < intemp.Speeds; k++)
-                {
-                    for (int j = 0; j < bktemp.Speeds; j++)
-                    {
-                        CResult resulttemp = new CResult();
-                        resulttemp.No1 = num;
-                        num++;
-                        resulttemp.Gear1 = "";
-                        resulttemp.GearT1 = "";
-                        if (frtemp.Speeds != 1)
-                        {
-                            resulttemp.Gear1 += (i + 1).ToString();
-                            resulttemp.GearT1 += frtemp.teeth[i].teeth.ToString() + "T";
-                        }
-                        if (bktemp.Speeds != 1)
-                        {
-                            if (resulttemp.Gear1 != "")
-                            {
-                                resulttemp.Gear1 += "x";
-                                resulttemp.GearT1 += "x";
-                            }
-                            resulttemp.Gear1 += (j + 1).ToString();
-                            resulttemp.GearT1 += bktemp.teeth[j].teeth.ToString() + "T";
-                        }
-                        if (intemp.Speeds != 1)
-                        {
-                            if (resulttemp.Gear1 != "")
-                            {
-                                resulttemp.Gear1 += "x";
-                                resulttemp.GearT1 += "x";
-                            }
-                            resulttemp.Gear1 += (k + 1).ToString();
-                            resulttemp.GearT1 += intemp.teeth[k].Teeth.ToString("0.00");
-                        }
-                        double toothrateout = (double)frtemp.teeth[i].teeth / (double)bktemp.teeth[j].teeth;
-                        double toothrate = toothrateout * intemp.teeth[k].teeth;
-                        
-                        if (toothratemin == 0) toothratemin = toothrate;
-                        if (toothratemax == 0) toothratemax = toothrate;
-                        if (toothrate < toothratemin) toothratemin = toothrate;
-                        if (toothrate > toothratemax) toothratemax = toothrate;
-
-                        resulttemp.GearRatio1 = toothrate;
-                        resulttemp.SpeedRatio1 = toothrate * whtemp.Lenth / 3.1415926535 / 25.4;
-
-                        if (checkBox1.IsChecked.Value)
-                        {
-                            if (Properties.Settings.Default.IsMPH)
-                                resulttemp.Speed1 = cad * 1.609344 / 2.0 * 1000000.0 / 60.0 / whtemp.Lenth / toothrate;
-                            else
-                                resulttemp.Speed1 = cad / 2.0 * 1000000.0 / 60.0 / whtemp.Lenth / toothrate;
-                        }
-                        else
-                        {
-                            if (Properties.Settings.Default.IsMPH)
-                                resulttemp.Speed1 = toothrate * cad * whtemp.Lenth * 60 / 1000000.0 * 0.6213712;
-                            else
-                                resulttemp.Speed1 = toothrate * cad * whtemp.Lenth * 60 / 1000000.0;
-                        }
-
-                        if (num >= 3)
-                            resulttemp.Increment1 = toothrate / toothrateold - 1.0;
-                        toothrateold = toothrate;
-
-                        resulttemp.Remark1 = "";
-                        if (frtemp.Speeds != 1 && bktemp.Speeds != 1)
-                        {
-                            if (i == frtemp.Speeds - 1 && j == 0) resulttemp.Remark1 += Properties.Resources.StringLFLB;
-                            if (i == 0 && j == bktemp.Speeds - 1) resulttemp.Remark1 += Properties.Resources.StringSFSB;
-                        }
-
-                        if (intemp.Speeds != 1)
-                        {
-                            if (toothrateout < 1.5) resulttemp.Remark1 += Properties.Resources.StringTorque;
-                        }
-                        results.Add(resulttemp);
-                        listBox1.Items.Add(resulttemp);
-
-                        
-                        double tempx = 0;
-                        double tempy = 0;
-                        switch (CurveX)
-                        {
-                            case 0://不分支
-                                tempx = num - 1;
-                                break;
-                            case 1://按牙盘
-                                tempx = bktemp.Speeds * k + j + 1;
-                                break;
-                            case 2://按飞轮
-                                tempx = i * frtemp.Speeds + k + 1;
-                                break;
-                            case 3://按内变速
-                                tempx = i * bktemp.Speeds + j + 1;
-                                break;
-                        }
-
-
-                        switch (CurveY)
-                        {
-                            case 1://走距速比
-                                tempy = toothrate * whtemp.Lenth / 1000.0;
-                                break;
-                            case 2://GI速比
-                                tempy = toothrate * whtemp.Lenth / 3.1415926535 / 25.4;
-                                break;
-                            case 3://齿比
-                                tempy = toothrate;
-                                break;
-                            case 4://车速踏频
-                                tempy = resulttemp.Speed1;
-                                break;
-                        }
-                        if (lineSeriesCurrent.Points.Count >= 2)
-                            if (lineSeriesCurrent.Points[lineSeriesCurrent.Points.Count - 2].X != double.NaN)
-                                if (tempx - lineSeriesCurrent.Points[lineSeriesCurrent.Points.Count - 2].X <= 0)
-                                {
-                                    lineSeriesCurrent.Points.Add(new DataPoint(double.NaN, double.NaN));
-                                    NaNNumber.Add(num - 1);
-                                }
-                        lineSeriesCurrent.Points.Add(new DataPoint(tempx, tempy));
-                        
-                    }
-                }
-            }
-
-            switch (CurveX)
-            {
-                case 0://不分支
-                    pm.Axes[0].Title = Properties.Resources.StringGear + " No.";
-                    break;
-                case 1://按牙盘
-                    pm.Axes[0].Title = Properties.Resources.StringGear + " No. (" + Properties.Resources.StringBranchfr + ")";
-                    break;
-                case 2://按飞轮
-                    pm.Axes[0].Title = Properties.Resources.StringGear + " No. (" + Properties.Resources.StringBranchbk + ")";
-                    break;
-                case 3://按内变速
-                    pm.Axes[0].Title = Properties.Resources.StringGear + " No. (" + Properties.Resources.StringBranchin + ")";
-                    break;
-            }
-
-
-            switch (CurveY)
-            {
-                case 1://走距速比
-                    pm.Axes[1].Title = Properties.Resources.StringSpdRatio;
-                    break;
-                case 2://GI速比
-                    pm.Axes[1].Title = Properties.Resources.StringGI;
-                    break;
-                case 3://齿比
-                    pm.Axes[1].Title = Properties.Resources.StringGearRatio;
-                    break;
-                case 4://车速踏频
-                    pm.Axes[1].Title = (checkBox1.IsChecked.Value ? Properties.Resources.StringCAD + "(rpm)" : (Properties.Resources.StringSpeed + (Properties.Settings.Default.IsMPH ? "(mph)" : "(km/h)")));
-                    break;
-            }
-
-            if (checkBox1.IsChecked.Value)
-                SpeedColumn.Header = Properties.Resources.StringCAD + " rpm";
-            else
-            {
-                if (Properties.Settings.Default.IsMPH)
-                    SpeedColumn.Header = Properties.Resources.StringSpeed + " mph";
-                else
-                    SpeedColumn.Header = Properties.Resources.StringSpeed + " km/h";
-            }
-            labelinfo.Content = Properties.Resources.StringTotaldiff + ": " +
-                (Convert.ToDouble(toothratemax / toothratemin * 100.0)).ToString("F0") +
-                "%";
-            labelinfo1.Content = Properties.Resources.StringTotalCap + ": " +
-                (frtemp.teeth[frtemp.Speeds - 1].teeth - frtemp.teeth[0].teeth - bktemp.teeth[bktemp.Speeds - 1].teeth + bktemp.teeth[0].teeth).ToString() + "T";
-
-            if (checkBox1.IsChecked.Value)
-            {
-                if (Properties.Settings.Default.IsMPH)
-                    labelCAD.Content = (trackBar1.Value / 2.0).ToString("0.0") + " mph";
-                else
-                    labelCAD.Content = (trackBar1.Value / 2.0).ToString("0.0") + " km/h";
-            }
-            else
-            {
-                labelCAD.Content = trackBar1.Value.ToString("0.0") + " rpm";
-            }
-            
-            Chart1.ResetAllAxes();
-            Chart1.InvalidatePlot(true);
-            pm.Axes[1].Minimum = 0;
-            //if (pm.Axes[0].ActualMinorStep < 0.9 && pm.Axes[0].MinorStep == double.NaN) pm.Axes[0].MinorStep = 1;
-            //if (pm.Axes[0].ActualMajorStep < 0.9 && pm.Axes[0].MajorStep == double.NaN) pm.Axes[0].MajorStep = 1;
-            //Chart1.InvalidatePlot(true);
-
-
-        }
-
-        
-        private void AddCurveNow()
-        {
-            CGear frtemp = (CGear)FrModelcomboBox.SelectedItem;
-            CGear bktemp = (CGear)BkModelcomboBox.SelectedItem;
-            CGear intemp = (CGear)((CGear)InModelcomboBox.SelectedItem).Clone();
-            CWheel whtemp = (CWheel)WheelcomboBox.SelectedItem;
-
-            whtemp.Lenth = Convert.ToInt32(WheelLenthtextBox.Text);
-
-            string tempstr = "";
-            tempstr += pm.Axes[0].Title;
-            tempstr += " " + frtemp.Name;
-            tempstr += "& " + bktemp.Name;
-            if (intemp.Speeds != 1)
-                tempstr += "& " + intemp.Name;
-            string chartname = tempstr + "& " + whtemp.Lenth.ToString()+"mm";
-            /*
-            while (Chart1.Series.FindByName(chartname) != null)
-            {
-                InputForm inputform = new InputForm(Properties.Resources.StringAddCurve, Properties.Resources.StringCurveexist + ": \r\n\"" + chartname + "\"\r\n" + Properties.Resources.StringRenameandAdd, chartname);
-                if (inputform.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    chartname = inputform.name;
-                else
-                    return;
-            }*/
-            //foreach (DataPoint dp in lineSeriesCurrent..Points) dp.MarkerSize = 4;
-            InputWindow inputform = new InputWindow(Properties.Resources.StringAddCurve, Properties.Resources.StringInputCName, chartname);
-            if (inputform.ShowDialog().Value)
-                chartname = inputform.name;
-            else
-                return;
-
-
-            LineSeries temp = new LineSeries();
-            //temp.Color = OxyColors.SkyBlue;
-            //temp.MarkerFill = OxyColors.SkyBlue;
-            temp.MarkerSize = 4;
-            temp.MarkerStroke = OxyColors.White;
-            temp.MarkerStrokeThickness = 2;
-            temp.MarkerType = MarkerType.Circle;
-            temp.Title = chartname;
-            foreach (DataPoint dp in lineSeriesCurrent.Points) 
-                temp.Points.Add(new DataPoint(dp.X, dp.Y));
-            pm.Series.Add(temp);
-            
-
-            Chart1.InvalidatePlot(true);
-
-            
-        }
-
-
         private void WheelcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
         {
             CWheel temp = (CWheel)WheelcomboBox.SelectedItem;
-            if (temp != null)
-                WheelLenthtextBox.Text = temp.Lenth.ToString();
+            if (temp == null) return;
+            WheelLenthtextBox.Text = temp.Lenth.ToString();
+            TransmissionCal.whnow = temp;
+            TransmissionCal.whnow_index = WheelcomboBox.SelectedIndex;
         }
 
         private void WheelLenthtextBox_ValueChanged(object sender, EventArgs e)
         {
-            Calculate();
+            TransmissionCal.Calculate();
         }
 
 
-        private void ExportFileSp()
-        {
-            Microsoft.Win32.SaveFileDialog saveFileDialog1 = new Microsoft.Win32.SaveFileDialog();
-            saveFileDialog1.DefaultExt = "csv";
-            saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            saveFileDialog1.FileName = Properties.Resources.StringSpokesData + ".csv";
-            if (!saveFileDialog1.ShowDialog().Value)
-                return;
-
-            CRim rimtemp = rimnow;
-            CHub hubtemp = hubnow;
-
-            System.IO.StreamWriter swriter;
-            string _filename = saveFileDialog1.FileName;
-            try
-            {
-                swriter = new System.IO.StreamWriter(_filename, false, Encoding.UTF8);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(Properties.Resources.StringUnableexp + "\r\n" + ex.Message);
-                return;
-            }
-            swriter.WriteLine(Properties.Resources.StringSpokesData);
-            swriter.WriteLine("");
-
-
-            swriter.WriteLine(Properties.Resources.StringRims + "," + rimtemp.Name + ",");
-            swriter.WriteLine("ERD" + "," + "OSB" + ",");
-            swriter.WriteLine(rimtemp.ERD.ToString() + "mm" + "," + rimtemp.OSB.ToString() + "mm");
-            swriter.WriteLine("");
-
-
-            swriter.WriteLine(Properties.Resources.StringHubs + "," + hubtemp.Name + ",");
-            string hubstr = "";
-            hubstr += Properties.Resources.StringFlangeL + ",";
-            hubstr += Properties.Resources.StringFlangeR + ",";
-            hubstr += Properties.Resources.StringCenterL + ",";
-            hubstr += Properties.Resources.StringCenterR + ",";
-            hubstr += Properties.Resources.StringSpokeHole + ",";
-            swriter.WriteLine(hubstr);
-            hubstr = "";
-            hubstr += hubtemp.LeftFlange + "mm" + ",";
-            hubstr += hubtemp.RightFlange + "mm" + ",";
-            hubstr += hubtemp.CenterToLeft + "mm" + ",";
-            hubstr += hubtemp.CenterToRight + "mm" + ",";
-            hubstr += hubtemp.SpokeHole + "mm" + ",";
-            swriter.WriteLine(hubstr);
-            swriter.WriteLine("");
-
-            swriter.WriteLine(Properties.Resources.StringSpokes + "," + TextBoxSpokes.Text);
-            swriter.WriteLine("");
-
-            string strtemp = "";
-            foreach (GridViewColumn ch in listBox2Grid.Columns)
-                strtemp += ch.Header + ",";
-            swriter.WriteLine(strtemp);
-
-            foreach (CSpokeResult it in listBox2.Items)
-            {
-                strtemp = "";
-                strtemp += it.Crosses.ToString() + ",";
-                strtemp += it.Lenthleft.ToString("0.00") + ",";
-                strtemp += it.Lenthright.ToString("0.00") + ",";
-                strtemp += it.Remark + ",";
-                swriter.WriteLine(strtemp);
-            }
-            swriter.Close();
-
-        }
-
-        private void ExportFileTr()
-        {
-            Microsoft.Win32.SaveFileDialog saveFileDialog1 = new Microsoft.Win32.SaveFileDialog();
-            saveFileDialog1.DefaultExt = "csv";
-            saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            saveFileDialog1.FileName = Properties.Resources.StringTransData + ".csv";
-            if (!saveFileDialog1.ShowDialog().Value)
-                return;
-
-            CGear frtemp = (CGear)((CGear)FrModelcomboBox.SelectedItem).Clone();
-            CGear bktemp = (CGear)((CGear)BkModelcomboBox.SelectedItem).Clone();
-            CGear intemp = (CGear)((CGear)InModelcomboBox.SelectedItem).Clone();
-            CWheel whtemp = (CWheel)((CWheel)WheelcomboBox.SelectedItem).Clone();
-
-            for (int i = 0; i < dataGridViewFr.Items.Count; i++)
-                frtemp.teeth[i].teeth = ((CTeeth)dataGridViewFr.Items[i]).Teeth;
-            for (int i = 0; i < dataGridViewBk.Items.Count; i++)
-                bktemp.teeth[i].teeth = ((CTeeth)dataGridViewBk.Items[i]).Teeth;
-            for (int i = 0; i < dataGridViewIn.Items.Count; i++)
-                intemp.teeth[i].teeth = ((CTeeth)dataGridViewIn.Items[i]).Teeth;
-
-            whtemp.Lenth = Convert.ToInt32(WheelLenthtextBox.Text);
-            System.IO.StreamWriter swriter;
-            string _filename = saveFileDialog1.FileName;
-            try
-            {
-                swriter = new System.IO.StreamWriter(_filename, false, Encoding.UTF8);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(Properties.Resources.StringUnableexp + "\r\n" + ex.Message);
-                return;
-            }
-            swriter.WriteLine(Properties.Resources.StringTransData);
-            swriter.WriteLine("");
-
-
-            swriter.WriteLine(Properties.Resources.StringTire + "," + whtemp.Name + "," + whtemp.Lenth.ToString() + "mm");
-
-            string frstr = "";
-            for (int i = 0; i < frtemp.Speeds; i++)
-                frstr += frtemp.teeth[i].teeth.ToString() + "/";
-            frstr += "T";
-            swriter.WriteLine(Properties.Resources.StringCranksets + "," + frtemp.Name + "," + frstr);
-
-            string bkstr = "";
-            for (int i = 0; i < bktemp.Speeds; i++)
-                bkstr += bktemp.teeth[i].teeth.ToString() + "/";
-            bkstr += "T";
-            swriter.WriteLine(Properties.Resources.StringCassette + "," + bktemp.Name + "," + bkstr);
-
-            string instr = "";
-            for (int i = 0; i < intemp.Speeds; i++)
-                instr += intemp.teeth[i].teeth.ToString("0.00") + "/";
-            swriter.WriteLine(Properties.Resources.StringInternalHub + "," + intemp.Name + "," + instr);
-
-            swriter.WriteLine("");
-            string strtemp = "";
-            foreach (GridViewColumn ch in listBox1Grid.Columns)
-                strtemp += ch.Header + ",";
-            swriter.WriteLine(strtemp);
-
-            foreach (CResult it in listBox1.Items)
-            {
-                strtemp = "";
-                strtemp += it.No1.ToString() + ",";
-                strtemp += it.Gear1 + ",";
-                strtemp += it.GearT1 + ",";
-                strtemp += it.GearRatio1.ToString("0.00") + ",";
-                strtemp += it.SpeedRatio1.ToString("0.0") + ",";
-                strtemp += it.Speed1.ToString("0.0") + ",";
-                strtemp += it.Increment1.ToString("P2") + ",";
-                strtemp += it.Remark1 + ",";
-                swriter.WriteLine(strtemp);
-            }
-            swriter.Close();
-        }
+        
         
 
         private void listBox1_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
         {
-            pm.Annotations.Clear();
             dataGridViewFr.SelectedIndex = -1;
             dataGridViewBk.SelectedIndex = -1;
             dataGridViewIn.SelectedIndex = -1;
+            TransmissionCal.pm.Annotations.Clear();
+
             if (listBox1.SelectedItems.Count == 0)
             {
                 Chart1.InvalidatePlot(true);
@@ -968,6 +429,7 @@ namespace BicycleCalculatorWPF
 
             double max = 0;
             double min = 100000000;
+            
             foreach (CResult item in listBox1.SelectedItems)
             {
                 int n = item.No1 - 1;
@@ -984,16 +446,16 @@ namespace BicycleCalculatorWPF
 
                 PointAnnotation pointAnnotation1 = new PointAnnotation();
                 int nanadd = 0;
-                foreach (int nan in NaNNumber)
+                foreach (int nan in TransmissionCal.NaNNumber)
                     if (n > nan-2) nanadd++;
-                pointAnnotation1.X = lineSeriesCurrent.Points[n + nanadd].X;
-                pointAnnotation1.Y = lineSeriesCurrent.Points[n + nanadd].Y;
+                pointAnnotation1.X = TransmissionCal.lineSeriesCurrent.Points[n + nanadd].X;
+                pointAnnotation1.Y = TransmissionCal.lineSeriesCurrent.Points[n + nanadd].Y;
                 pointAnnotation1.Size = 6;
                 pointAnnotation1.Fill = OxyColors.SkyBlue;
                 pointAnnotation1.Stroke = OxyColors.DarkBlue;
                 pointAnnotation1.StrokeThickness = 1;
                 pointAnnotation1.Text = item.Gear1;
-                pm.Annotations.Add(pointAnnotation1);
+                TransmissionCal.pm.Annotations.Add(pointAnnotation1);
 
             }
             if (listBox1.SelectedItems.Count > 1)
@@ -1088,50 +550,50 @@ namespace BicycleCalculatorWPF
 
         private void NoneToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            CurveX = 0;
-            Calculate();
+            TransmissionCal.CurveX = 0;
+            TransmissionCal.Calculate();
         }
 
         private void WithCrankToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            CurveX = 1;
-            Calculate();
+            TransmissionCal.CurveX = 1;
+            TransmissionCal.Calculate();
         }
 
         private void WithCassToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            CurveX = 2;
-            Calculate();
+            TransmissionCal.CurveX = 2;
+            TransmissionCal.Calculate();
         }
 
         private void WithInterToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            CurveX = 3;
-            Calculate();
+            TransmissionCal.CurveX = 3;
+            TransmissionCal.Calculate();
         }
         
         private void SRToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            CurveY = 1;
-            Calculate();
+            TransmissionCal.CurveY = 1;
+            TransmissionCal.Calculate();
         }
 
         private void GIToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            CurveY = 2;
-            Calculate();
+            TransmissionCal.CurveY = 2;
+            TransmissionCal.Calculate();
         }
 
         private void GRToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            CurveY = 3;
-            Calculate();
+            TransmissionCal.CurveY = 3;
+            TransmissionCal.Calculate();
         }
 
         private void SpdToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            CurveY = 4;
-            Calculate();
+            TransmissionCal.CurveY = 4;
+            TransmissionCal.Calculate();
         }
 
 
@@ -1176,13 +638,13 @@ namespace BicycleCalculatorWPF
         private void kMHToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.IsMPH = false;
-            Calculate();
+            TransmissionCal.Calculate();
         }
 
         private void mPHToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.IsMPH = true;
-            Calculate();
+            TransmissionCal.Calculate();
         }
 
 
@@ -1231,7 +693,7 @@ namespace BicycleCalculatorWPF
             if (((CTeeth)dataGridViewFr.Items[id - 1]).teeth > 1)
                 ((CTeeth)dataGridViewFr.Items[id - 1]).teeth--;
             dataGridViewFr.Items.Refresh();
-            Calculate();
+            TransmissionCal.Calculate();
         }
 
         private void frAddButton_Click(object sender, RoutedEventArgs e)
@@ -1241,7 +703,7 @@ namespace BicycleCalculatorWPF
             if (((CTeeth)dataGridViewFr.Items[id - 1]).teeth < 200)
                 ((CTeeth)dataGridViewFr.Items[id - 1]).teeth++;
             dataGridViewFr.Items.Refresh();
-            Calculate();
+            TransmissionCal.Calculate();
         }
 
         private void bkMinuButton_Click(object sender, RoutedEventArgs e)
@@ -1251,7 +713,7 @@ namespace BicycleCalculatorWPF
             if (((CTeeth)dataGridViewBk.Items[id - 1]).teeth > 1)
                 ((CTeeth)dataGridViewBk.Items[id - 1]).teeth--;
             dataGridViewBk.Items.Refresh();
-            Calculate();
+            TransmissionCal.Calculate();
         }
 
         private void bkAddButton_Click(object sender, RoutedEventArgs e)
@@ -1261,7 +723,7 @@ namespace BicycleCalculatorWPF
             if (((CTeeth)dataGridViewBk.Items[id - 1]).teeth < 200)
                 ((CTeeth)dataGridViewBk.Items[id - 1]).teeth++;
             dataGridViewBk.Items.Refresh();
-            Calculate();
+            TransmissionCal.Calculate();
         }
 
         private void inMinuButton_Click(object sender, RoutedEventArgs e)
@@ -1271,7 +733,7 @@ namespace BicycleCalculatorWPF
             if (((CTeeth)dataGridViewIn.Items[id - 1]).teeth > 0.01)
                 ((CTeeth)dataGridViewIn.Items[id - 1]).teeth -= 0.01;
             dataGridViewIn.Items.Refresh();
-            Calculate();
+            TransmissionCal.Calculate();
         }
 
         private void inAddButton_Click(object sender, RoutedEventArgs e)
@@ -1281,33 +743,61 @@ namespace BicycleCalculatorWPF
             if (((CTeeth)dataGridViewIn.Items[id - 1]).teeth < 20.0)
                 ((CTeeth)dataGridViewIn.Items[id - 1]).teeth += 0.01;
             dataGridViewIn.Items.Refresh();
-            Calculate();
+            TransmissionCal.Calculate();
         }
 
         private void trackBar1_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Calculate();
+            if (!TransmissionCal.ready) return;
+            TransmissionCal.cad = trackBar1.Value;
+            TransmissionCal.Calculate();
+
+            if (TransmissionCal.IsSpd)
+            {
+                if (Properties.Settings.Default.IsMPH)
+                    labelCAD.Content = (trackBar1.Value / 2.0).ToString("0.0") + " mph";
+                else
+                    labelCAD.Content = (trackBar1.Value / 2.0).ToString("0.0") + " km/h";
+            }
+            else
+            {
+                labelCAD.Content = trackBar1.Value.ToString("0.0") + " rpm";
+            }
+
         }
 
         private void checkBox1_Click(object sender, RoutedEventArgs e)
         {
+            //if (!TransmissionCal.ready) return;
             if (checkBox1.IsChecked.Value)
             {
                 trackBar1.Value = 50;
                 timerCAD.Enabled = false;
                 labelCAD.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+                if (Properties.Settings.Default.IsMPH)
+                    labelCAD.Content = (trackBar1.Value / 2.0).ToString("0.0") + " mph";
+                else
+                    labelCAD.Content = (trackBar1.Value / 2.0).ToString("0.0") + " km/h";
+                SpeedColumn.Header = Properties.Resources.StringCAD + " rpm";
             }
             else
             {
                 trackBar1.Value = 80;
                 timerCAD.Enabled = true;
+                labelCAD.Content = trackBar1.Value.ToString("0.0") + " rpm";
+                if (Properties.Settings.Default.IsMPH)
+                    SpeedColumn.Header = Properties.Resources.StringSpeed + " mph";
+                else
+                    SpeedColumn.Header = Properties.Resources.StringSpeed + " km/h";
             }
-            Calculate();
+            TransmissionCal.IsSpd = checkBox1.IsChecked.Value;
+            TransmissionCal.Calculate();
         }
 
         private void WheelLenthtextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Calculate();
+            try { TransmissionCal.whlength = Convert.ToInt32(WheelLenthtextBox.Text); } catch { }
+            TransmissionCal.Calculate();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -1358,7 +848,7 @@ namespace BicycleCalculatorWPF
             if (((CTeeth)dataGridViewFr.Items[id - 1]).Teeth < 200 && e.Delta > 0)
                 ((CTeeth)dataGridViewFr.Items[id - 1]).Teeth += 1;
             dataGridViewFr.Items.Refresh();
-            Calculate();
+            TransmissionCal.Calculate();
         }
 
         private void TextBox_MouseWheel_Bk(object sender, MouseWheelEventArgs e)
@@ -1369,7 +859,7 @@ namespace BicycleCalculatorWPF
             if (((CTeeth)dataGridViewBk.Items[id - 1]).Teeth < 200 && e.Delta > 0)
                 ((CTeeth)dataGridViewBk.Items[id - 1]).Teeth += 1;
             dataGridViewBk.Items.Refresh();
-            Calculate();
+            TransmissionCal.Calculate();
         }
 
         private void TextBox_MouseWheel_In(object sender, MouseWheelEventArgs e)
@@ -1381,7 +871,7 @@ namespace BicycleCalculatorWPF
                 ((CTeeth)dataGridViewIn.Items[id - 1]).Teeth += 0.01;
 
             dataGridViewIn.Items.Refresh();
-            Calculate();
+            TransmissionCal.Calculate();
         }
 
         private void TextBox_LostKeyboardFocus_Fr(object sender, KeyboardFocusChangedEventArgs e)
@@ -1398,7 +888,7 @@ namespace BicycleCalculatorWPF
             if (teethtemp < 1) teethtemp = 1;
             ((CTeeth)dataGridViewFr.Items[id - 1]).Teeth = teethtemp;
             dataGridViewFr.Items.Refresh();
-            Calculate();
+            TransmissionCal.Calculate();
         }
 
         private void TextBox_LostKeyboardFocus_Bk(object sender, KeyboardFocusChangedEventArgs e)
@@ -1415,7 +905,7 @@ namespace BicycleCalculatorWPF
             if (teethtemp < 1) teethtemp = 1;
             ((CTeeth)dataGridViewBk.Items[id - 1]).Teeth = teethtemp;
             dataGridViewBk.Items.Refresh();
-            Calculate();
+            TransmissionCal.Calculate();
         }
 
         private void TextBox_LostKeyboardFocus_In(object sender, KeyboardFocusChangedEventArgs e)
@@ -1432,7 +922,7 @@ namespace BicycleCalculatorWPF
             if (teethtemp < 0.01) teethtemp = 0.01;
             ((CTeeth)dataGridViewIn.Items[id - 1]).Teeth = teethtemp;
             dataGridViewIn.Items.Refresh();
-            Calculate();
+            TransmissionCal.Calculate();
         }
 
         private void unitToolStripMenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
@@ -1534,9 +1024,9 @@ namespace BicycleCalculatorWPF
         private void saveToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
             if (TabControlMain.SelectedIndex == 0)
-                ExportFileTr();
+                TransmissionCal.ExportFileTr();
             else if (TabControlMain.SelectedIndex == 1)
-                ExportFileSp();
+                WheelCal.ExportFileSp();
         }
 
         private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
@@ -1603,15 +1093,12 @@ namespace BicycleCalculatorWPF
 
         private void AddCurveToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            AddCurveNow();
+            TransmissionCal.AddCurveNow();
         }
 
         private void ClrCurveToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            pm.Series.Clear(); 
-            pm.Series.Add(lineSeriesCurrent);
-            Calculate();
-            
+            TransmissionCal.ClearCurve();
         }
 
         private void labelCAD_ContextMenuOpening(object sender, ContextMenuEventArgs e)
@@ -1636,7 +1123,7 @@ namespace BicycleCalculatorWPF
 
         private void BranchDisToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            switch (CurveX)
+            switch (TransmissionCal.CurveX)
             {
                 case 0:
                     ((MenuItem)((MenuItem)sender).Items[0]).IsChecked = false;
@@ -1667,7 +1154,7 @@ namespace BicycleCalculatorWPF
 
         private void YAxisToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            switch (CurveY)
+            switch (TransmissionCal.CurveY)
             {
 
                 case 1:
@@ -1699,13 +1186,13 @@ namespace BicycleCalculatorWPF
 
         private void ResetAxisToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            pm.ResetAllAxes();
+            TransmissionCal.pm.ResetAllAxes();
             Chart1.InvalidatePlot(false);
         }
 
         private void ResetAxisToolStripMenuItem1_Click(object sender, RoutedEventArgs e)
         {
-            pm1.ResetAllAxes();
+            WheelCal.pm1.ResetAllAxes();
             Chart2.InvalidatePlot(false);
         }
 
@@ -1733,32 +1220,30 @@ namespace BicycleCalculatorWPF
             WheelcomboBox.SelectedIndex = (temp==-1?1:temp);
         }
 
-        CRim rimnow;
         private void RimNumcomboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (RimNumcomboBox.SelectedItem == null) return;
-            bool rtemp = ready;
-            ready = false;
-            rimnow = (CRim)((CRim)RimNumcomboBox.SelectedItem).Clone();
+            bool rtemp = WheelCal.ready;
+            WheelCal.ready = false;
+            WheelCal.rimnow = (CRim)((CRim)RimNumcomboBox.SelectedItem).Clone();
             dataGridViewRim.Items.Clear();
-            foreach (CValue v in rimnow.vals)
+            foreach (CValue v in WheelCal.rimnow.vals)
                 dataGridViewRim.Items.Add(v);
-            ready = rtemp;
-            CalculateSpoke();
+            WheelCal.ready = rtemp;
+            WheelCal.CalculateSpoke();
         }
 
-        CHub hubnow;
         private void HubNumcomboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (HubNumcomboBox.SelectedItem == null) return;
-            bool rtemp = ready;
-            ready = false;
-            hubnow = (CHub)((CHub)HubNumcomboBox.SelectedItem).Clone();
+            bool rtemp = WheelCal.ready;
+            WheelCal.ready = false;
+            WheelCal.hubnow = (CHub)((CHub)HubNumcomboBox.SelectedItem).Clone();
             dataGridViewHub.Items.Clear();
-            foreach (CValue v in hubnow.vals)
+            foreach (CValue v in WheelCal.hubnow.vals)
                 dataGridViewHub.Items.Add(v);
-            ready = rtemp;
-            CalculateSpoke();
+            WheelCal.ready = rtemp;
+            WheelCal.CalculateSpoke();
         }
 
         private void rimMinuButton_Click(object sender, RoutedEventArgs e)
@@ -1768,7 +1253,7 @@ namespace BicycleCalculatorWPF
             if (((CValue)dataGridViewRim.Items[no]).Val > 0.0)
                 ((CValue)dataGridViewRim.Items[no]).Val -= 0.01;
             dataGridViewRim.Items.Refresh();
-            CalculateSpoke();
+            WheelCal.CalculateSpoke();
         }
 
         private void rimAddButton_Click(object sender, RoutedEventArgs e)
@@ -1778,7 +1263,7 @@ namespace BicycleCalculatorWPF
             if (((CValue)dataGridViewRim.Items[no]).Val < 1000.0)
                 ((CValue)dataGridViewRim.Items[no]).Val += 0.01;
             dataGridViewRim.Items.Refresh();
-            CalculateSpoke();
+            WheelCal.CalculateSpoke();
         }
 
         private void hubMinuButton_Click(object sender, RoutedEventArgs e)
@@ -1788,7 +1273,7 @@ namespace BicycleCalculatorWPF
             if (((CValue)dataGridViewHub.Items[no]).Val > 0.0)
                 ((CValue)dataGridViewHub.Items[no]).Val -= 0.01;
             dataGridViewHub.Items.Refresh();
-            CalculateSpoke();
+            WheelCal.CalculateSpoke();
         }
 
         private void hubAddButton_Click(object sender, RoutedEventArgs e)
@@ -1798,7 +1283,7 @@ namespace BicycleCalculatorWPF
             if (((CValue)dataGridViewHub.Items[no]).Val < 1000.0)
                 ((CValue)dataGridViewHub.Items[no]).Val += 0.01;
             dataGridViewHub.Items.Refresh();
-            CalculateSpoke();
+            WheelCal.CalculateSpoke();
         }
 
         private void hubtextBox_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -1815,7 +1300,7 @@ namespace BicycleCalculatorWPF
                     ((CValue)dataGridViewHub.Items[no]).Val -= 0.01;
             }
             dataGridViewHub.Items.Refresh();
-            CalculateSpoke();
+            WheelCal.CalculateSpoke();
         }
 
         private void rimtextBox_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -1832,7 +1317,7 @@ namespace BicycleCalculatorWPF
                     ((CValue)dataGridViewRim.Items[no]).Val -= 0.01;
             }
             dataGridViewRim.Items.Refresh();
-            CalculateSpoke();
+            WheelCal.CalculateSpoke();
 
         }
 
@@ -1850,7 +1335,7 @@ namespace BicycleCalculatorWPF
             if (val < 0) val = 0;
             ((CValue)dataGridViewRim.Items[no]).Val = val;
             dataGridViewRim.Items.Refresh();
-            CalculateSpoke();
+            WheelCal.CalculateSpoke();
         }
 
         private void hubTextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -1867,278 +1352,9 @@ namespace BicycleCalculatorWPF
             if (val < 0) val = 0;
             ((CValue)dataGridViewHub.Items[no]).Val = val;
             dataGridViewHub.Items.Refresh();
-            CalculateSpoke();
+            WheelCal.CalculateSpoke();
         }
 
-        private void CalculateSpoke()
-        {
-            if (!ready) return;
-            pm1.Series.Clear();
-            //pm.Axes[0].MinorStep = double.NaN;
-            //pm.Axes[0].MajorStep = double.NaN;
-            //CHub hubtemp = frnow;
-            CHub hubtemp = hubnow;
-            CRim rimtemp = rimnow;
-            int Spokes;
-            int Crosses;
-            try
-            {
-                Spokes = Convert.ToInt16(TextBoxSpokes.Text);
-                if (Spokes < 4) Spokes = 4;
-                if (Spokes > 100) Spokes = 100;
-            }
-            catch
-            {
-                return;
-            }  
-         
-            try
-            {
-                Crosses = Convert.ToInt16(TextBoxCrosses.Text);
-            }
-            catch
-            {
-                return;
-            } 
-
-
-            if (Spokes <= 3) return;
-
-
-            ///////////////左侧///////////////////////
-            //花鼓孔
-            var hubhole = new ScatterSeries();
-            hubhole.MarkerType = MarkerType.Circle;
-            hubhole.MarkerSize = 3;
-            hubhole.Title = Properties.Resources.StringHubHoleL;
-            for (int i = 0; i < Spokes / 2; i++)
-            {
-                double theta = 2.0 * Math.PI / (Spokes / 2.0) * i;
-                double x = Math.Sin(theta) * hubtemp.LeftFlange / 2.0;
-                double y = Math.Cos(theta) * hubtemp.LeftFlange / 2.0;
-                ScatterPoint scatterPoint = new ScatterPoint(x, y);
-                hubhole.Points.Add(scatterPoint);
-            }
-            //轮圈孔
-            var rimhole = new ScatterSeries();
-            rimhole.MarkerType = MarkerType.Circle;
-            rimhole.MarkerSize = 3;
-            for (int i = 0; i < Spokes / 2; i++)
-            {
-                double theta = 2.0 * Math.PI / (Spokes / 2.0) * i;
-                double x = Math.Sin(theta) * rimtemp.ERD / 2.0;
-                double y = Math.Cos(theta) * rimtemp.ERD / 2.0;
-                ScatterPoint scatterPoint = new ScatterPoint(x, y);
-                rimhole.Points.Add(scatterPoint);
-            }
-            //轮圈线
-            var rimline = new LineSeries();
-            rimline.StrokeThickness = 2;
-            for (int i = 0; i < 101; i++)
-            {
-                double theta = 2.0 * Math.PI / 100.0 * i;
-                double x = Math.Sin(theta) * rimtemp.ERD / 2.0;
-                double y = Math.Cos(theta) * rimtemp.ERD / 2.0;
-                rimline.Points.Add(new DataPoint(x, y));
-            }
-            //花鼓线
-            var hubline = new LineSeries();
-            hubline.StrokeThickness = 2;
-            for (int i = 0; i < 101; i++)
-            {
-                double theta = 2.0 * Math.PI / 100.0 * i;
-                double x = Math.Sin(theta) * hubtemp.LeftFlange / 2.0 * 1.2;
-                double y = Math.Cos(theta) * hubtemp.LeftFlange / 2.0 * 1.2;
-                hubline.Points.Add(new DataPoint(x, y));
-            }
-            hubline.Points.Add(new DataPoint(double.NaN,double.NaN));
-            for (int i = 0; i < 101; i++)
-            {
-                double theta = 2.0 * Math.PI / 100.0 * i;
-                double x = Math.Sin(theta) * 7.0;
-                double y = Math.Cos(theta) * 7.0;
-                hubline.Points.Add(new DataPoint(x, y));
-            }
-            //辐条
-            var spokesline = new LineSeries();
-            spokesline.Title = Properties.Resources.StringSpokeL;
-            spokesline.StrokeThickness = 1;
-            double spokeslenthraw = 0;
-            for (int i = 0; i < Spokes / 2; i++)
-            {
-                DataPoint p1 = new DataPoint(hubhole.Points[i].X, hubhole.Points[i].Y);
-                //p1.X = hubhole.Points[i].X;
-                //p1.Y = hubhole.Points[i].Y;
-                int j = 0;
-                if (i % 2 == 0)
-                {
-                    j = i + Crosses;
-                }
-                else
-                {
-                    j = i - Crosses;
-                }
-                while (j < 0) j += Spokes / 2;
-                j = j % (Spokes / 2);
-
-                DataPoint p2 = new DataPoint(rimhole.Points[j].X, rimhole.Points[j].Y);
-                //p2.X = rimhole.Points[j].X;
-                //p2.Y = rimhole.Points[j].Y;
-                if (spokeslenthraw == 0)
-                    spokeslenthraw = (p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y);
-                spokesline.Points.Add(p1);
-                spokesline.Points.Add(p2);
-                spokesline.Points.Add(new DataPoint(double.NaN, double.NaN));
-            }
-
-
-            /////////////////////右侧///////////////////////
-            //花鼓孔
-            var hubholer = new ScatterSeries();
-            hubholer.MarkerSize = 3;
-            hubholer.Title = Properties.Resources.StringHubHoleR;
-            hubholer.MarkerType = MarkerType.Circle;
-            for (int i = 0; i < Spokes / 2; i++)
-            {
-                double theta = 2.0 * Math.PI / (Spokes / 2.0) * (i + 0.5);
-                double x = Math.Sin(theta) * hubtemp.RightFlange / 2.0;
-                double y = Math.Cos(theta) * hubtemp.RightFlange / 2.0;
-                ScatterPoint scatterPoint = new ScatterPoint(x, y);
-                hubholer.Points.Add(scatterPoint);
-            }            
-            //轮圈孔
-            var rimholer = new ScatterSeries();
-            rimholer.MarkerSize = 3;
-            rimholer.MarkerType = MarkerType.Circle;
-            for (int i = 0; i < Spokes / 2; i++)
-            {
-                double theta = 2.0 * Math.PI / (Spokes / 2.0) * (i + 0.5);
-                double x = Math.Sin(theta) * rimtemp.ERD / 2.0;
-                double y = Math.Cos(theta) * rimtemp.ERD / 2.0;
-                ScatterPoint scatterPoint = new ScatterPoint(x, y);
-                rimholer.Points.Add(scatterPoint);
-            }
-            //辐条
-            var spokesliner = new LineSeries();
-            spokesliner.Title = Properties.Resources.StringSpokeR;
-            spokesliner.StrokeThickness = 1;
-            double spokeslenthrawr = 0;
-            for (int i = 0; i < Spokes / 2; i++)
-            {
-                DataPoint p1 = new DataPoint(hubholer.Points[i].X, hubholer.Points[i].Y);
-                //p1.X = hubholer.Points[i].X;
-                //p1.Y = hubholer.Points[i].Y;
-                int j = 0;
-                if (i % 2 == 0)
-                {
-                    j = i + Crosses;
-                }
-                else
-                {
-                    j = i - Crosses;
-                }
-                while (j < 0) j += Spokes / 2;
-                j = j % (Spokes / 2);
-
-                DataPoint p2 = new DataPoint(rimholer.Points[j].X, rimholer.Points[j].Y);
-                //p2.X = rimholer.Points[j].X;
-                //p2.Y = rimholer.Points[j].Y;
-                if (spokeslenthrawr == 0)
-                    spokeslenthrawr = (p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y);
-                spokesliner.Points.Add(p1);
-                spokesliner.Points.Add(p2);
-                spokesliner.Points.Add(new DataPoint(double.NaN, double.NaN));
-            }
-
-            if (disrimline) pm1.Series.Add(rimline);
-            if (dishubline) pm1.Series.Add(hubline);
-            if (disrightside && dishubhole) pm1.Series.Add(hubholer);
-            if (disleftside && dishubhole) pm1.Series.Add(hubhole);
-            if (disrightside && disrimhole) pm1.Series.Add(rimholer);
-            if (disleftside && disrimhole) pm1.Series.Add(rimhole);
-            if (disrightside && disspokesline) pm1.Series.Add(spokesliner);
-            if (disleftside && disspokesline) pm1.Series.Add(spokesline);
-            Chart2.ResetAllAxes();
-            Chart2.InvalidatePlot(true);
-
-
-            listBox2.Items.Clear();
-
-            for (int i = 0; i < 6; i++)
-            {
-                DataPoint p1 = new DataPoint(hubhole.Points[0].X, hubhole.Points[0].Y);
-                //p1.X = hubhole.Points[0].X;
-                //p1.Y = hubhole.Points[0].Y;
-                while (i < 0) i += Spokes / 2;
-                int j = i % (Spokes / 2);
-                DataPoint p2 = new DataPoint(rimhole.Points[j].X, rimhole.Points[j].Y);
-                //p2.X = rimhole.Points[j].X;
-                //p2.Y = rimhole.Points[j].Y;
-                spokeslenthraw = (p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y);
-
-                p1 = new DataPoint(hubhole.Points[0].X, hubhole.Points[0].Y);
-                //p1.X = hubholer.Points[0].X;
-                //p1.Y = hubholer.Points[0].Y;
-                while (i < 0) i += Spokes / 2;
-                j = i % (Spokes / 2);
-                p2 = new DataPoint(rimhole.Points[j].X, rimhole.Points[j].Y);
-                //p2.X = rimholer.Points[j].X;
-                //p2.Y = rimholer.Points[j].Y;
-                spokeslenthrawr = (p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y);
-
-
-                CSpokeResult resulttemp = new CSpokeResult();
-                resulttemp.Crosses = i;
-                double offsetl = hubtemp.CenterToLeft - rimtemp.OSB;
-                double offsetr = hubtemp.CenterToRight + rimtemp.OSB;
-                resulttemp.Lenthleft = Math.Sqrt(spokeslenthraw + offsetl * offsetl) - hubtemp.SpokeHole / 2.0;
-                resulttemp.Lenthright = Math.Sqrt(spokeslenthrawr + offsetr * offsetr) - hubtemp.SpokeHole / 2.0; ;
-
-                double sinphyl = offsetl / Math.Sqrt(spokeslenthraw);
-                double sinphyr = offsetr / Math.Sqrt(spokeslenthrawr);
-                resulttemp.Tensionratio = sinphyr / sinphyl;
-                resulttemp.Remark = "";
-                listBox2.Items.Add(resulttemp);
-            }
-            if (Crosses > 5)
-            {
-                int i = Crosses;
-                DataPoint p1 = new DataPoint(hubhole.Points[0].X, hubhole.Points[0].Y);
-                //p1.X = hubhole.Points[0].X;
-                //p1.Y = hubhole.Points[0].Y;
-                while (i < 0) i += Spokes / 2;
-                int j = i % (Spokes / 2);
-
-                DataPoint p2 = new DataPoint(rimhole.Points[j].X, rimhole.Points[j].Y);
-                //p2.X = rimhole.Points[j].X;
-                //p2.Y = rimhole.Points[j].Y;
-                spokeslenthraw = (p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y);
-
-                p1 = new DataPoint(hubhole.Points[0].X, hubhole.Points[0].Y);
-                //p1.X = hubholer.Points[0].X;
-                //p1.Y = hubholer.Points[0].Y;
-                while (i < 0) i += Spokes / 2;
-                j = i % (Spokes / 2);
-                p2 = new DataPoint(rimhole.Points[j].X, rimhole.Points[j].Y);
-                //p2.X = rimholer.Points[j].X;
-                //p2.Y = rimholer.Points[j].Y;
-                spokeslenthrawr = (p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y);
-
-
-                CSpokeResult resulttemp = new CSpokeResult();
-                resulttemp.Crosses = i;
-                double offsetl = hubtemp.CenterToLeft - rimtemp.OSB;
-                double offsetr = hubtemp.CenterToRight + rimtemp.OSB;
-                resulttemp.Lenthleft = Math.Sqrt(spokeslenthraw + offsetl * offsetl) - hubtemp.SpokeHole / 2.0;
-                resulttemp.Lenthright = Math.Sqrt(spokeslenthrawr + offsetr * offsetr) - hubtemp.SpokeHole / 2.0; ;
-
-                double sinphyl = offsetl / Math.Sqrt(spokeslenthraw);
-                double sinphyr = offsetr / Math.Sqrt(spokeslenthrawr);
-                resulttemp.Tensionratio = sinphyr / sinphyl;
-                resulttemp.Remark = "";
-                listBox2.Items.Add(resulttemp);
-            }
-        }
 
         private void OnSpokeAddButtonClick(object sender, RoutedEventArgs e)
         {
@@ -2170,120 +1386,115 @@ namespace BicycleCalculatorWPF
 
         private void TextBoxCrosses_TextChanged(object sender, TextChangedEventArgs e)
         {
+            int temp;
             try
             {
-                int temp = Convert.ToInt16(((TextBox)sender).Text);
+                temp = Convert.ToInt16(((TextBox)sender).Text);
                 if (!((TextBox)sender).IsKeyboardFocused && temp < 0) temp = 0;
                 if (temp > 100) temp = 100;
                 ((TextBox)sender).Text = temp.ToString();
             }
             catch
             {
-                int temp = 32;
+                temp = 32;
                 ((TextBox)sender).Text = temp.ToString();
             }
-            CalculateSpoke();
+            WheelCal.Crosses = temp;
+            WheelCal.CalculateSpoke();
         }
 
 
         private void TextBoxSpokes_TextChanged(object sender, TextChangedEventArgs e)
         {
+            int temp;
             try
             {
-                int temp = Convert.ToInt16(((TextBox)sender).Text);
+                temp = Convert.ToInt16(((TextBox)sender).Text);
                 if (!((TextBox)sender).IsKeyboardFocused && temp < 4) temp = 4;
                 if (temp > 100) temp = 100;
                 ((TextBox)sender).Text = temp.ToString();
             }
             catch
             {
-                int temp = 32;
+                temp = 32;
                 ((TextBox)sender).Text = temp.ToString();
             }
-            CalculateSpoke();
+            WheelCal.Spokes = temp;
+            WheelCal.CalculateSpoke();
         }
 
-
-        bool disleftside = true;
-        bool disrightside = true;
         private void LRSideDisToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ((MenuItem)((MenuItem)sender).Items[0]).IsChecked = disleftside;
-            ((MenuItem)((MenuItem)sender).Items[1]).IsChecked = disrightside;
+            ((MenuItem)((MenuItem)sender).Items[0]).IsChecked = WheelCal.disleftside;
+            ((MenuItem)((MenuItem)sender).Items[1]).IsChecked = WheelCal.disrightside;
         }
 
         private void DisLeftToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            disleftside = !disleftside;
-            CalculateSpoke();
+            WheelCal.disleftside = !WheelCal.disleftside;
+            WheelCal.CalculateSpoke();
         }
 
         private void DisRightToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            disrightside = !disrightside;
-            CalculateSpoke();
+            WheelCal.disrightside = !WheelCal.disrightside;
+            WheelCal.CalculateSpoke();
         }
 
-
-        bool disrimline = true;
-        bool dishubline = true;
-        bool dishubhole = true;
-        bool disrimhole = true;
-        bool disspokesline = true;
         private void DisItemStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ((MenuItem)((MenuItem)sender).Items[0]).IsChecked = disrimline;
-            ((MenuItem)((MenuItem)sender).Items[1]).IsChecked = disrimhole;
-            ((MenuItem)((MenuItem)sender).Items[2]).IsChecked = dishubline;
-            ((MenuItem)((MenuItem)sender).Items[3]).IsChecked = dishubhole;
-            ((MenuItem)((MenuItem)sender).Items[4]).IsChecked = disspokesline;
+            ((MenuItem)((MenuItem)sender).Items[0]).IsChecked = WheelCal.disrimline;
+            ((MenuItem)((MenuItem)sender).Items[1]).IsChecked = WheelCal.disrimhole;
+            ((MenuItem)((MenuItem)sender).Items[2]).IsChecked = WheelCal.dishubline;
+            ((MenuItem)((MenuItem)sender).Items[3]).IsChecked = WheelCal.dishubhole;
+            ((MenuItem)((MenuItem)sender).Items[4]).IsChecked = WheelCal.disspokesline;
         }
 
         private void DisAllToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            disleftside = true;
-            disrightside = true;
-            disrimline = true;
-            disrimhole = true;
-            dishubline = true;
-            dishubhole = true;
-            disspokesline = true;
-            CalculateSpoke();
+            WheelCal.disleftside = true;
+            WheelCal.disrightside = true;
+            WheelCal.disrimline = true;
+            WheelCal.disrimhole = true;
+            WheelCal.dishubline = true;
+            WheelCal.dishubhole = true;
+            WheelCal.disspokesline = true;
+            WheelCal.CalculateSpoke();
 
         }
 
         private void RimlineToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            disrimline = !disrimline;
-            CalculateSpoke();
+            WheelCal.disrimline = !WheelCal.disrimline;
+            WheelCal.CalculateSpoke();
 
         }
 
         private void RimholeToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            disrimhole = !disrimhole;
-            CalculateSpoke();
+            WheelCal.disrimhole = !WheelCal.disrimhole;
+            WheelCal.CalculateSpoke();
 
         }
 
         private void HublineToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            dishubline = !dishubline;
-            CalculateSpoke();
+            WheelCal.dishubline = !WheelCal.dishubline;
+            WheelCal.CalculateSpoke();
 
         }
 
         private void HubholeToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            dishubhole = !dishubhole;
-            CalculateSpoke();
+            WheelCal.dishubhole = !WheelCal.dishubhole;
+            WheelCal.CalculateSpoke();
 
         }
 
         private void SpolineToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            disspokesline = !disspokesline;
-            CalculateSpoke();
+            WheelCal.disspokesline = !WheelCal.disspokesline;
+            WheelCal.CalculateSpoke();
 
         }
 
@@ -2357,59 +1568,18 @@ namespace BicycleCalculatorWPF
 
         private void Window_Closing_1(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            TransmissionCal.SaveSettings();
+
             Properties.Settings.Default.frnumid = FrNumcomboBox.SelectedIndex;
             Properties.Settings.Default.frmodid = FrModelcomboBox.SelectedIndex;
-            Properties.Settings.Default.frnow1 = frnow.teeth[0].Teeth;
-            Properties.Settings.Default.frnow2 = frnow.teeth[1].Teeth;
-            Properties.Settings.Default.frnow3 = frnow.teeth[2].Teeth;
-            Properties.Settings.Default.frnow4 = frnow.teeth[3].Teeth;
-            Properties.Settings.Default.frnow5 = frnow.teeth[4].Teeth;
-            Properties.Settings.Default.frnow6 = frnow.teeth[5].Teeth;
-            Properties.Settings.Default.frnow7 = frnow.teeth[6].Teeth;
-            Properties.Settings.Default.frnow8 = frnow.teeth[7].Teeth;
-            Properties.Settings.Default.frnow9 = frnow.teeth[8].Teeth;
-            Properties.Settings.Default.frnow10 = frnow.teeth[9].Teeth;
-            Properties.Settings.Default.frnow11 = frnow.teeth[10].Teeth;
-            Properties.Settings.Default.frnow12 = frnow.teeth[11].Teeth;
-
+            
             Properties.Settings.Default.bknumid = BkNumcomboBox.SelectedIndex;
             Properties.Settings.Default.bkmodid = BkModelcomboBox.SelectedIndex;
-            Properties.Settings.Default.bknow1 = bknow.teeth[0].Teeth;
-            Properties.Settings.Default.bknow2 = bknow.teeth[1].Teeth;
-            Properties.Settings.Default.bknow3 = bknow.teeth[2].Teeth;
-            Properties.Settings.Default.bknow4 = bknow.teeth[3].Teeth;
-            Properties.Settings.Default.bknow5 = bknow.teeth[4].Teeth;
-            Properties.Settings.Default.bknow6 = bknow.teeth[5].Teeth;
-            Properties.Settings.Default.bknow7 = bknow.teeth[6].Teeth;
-            Properties.Settings.Default.bknow8 = bknow.teeth[7].Teeth;
-            Properties.Settings.Default.bknow9 = bknow.teeth[8].Teeth;
-            Properties.Settings.Default.bknow10 = bknow.teeth[9].Teeth;
-            Properties.Settings.Default.bknow11 = bknow.teeth[10].Teeth;
-            Properties.Settings.Default.bknow12 = bknow.teeth[11].Teeth;
 
             Properties.Settings.Default.innumid = InNumcomboBox.SelectedIndex;
             Properties.Settings.Default.inmodid = InModelcomboBox.SelectedIndex;
-            Properties.Settings.Default.innow1 = innow.teeth[0].Teeth;
-            Properties.Settings.Default.innow2 = innow.teeth[1].Teeth;
-            Properties.Settings.Default.innow3 = innow.teeth[2].Teeth;
-            Properties.Settings.Default.innow4 = innow.teeth[3].Teeth;
-            Properties.Settings.Default.innow5 = innow.teeth[4].Teeth;
-            Properties.Settings.Default.innow6 = innow.teeth[5].Teeth;
-            Properties.Settings.Default.innow7 = innow.teeth[6].Teeth;
-            Properties.Settings.Default.innow8 = innow.teeth[7].Teeth;
-            Properties.Settings.Default.innow9 = innow.teeth[8].Teeth;
-            Properties.Settings.Default.innow10 = innow.teeth[9].Teeth;
-            Properties.Settings.Default.innow11 = innow.teeth[10].Teeth;
-            Properties.Settings.Default.innow12 = innow.teeth[11].Teeth;
-            Properties.Settings.Default.innow13 = innow.teeth[12].Teeth;
-            Properties.Settings.Default.innow14 = innow.teeth[13].Teeth;
 
-            Properties.Settings.Default.IsSpd = checkBox1.IsChecked.Value;
-            Properties.Settings.Default.SpdVal = trackBar1.Value;
             Properties.Settings.Default.IsISO = checkBox2.IsChecked.Value;
-
-            Properties.Settings.Default.wheelid = WheelcomboBox.SelectedIndex;
-            Properties.Settings.Default.wheellen = Convert.ToInt32(WheelLenthtextBox.Text);
             Properties.Settings.Default.numUD1 = Convert.ToDouble(numericUpDown1.Text);
             Properties.Settings.Default.numUD2 = Convert.ToDouble(numericUpDown2.Text);
 
