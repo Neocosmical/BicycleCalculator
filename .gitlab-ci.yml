@@ -7,14 +7,14 @@ variables:
 bin:
   stage: build
   script:
-    - cd "C:/Program Files (x86)/Microsoft Visual Studio 14.0/Common7/IDE/"
-    - echo "%CI_PROJECT_DIR%/%SLN_NAME%.sln"
-    - devenv "%CI_PROJECT_DIR%/%SLN_NAME%.sln" /Build "Release"
+    - C:\Windows\Microsoft.NET\Framework64\v4.0.30319\msbuild.exe /consoleloggerparameters:ErrorsOnly /maxcpucount /nologo /property:Configuration=Release /verbosity:quiet "%SLN_NAME%.sln"
   artifacts:
     paths:
       - "%SLN_NAME%/bin/Release/*.exe"
       - "%SLN_NAME%/bin/Release/zh-Hans/*.*"
       - "%SLN_NAME%/bin/Release/*.dll"
       - "%SLN_NAME%/bin/Release/DLL/*.dll"
+      - "%SLN_NAME%/bin/Release/DLL/*.csv"
+      - "%SLN_NAME%/bin/Release/DLL/*.mht"
   tags:
     - CSharp
