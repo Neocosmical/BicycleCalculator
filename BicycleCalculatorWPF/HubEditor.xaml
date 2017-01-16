@@ -6,7 +6,7 @@
         xmlns:res="clr-namespace:BicycleCalculatorWPF.Properties"
         xmlns:local="clr-namespace:BicycleCalculatorWPF"
         mc:Ignorable="d"
-        Title="HubEditor" Height="250" Width="200" Loaded="Window_Loaded" BorderThickness="1" WindowStyle="ToolWindow">
+        Title="HubEditor" Height="250" Width="200" Loaded="Window_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Icon="Resources/自行车计算器s.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
