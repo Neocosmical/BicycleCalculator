@@ -12,6 +12,8 @@ bin:
     paths:
       - "%SLN_NAME%/bin/Release/*.exe"
       - "%SLN_NAME%/bin/Release/zh-Hans/*.*"
+      - "%SLN_NAME%/bin/Release/zh-CN/*.*"
+      - "%SLN_NAME%/bin/Release/zh-TW/*.*"
       - "%SLN_NAME%/bin/Release/*.dll"
       - "%SLN_NAME%/bin/Release/DLL/*.dll"
       - "%SLN_NAME%/bin/Release/DLL/*.csv"
