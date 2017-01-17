@@ -55,7 +55,7 @@ namespace BicycleCalculatorWPF
         public void SaveDate()
         {
             System.IO.FileStream fs = new System.IO.FileStream("Data.csv", System.IO.FileMode.Create);
-            System.IO.StreamWriter sw = new System.IO.StreamWriter(fs, Encoding.Default);
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(fs, Encoding.UTF8);
             //开始写入
             foreach (CGearList list in frlists.Lists)
             {
@@ -198,7 +198,7 @@ namespace BicycleCalculatorWPF
             try
             {
                 System.IO.FileStream fs = new System.IO.FileStream("Data.csv", System.IO.FileMode.Open);
-                System.IO.StreamReader sr = new System.IO.StreamReader(fs, Encoding.Default);
+                System.IO.StreamReader sr = new System.IO.StreamReader(fs, Encoding.UTF8);
                 String line;
                 List<CGear> gearlisttemp = new List<CGear>();
                 List<CWheel> wheellisttemp = new List<CWheel>();
@@ -248,7 +248,7 @@ namespace BicycleCalculatorWPF
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("读取数据失败。\r\n" + ex.Message);
+                System.Windows.MessageBox.Show(Properties.Resources.StringFailReadFile + "\r\n" + ex.Message);
             }
 
         }

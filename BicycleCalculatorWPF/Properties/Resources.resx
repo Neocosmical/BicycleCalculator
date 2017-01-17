@@ -546,4 +546,7 @@ Are you sure to save the dataset?</value>
   <data name="StringDataSource" xml:space="preserve">
     <value>Data Source:</value>
   </data>
+  <data name="StringFailReadFile" xml:space="preserve">
+    <value>Failed to read file.</value>
+  </data>
 </root>

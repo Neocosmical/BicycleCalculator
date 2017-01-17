@@ -437,6 +437,15 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Failed to read file. 的本地化字符串。
+        /// </summary>
+        public static string StringFailReadFile {
+            get {
+                return ResourceManager.GetString("StringFailReadFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 File 的本地化字符串。
         /// </summary>
         public static string StringFile {

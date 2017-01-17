@@ -36,6 +36,7 @@
                     <Separator/>
                     <MenuItem Header = "English" Click="EngMenuItem_Click"/>
                     <MenuItem Header = "简体中文" Click="ChnMenuItem_Click"/>
+                    <MenuItem Header = "繁體中文" Click="ChtMenuItem_Click"/>
                 </MenuItem>
                 <Separator/>
                 <MenuItem x:Name="exitToolStripMenuItem" Header="{x:Static res:Resources.StringExit}" Click="exitToolStripMenuItem_Click"/>

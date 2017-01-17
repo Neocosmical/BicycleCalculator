@@ -584,7 +584,7 @@ namespace BicycleCalculatorWPF
             whtemp.Lenth = Whlength;
 
             string tempstr = "";
-            tempstr += pm.Axes[0].Title;
+            tempstr += pm.Axes[1].Title;
             tempstr += " " + frtemp.Name;
             tempstr += "& " + bktemp.Name;
             if (intemp.Speeds != 1)

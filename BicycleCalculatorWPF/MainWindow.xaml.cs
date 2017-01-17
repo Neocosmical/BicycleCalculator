@@ -47,6 +47,9 @@ namespace BicycleCalculatorWPF
                 case 3:
                     System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("zh-CN");
                     break;
+                case 4:
+                    System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("zh-TW");
+                    break;
             }
             InitializeComponent();
 
@@ -219,11 +222,6 @@ namespace BicycleCalculatorWPF
 
             checkBox1_Click(null, null);
 
-            TransmissionCal.Calculate();
-            WheelCal.Calculate();
-
-            
-
             timerload1 = new System.Timers.Timer(200);
             timerload1.Enabled = true;
             timerload1.Elapsed += timerload1_Elapsed;
@@ -259,7 +257,14 @@ namespace BicycleCalculatorWPF
                     TextBlockLoad.Visibility = Visibility.Hidden;
             }));
             if (TextBlockLoadOpacity < 0)
+            {
                 timerload1.Enabled = false;
+                TextBlockLoad.Dispatcher.Invoke(new Action(() =>
+                {
+                    TransmissionCal.Calculate();
+                    WheelCal.Calculate();
+                }));
+            }
         }
                 
         private void WheelcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
@@ -886,7 +891,7 @@ namespace BicycleCalculatorWPF
 
         private void ResetAxisToolStripMenuItem1_Click(object sender, RoutedEventArgs e)
         {
-            WheelCal.pm1.ResetAllAxes();
+            WheelCal.pm.ResetAllAxes();
             Chart2.InvalidatePlot(false);
         }
 
@@ -1203,6 +1208,8 @@ namespace BicycleCalculatorWPF
         {
             ViewMenuItem.Visibility = ((TabControlMain.SelectedIndex == 0) ? Visibility.Visible : Visibility.Collapsed);
             RusultMenuItem.Visibility = ((TabControlMain.SelectedIndex == 0) ? Visibility.Visible : Visibility.Collapsed);
+            //if (TabControlMain.SelectedIndex == 0) TransmissionCal.Calculate();
+            //else WheelCal.Calculate();
         }
 
         private void TextBoxCrosses_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -1244,6 +1251,13 @@ namespace BicycleCalculatorWPF
         private void ChnMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.Language = 3;
+            MessageBox.Show(Properties.Resources.StringRestartEff);
+            Properties.Settings.Default.Save();
+        }
+        
+        private void ChtMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.Language = 4;
             MessageBox.Show(Properties.Resources.StringRestartEff);
             Properties.Settings.Default.Save();
         }

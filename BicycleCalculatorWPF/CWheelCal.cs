@@ -19,7 +19,7 @@ namespace BicycleCalculatorWPF
 
         OxyPlot.Wpf.PlotView chart;
         System.Windows.Controls.ListView list;
-        public PlotModel pm1;
+        public PlotModel pm;
 
         public int Spokes;
         public int Crosses;
@@ -32,7 +32,7 @@ namespace BicycleCalculatorWPF
         public bool disleftside = true;
         public bool disrightside = true;
 
-        public static PlotModel LineSeries1()
+        public static PlotModel LineSeries()
         {
             var plotModel1 = new PlotModel();
             plotModel1.PlotType = PlotType.Cartesian;
@@ -72,16 +72,16 @@ namespace BicycleCalculatorWPF
             chart = _chart;
             list = _list;
 
-            pm1 = new PlotModel();
-            pm1 = LineSeries1();
-            chart.Model = pm1;
+            pm = new PlotModel();
+            pm = LineSeries();
+            chart.Model = pm;
         }
 
 
         public void Calculate()
         {
             if (!ready) return;
-            pm1.Series.Clear();
+            pm.Series.Clear();
             //pm.Axes[0].MinorStep = double.NaN;
             //pm.Axes[0].MajorStep = double.NaN;
             //CHub hubtemp = frnow;
@@ -236,14 +236,14 @@ namespace BicycleCalculatorWPF
                 spokesliner.Points.Add(new DataPoint(double.NaN, double.NaN));
             }
 
-            if (disrimline) pm1.Series.Add(rimline);
-            if (dishubline) pm1.Series.Add(hubline);
-            if (disrightside && dishubhole) pm1.Series.Add(hubholer);
-            if (disleftside && dishubhole) pm1.Series.Add(hubhole);
-            if (disrightside && disrimhole) pm1.Series.Add(rimholer);
-            if (disleftside && disrimhole) pm1.Series.Add(rimhole);
-            if (disrightside && disspokesline) pm1.Series.Add(spokesliner);
-            if (disleftside && disspokesline) pm1.Series.Add(spokesline);
+            if (disrimline) pm.Series.Add(rimline);
+            if (dishubline) pm.Series.Add(hubline);
+            if (disrightside && dishubhole) pm.Series.Add(hubholer);
+            if (disleftside && dishubhole) pm.Series.Add(hubhole);
+            if (disrightside && disrimhole) pm.Series.Add(rimholer);
+            if (disleftside && disrimhole) pm.Series.Add(rimhole);
+            if (disrightside && disspokesline) pm.Series.Add(spokesliner);
+            if (disleftside && disspokesline) pm.Series.Add(spokesline);
             chart.ResetAllAxes();
             chart.InvalidatePlot(true);
 

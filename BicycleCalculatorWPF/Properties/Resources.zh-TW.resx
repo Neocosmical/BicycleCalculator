@@ -1,0 +1,538 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="back" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\back.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_donateCC_LG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_donateCC_LG.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_77bikegreens" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\77bikegreens.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="内变速_s1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\内变速-s1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="支付宝3sina" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\支付宝3sina.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="牙盘1_s8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\牙盘1-s8.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="自行车计算器" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\自行车计算器.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="轮胎数据" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\轮胎数据.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="飞轮_s4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\飞轮-s4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StringAbout" xml:space="preserve">
+    <value>關於</value>
+  </data>
+  <data name="StringAddCurve" xml:space="preserve">
+    <value>添加曲線</value>
+  </data>
+  <data name="StringAliPay" xml:space="preserve">
+    <value>通過支付寶捐款</value>
+  </data>
+  <data name="StringBranchbk" xml:space="preserve">
+    <value>按飛輪分支</value>
+  </data>
+  <data name="StringBranchfr" xml:space="preserve">
+    <value>按牙盤分支</value>
+  </data>
+  <data name="StringBranchin" xml:space="preserve">
+    <value>按內變速分支</value>
+  </data>
+  <data name="StringCAD" xml:space="preserve">
+    <value>踏頻</value>
+  </data>
+  <data name="StringCassette" xml:space="preserve">
+    <value>飛輪</value>
+  </data>
+  <data name="StringCranksets" xml:space="preserve">
+    <value>牙盤</value>
+  </data>
+  <data name="StringCurrent" xml:space="preserve">
+    <value>當前</value>
+  </data>
+  <data name="StringCurveexist" xml:space="preserve">
+    <value>已包含以下曲線</value>
+  </data>
+  <data name="StringEnterISO" xml:space="preserve">
+    <value>輸入ISO(ETRTO)輪胎型號</value>
+  </data>
+  <data name="StringGear" xml:space="preserve">
+    <value>檔位</value>
+  </data>
+  <data name="StringGearRatio" xml:space="preserve">
+    <value>齒比</value>
+  </data>
+  <data name="StringGI" xml:space="preserve">
+    <value>GI速比</value>
+  </data>
+  <data name="StringIncrement" xml:space="preserve">
+    <value>增量</value>
+  </data>
+  <data name="StringInner" xml:space="preserve">
+    <value>內</value>
+  </data>
+  <data name="StringInternalHub" xml:space="preserve">
+    <value>內變速</value>
+  </data>
+  <data name="StringISOeg" xml:space="preserve">
+    <value>例如 47-559 或 1.75-406。</value>
+  </data>
+  <data name="StringISOmminch" xml:space="preserve">
+    <value>單位mm或inch，例如 47、50 或 1.1、1.75。</value>
+  </data>
+  <data name="StringLFLB" xml:space="preserve">
+    <value>大盤大飛</value>
+  </data>
+  <data name="Stringmm" xml:space="preserve">
+    <value>單位 mm</value>
+  </data>
+  <data name="StringMTB" xml:space="preserve">
+    <value>山地</value>
+  </data>
+  <data name="StringNone" xml:space="preserve">
+    <value>無</value>
+  </data>
+  <data name="StringOther" xml:space="preserve">
+    <value>其他</value>
+  </data>
+  <data name="StringPayPal" xml:space="preserve">
+    <value>通過PayPal捐款</value>
+  </data>
+  <data name="StringRacing" xml:space="preserve">
+    <value>公路</value>
+  </data>
+  <data name="StringRenameandAdd" xml:space="preserve">
+    <value>重命名當前曲線後添加？</value>
+  </data>
+  <data name="StringRimdiameter" xml:space="preserve">
+    <value>輪轂底直徑</value>
+  </data>
+  <data name="StringRimdiametermm" xml:space="preserve">
+    <value>單位mm，例如 559、406</value>
+  </data>
+  <data name="StringSelectAll" xml:space="preserve">
+    <value>全選</value>
+  </data>
+  <data name="StringSFSB" xml:space="preserve">
+    <value>小盤小飛</value>
+  </data>
+  <data name="StringSizeToFit" xml:space="preserve">
+    <value>將所有列調整為合適大小</value>
+  </data>
+  <data name="StringSpdRatio" xml:space="preserve">
+    <value>走距速比 (m)</value>
+  </data>
+  <data name="StringSpeed" xml:space="preserve">
+    <value>車速</value>
+  </data>
+  <data name="StringTire" xml:space="preserve">
+    <value>輪胎</value>
+  </data>
+  <data name="StringTireCirc" xml:space="preserve">
+    <value>輪胎周長</value>
+  </data>
+  <data name="StringTirewidth" xml:space="preserve">
+    <value>輪胎寬度</value>
+  </data>
+  <data name="StringTitle" xml:space="preserve">
+    <value>自行車計算器</value>
+  </data>
+  <data name="StringTorque" xml:space="preserve">
+    <value>注意扭矩</value>
+  </data>
+  <data name="StringTotalCap" xml:space="preserve">
+    <value>齒容</value>
+  </data>
+  <data name="StringTotaldiff" xml:space="preserve">
+    <value>總差</value>
+  </data>
+  <data name="StringTransData" xml:space="preserve">
+    <value>傳動系統數據</value>
+  </data>
+  <data name="StringUnableexp" xml:space="preserve">
+    <value>無法導出文件。</value>
+  </data>
+  <data name="StringUpdateURL" xml:space="preserve">
+    <value>http://pan.baidu.com/s/1gdmoQCr</value>
+  </data>
+  <data name="StringVersion" xml:space="preserve">
+    <value>版本</value>
+  </data>
+  <data name="StringBranchDisplay" xml:space="preserve">
+    <value>分支顯示</value>
+  </data>
+  <data name="StringCadenceSpeed" xml:space="preserve">
+    <value>踏頻/車速</value>
+  </data>
+  <data name="StringChart" xml:space="preserve">
+    <value>圖像</value>
+  </data>
+  <data name="StringClrCurve" xml:space="preserve">
+    <value>清空曲線</value>
+  </data>
+  <data name="StringColumn" xml:space="preserve">
+    <value>列</value>
+  </data>
+  <data name="StringDonate" xml:space="preserve">
+    <value>捐贈</value>
+  </data>
+  <data name="StringExit" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="StringExport" xml:space="preserve">
+    <value>導出...</value>
+  </data>
+  <data name="StringFile" xml:space="preserve">
+    <value>檔案</value>
+  </data>
+  <data name="StringGearTeeth" xml:space="preserve">
+    <value>檔位 (齒)</value>
+  </data>
+  <data name="StringHelp" xml:space="preserve">
+    <value>幫助</value>
+  </data>
+  <data name="StringInstructions" xml:space="preserve">
+    <value>使用說明</value>
+  </data>
+  <data name="StringOpen" xml:space="preserve">
+    <value>打開</value>
+  </data>
+  <data name="StringRemark" xml:space="preserve">
+    <value>備註</value>
+  </data>
+  <data name="StringResult" xml:space="preserve">
+    <value>計算結果</value>
+  </data>
+  <data name="StringSpeeds" xml:space="preserve">
+    <value>速別</value>
+  </data>
+  <data name="StringTeeth" xml:space="preserve">
+    <value>齒數</value>
+  </data>
+  <data name="StringUnit" xml:space="preserve">
+    <value>單位</value>
+  </data>
+  <data name="StringView" xml:space="preserve">
+    <value>檢視</value>
+  </data>
+  <data name="StringYAxis" xml:space="preserve">
+    <value>縱軸</value>
+  </data>
+  <data name="StringDonateContent" xml:space="preserve">
+    <value>您的捐贈將使軟件更好用！
+Thanks for your donation!
+
+點擊或
+使用手機支付寶掃一掃~~
+
+支付寶帳號:
+carrotkk@sina.com
+
+PayPal:
+carrotkk@sina.com</value>
+  </data>
+  <data name="StringHelpContent" xml:space="preserve">
+    <value>1. 選擇牙盤、飛輪、內變速、輪胎等型號以及踏頻，實時計算出齒比、速比、車速等參數並繪製曲線。
+
+2. 勾選”踏頻/車速“中的”車速“，可輸入車速，反算所需踏頻。
+
+3. 點擊”添加當前曲線“記錄當前的曲線用於對比，可添加多條曲線。
+
+4. 點擊”導出文件“導出當前配置和計算結果，導出的文件需使用Excel打開查看。
+
+5. 對於沒有飛輪變速只有內變速的情況，在飛輪處選”1s/內變“，並設置內變速上飛輪的齒數。
+
+6. 右鍵點擊曲線圖可選擇當前曲線顯示模式。
+
+7. 在計算結果表格中選擇任意一行，可查看所對應的檔位信息和圖像上的位置。</value>
+  </data>
+  <data name="StringAcknow" xml:space="preserve">
+    <value>感謝:
+德满, 嘻哈, 淘淘爸, citysa, hachi, heiyaa, 楚狂声, bingol, xuchux, 落星, azuretears, blocked, babyfish79, dolphinic, coolsear, 骑楼街5号, enstan007, namrisgan, harvey.hung, pheather, 咸鱼, Seor, kuye</value>
+  </data>
+  <data name="StringOK" xml:space="preserve">
+    <value>確定</value>
+  </data>
+  <data name="StringUpdate" xml:space="preserve">
+    <value>查看更新</value>
+  </data>
+  <data name="StringResetAxis" xml:space="preserve">
+    <value>重置坐標軸</value>
+  </data>
+  <data name="StringRatio" xml:space="preserve">
+    <value>變比</value>
+  </data>
+  <data name="StringSpdCAD" xml:space="preserve">
+    <value>車速/踏頻</value>
+  </data>
+  <data name="StringSpokeLength" xml:space="preserve">
+    <value>輻條長度</value>
+  </data>
+  <data name="StringTransmission" xml:space="preserve">
+    <value>傳動系統</value>
+  </data>
+  <data name="StringCenterL" xml:space="preserve">
+    <value>左側偏移量</value>
+  </data>
+  <data name="StringCenterR" xml:space="preserve">
+    <value>右側偏移量</value>
+  </data>
+  <data name="StringCrosses" xml:space="preserve">
+    <value>交織編法</value>
+  </data>
+  <data name="StringFlangeL" xml:space="preserve">
+    <value>左側法蘭⌀</value>
+  </data>
+  <data name="StringFlangeR" xml:space="preserve">
+    <value>右側法蘭⌀</value>
+  </data>
+  <data name="StringHubHoleL" xml:space="preserve">
+    <value>花鼓左側輻條孔</value>
+  </data>
+  <data name="StringHubHoleR" xml:space="preserve">
+    <value>花鼓右側輻條孔</value>
+  </data>
+  <data name="StringHubs" xml:space="preserve">
+    <value>花鼓</value>
+  </data>
+  <data name="StringRims" xml:space="preserve">
+    <value>輪圈</value>
+  </data>
+  <data name="StringSpokeHole" xml:space="preserve">
+    <value>輻條孔⌀</value>
+  </data>
+  <data name="StringSpokeL" xml:space="preserve">
+    <value>左側輻條</value>
+  </data>
+  <data name="StringSpokeLL" xml:space="preserve">
+    <value>左側輻條長</value>
+  </data>
+  <data name="StringSpokeLR" xml:space="preserve">
+    <value>右側輻條長</value>
+  </data>
+  <data name="StringSpokeR" xml:space="preserve">
+    <value>右側輻條</value>
+  </data>
+  <data name="StringSpokes" xml:space="preserve">
+    <value>輻條數</value>
+  </data>
+  <data name="StringTenRat" xml:space="preserve">
+    <value>張力比 L/R</value>
+  </data>
+  <data name="StringDisAll" xml:space="preserve">
+    <value>全部顯示</value>
+  </data>
+  <data name="StringDisItem" xml:space="preserve">
+    <value>顯示項目</value>
+  </data>
+  <data name="StringHubhole" xml:space="preserve">
+    <value>花鼓孔</value>
+  </data>
+  <data name="StringHubline" xml:space="preserve">
+    <value>花鼓</value>
+  </data>
+  <data name="StringLeft" xml:space="preserve">
+    <value>右側</value>
+  </data>
+  <data name="StringLRSide" xml:space="preserve">
+    <value>顯示左右側</value>
+  </data>
+  <data name="StringRight" xml:space="preserve">
+    <value>左側</value>
+  </data>
+  <data name="StringRimhole" xml:space="preserve">
+    <value>輪圈孔</value>
+  </data>
+  <data name="StringRimline" xml:space="preserve">
+    <value>輪圈</value>
+  </data>
+  <data name="StringSpokesData" xml:space="preserve">
+    <value>輻條數據</value>
+  </data>
+  <data name="StringSpokesline" xml:space="preserve">
+    <value>輻條</value>
+  </data>
+  <data name="StringDefault" xml:space="preserve">
+    <value>默認</value>
+  </data>
+  <data name="StringLanguage" xml:space="preserve">
+    <value>語言</value>
+  </data>
+  <data name="StringRestartEff" xml:space="preserve">
+    <value>重新啟動軟體後生效。</value>
+  </data>
+  <data name="StringCancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="StringInputCName" xml:space="preserve">
+    <value>輸入曲線名稱</value>
+  </data>
+  <data name="StringSourceRim" xml:space="preserve">
+    <value>輪圈花鼓數據來源:
+http://bbs.77bike.com/read.php?tid=58657
+飛輪數據來源:
+http://bbs.77bike.com/read.php?tid=233029</value>
+  </data>
+  <data name="StringModel" xml:space="preserve">
+    <value>型號</value>
+  </data>
+  <data name="StringEditDataSet" xml:space="preserve">
+    <value>數據集編輯</value>
+  </data>
+  <data name="StringType" xml:space="preserve">
+    <value>類型</value>
+  </data>
+  <data name="StringAdd" xml:space="preserve">
+    <value>增加</value>
+  </data>
+  <data name="StringClose" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="StringDelete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="StringModify" xml:space="preserve">
+    <value>修改</value>
+  </data>
+  <data name="StringSave" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="StringConfirmSave" xml:space="preserve">
+    <value>這將覆蓋原有數据集，建議備份Data.csv後再進行保存。
+確實要保存數据集嗎？“</value>
+  </data>
+  <data name="StringDeleteSelected" xml:space="preserve">
+    <value>確實要删除選中項目嗎？</value>
+  </data>
+  <data name="StringDataSource" xml:space="preserve">
+    <value>數據來源:</value>
+  </data>
+  <data name="StringFailReadFile" xml:space="preserve">
+    <value>無法讀取文件。</value>
+  </data>
+</root>
