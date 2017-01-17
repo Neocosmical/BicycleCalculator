@@ -165,8 +165,8 @@
                                     </Grid.RowDefinitions>
                                     <TextBlock Text="{x:Static res:Resources.StringSpeeds}" VerticalAlignment="Center" Margin="3"/>
                                     <TextBlock Grid.Row="1" Text="{x:Static res:Resources.StringModel}" VerticalAlignment="Center" Margin="3"/>
-                                    <ComboBox x:Name="BkNumcomboBox" Grid.Column="1" Margin="3" SelectionChanged="BkNumcomboBox_SelectedIndexChanged"/>
-                                    <ComboBox x:Name="BkModelcomboBox" Grid.Column="1" Grid.Row="1" Margin="3" SelectionChanged="BkModelcomboBox_SelectedIndexChanged"/>
+                                    <ComboBox x:Name="BkNumcomboBox" Grid.Column="1" Margin="3"/>
+                                    <ComboBox x:Name="BkModelcomboBox" Grid.Column="1" Grid.Row="1" Margin="3"/>
                                     <DataGrid x:Name="dataGridViewBk" Grid.Row="2" Margin="3" Background="#B2FFFFFF" Grid.ColumnSpan="2" HeadersVisibility="None" GridLinesVisibility="Horizontal" HorizontalScrollBarVisibility="Disabled">
                                         <DataGrid.BorderBrush>
                                             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
@@ -228,8 +228,8 @@
                                     </Grid.RowDefinitions>
                                     <TextBlock Text="{x:Static res:Resources.StringSpeeds}" VerticalAlignment="Center" Margin="3"/>
                                     <TextBlock Grid.Row="1" Text="{x:Static res:Resources.StringModel}" VerticalAlignment="Center" Margin="3"/>
-                                    <ComboBox x:Name="InNumcomboBox" Grid.Column="1" Margin="3" SelectionChanged="InNumcomboBox_SelectedIndexChanged"/>
-                                    <ComboBox x:Name="InModelcomboBox" Grid.Column="1" Grid.Row="1" Margin="3" SelectionChanged="InModelcomboBox_SelectedIndexChanged"/>
+                                    <ComboBox x:Name="InNumcomboBox" Grid.Column="1" Margin="3"/>
+                                    <ComboBox x:Name="InModelcomboBox" Grid.Column="1" Grid.Row="1" Margin="3"/>
                                     <DataGrid x:Name="dataGridViewIn" Grid.Row="2" Margin="3" Background="#B2FFFFFF" Grid.ColumnSpan="2" HeadersVisibility="None" GridLinesVisibility="Horizontal" HorizontalScrollBarVisibility="Disabled">
                                         <DataGrid.BorderBrush>
                                             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
@@ -305,8 +305,8 @@
                                         </Grid.RowDefinitions>
                                         <TextBlock Text="{x:Static res:Resources.StringSpeeds}" VerticalAlignment="Center" Margin="3"/>
                                         <TextBlock Grid.Row="1" Text="{x:Static res:Resources.StringModel}" VerticalAlignment="Center" Margin="3"/>
-                                        <ComboBox x:Name="FrNumcomboBox" Grid.Column="1" Margin="3" SelectionChanged="FrNumcomboBox_SelectedIndexChanged"/>
-                                        <ComboBox x:Name="FrModelcomboBox" Grid.Column="1" Grid.Row="1" Margin="3" SelectionChanged="FrModelcomboBox_SelectedIndexChanged"/>
+                                        <ComboBox x:Name="FrNumcomboBox" Grid.Column="1" Margin="3"/>
+                                        <ComboBox x:Name="FrModelcomboBox" Grid.Column="1" Grid.Row="1" Margin="3"/>
                                         <DataGrid x:Name="dataGridViewFr" Grid.Row="2" Margin="3" Background="#B2FFFFFF" Grid.ColumnSpan="2" HeadersVisibility="None" GridLinesVisibility="Horizontal" HorizontalScrollBarVisibility="Disabled">
                                             <DataGrid.BorderBrush>
                                                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
@@ -394,14 +394,14 @@
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBox x:Name="numericUpDown1" Text="50" TextChanged="numericUpDown1_ValueChanged" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" LostKeyboardFocus="numericUpDown1_LostKeyboardFocus"/>
-                                            <TextBox x:Name="numericUpDown2" Text="406" Grid.Column="2" TextChanged="numericUpDown2_ValueChanged" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" LostKeyboardFocus="numericUpDown2_LostKeyboardFocus"/>
+                                            <TextBox x:Name="numericUpDown1" Text="50" TextChanged="numericUpDown1_ValueChanged" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" MouseWheel="TextBox_MouseWheel"/>
+                                            <TextBox x:Name="numericUpDown2" Text="406" Grid.Column="2" TextChanged="numericUpDown2_ValueChanged" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" MouseWheel="TextBox_MouseWheel"/>
                                             <TextBlock Grid.Column="1" Text="-" Margin="2" HorizontalAlignment="Center"/>
                                         </Grid>
                                         <CheckBox x:Name="checkBox2" Content="ISO" Grid.Column="3" Margin="3" Grid.Row="1" VerticalAlignment="Center" Click="checkBox2_CheckedChanged"/>
                                         <RepeatButton Content="-" Grid.Column="1" Margin="1,3" Grid.Row="1" Click="Button_Click_2" Padding="1,0,1,1" Width="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                         <RepeatButton Content="+" Grid.Column="2" Margin="1,3" Grid.Row="1" Click="Button_Click_1" Padding="1,0,1,1" Width="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                                        <TextBox x:Name="WheelLenthtextBox" Margin="3" Grid.Row="1" TextWrapping="Wrap" Text="2000" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" TextChanged="WheelLenthtextBox_TextChanged" MouseWheel="WheelLenthtextBox_MouseWheel" LostKeyboardFocus="WheelLenthtextBox_LostKeyboardFocus"/>
+                                        <TextBox x:Name="WheelLenthtextBox" Margin="3" Grid.Row="1" TextWrapping="Wrap" Text="2000" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" TextChanged="WheelLenthtextBox_TextChanged" MouseWheel="TextBox_MouseWheel" LostKeyboardFocus="WheelLenthtextBox_LostKeyboardFocus"/>
                                     </Grid>
                                 </GroupBox>
                             </Grid>
@@ -668,7 +668,7 @@
                                         <TextBox x:Name="TextBoxSpokes" Margin="3" Grid.Row="1" TextWrapping="Wrap" Text="36" 
         									HorizontalContentAlignment="Right" 
         									VerticalContentAlignment="Center" 
-        									MouseWheel="WheelLenthtextBox_MouseWheel" 
+        									MouseWheel="TextBox_MouseWheel" 
         									LostKeyboardFocus="TextBoxCrosses_LostKeyboardFocus" 
         									TextChanged="TextBoxSpokes_TextChanged"/>
                                     </Grid>
@@ -683,7 +683,7 @@
                                         <TextBox x:Name="TextBoxCrosses" Margin="3" Grid.Row="1" TextWrapping="Wrap" Text="3" 
         									HorizontalContentAlignment="Right" 
         									VerticalContentAlignment="Center" 
-        									MouseWheel="WheelLenthtextBox_MouseWheel" 
+        									MouseWheel="TextBox_MouseWheel" 
         									LostKeyboardFocus="WheelLenthtextBox_LostKeyboardFocus" 
         									TextChanged="TextBoxCrosses_TextChanged"/>
                                     </Grid>

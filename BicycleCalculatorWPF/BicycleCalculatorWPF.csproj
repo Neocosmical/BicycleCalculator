@@ -97,6 +97,7 @@
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="CData.cs" />
+    <Compile Include="CGearSelector.cs" />
     <Compile Include="CHub.cs" />
     <Compile Include="CRim.cs" />
     <Compile Include="CTransmissionCal.cs" />

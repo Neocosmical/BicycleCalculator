@@ -6,10 +6,11 @@ using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using OxyPlot.Annotations;
+using System.ComponentModel;
 
 namespace BicycleCalculatorWPF
 {
-    class CTransmissionCal
+    class CTransmissionCal : INotifyPropertyChanged
     {
         public bool ready = false;
         public CGear frnow;
@@ -17,19 +18,218 @@ namespace BicycleCalculatorWPF
         public CGear innow;
         public CWheel whnow;
         public int whnow_index;
-        public int whlength;
+
+        private int whlength;
+
         public PlotModel pm;
         public LineSeries lineSeriesCurrent;
-        public double cad;
-        public bool IsSpd;
+        private double cad;
+        private bool isSpd;
+        private bool isISO;
+        private double tireISO1;
+        private double tireISO2;
+        private bool isMPH;
+        private int curveX = 0;
+        private int curveY = 1;
+
+
+        public int Whlength
+        {
+            get
+            {
+                return whlength;
+            }
+            set
+            {
+                if (whlength != value)
+                {
+                    whlength = value;
+                    NotifyPropertyChanged("Whlength");
+                    Calculate();
+                }
+            }
+        }
+
+        public double TireISO1
+        {
+            get
+            {
+                return tireISO1;
+            }
+
+            set
+            {
+                if (tireISO1 != value)
+                {
+                    tireISO1 = value;
+                    NotifyPropertyChanged("TireISO1");
+                    CalculateWheelLenth();
+                }
+            }
+        }
+
+        public double TireISO2
+        {
+            get
+            {
+                return tireISO2;
+            }
+
+            set
+            {
+                if (tireISO2 != value)
+                {
+                    tireISO2 = value;
+                    NotifyPropertyChanged("TireISO2");
+                    CalculateWheelLenth();
+                }
+            }
+        }
+
+        public bool IsISO
+        {
+            get
+            {
+                return isISO;
+            }
+
+            set
+            {
+                if (isISO != value)
+                {
+                    isISO = value;
+                    NotifyPropertyChanged("IsISO");
+                    CalculateWheelLenth();
+                }
+            }
+        }
+
+        public double Cad
+        {
+            get
+            {
+                return cad;
+            }
+
+            set
+            {
+                cad = value;
+                NotifyPropertyChanged("Cad");
+                NotifyPropertyChanged("CadStr");
+                Calculate();
+            }
+        }
+
+        public string CadStr
+        {
+            get
+            {
+                string str = "";
+                if (IsSpd)
+                {
+                    if (IsMPH)
+                        str = (Cad / 2.0).ToString("0.0") + " mph";
+                    else
+                        str = (Cad / 2.0).ToString("0.0") + " km/h";
+                }
+                else
+                {
+                    str = Cad.ToString("0.0") + " rpm";
+                }
+                return str;
+            }
+        }
+
+        public string SpeedHeaderStr
+        {
+            get
+            {
+                string str = "";
+                if (IsSpd)
+                {
+                    str = Properties.Resources.StringCAD + " rpm";
+                }
+                else
+                {
+                    if (IsMPH)
+                        str = Properties.Resources.StringSpeed + " mph";
+                    else
+                        str = Properties.Resources.StringSpeed + " km/h";
+                }
+                return str;
+            }
+        }
+
+        public bool IsMPH
+        {
+            get
+            {
+                return isMPH;
+            }
+
+            set
+            {
+                isMPH = value;
+                NotifyPropertyChanged("IsMPH");
+                NotifyPropertyChanged("CadStr");
+                NotifyPropertyChanged("SpeedHeaderStr");
+                Calculate();
+            }
+        }
+
+        public bool IsSpd
+        {
+            get
+            {
+                return isSpd;
+            }
+
+            set
+            {
+                isSpd = value;
+                NotifyPropertyChanged("IsSpd");
+                NotifyPropertyChanged("SpeedHeaderStr");
+                Cad = isSpd ? 50 : 80;
+                Calculate();
+            }
+        }
+
+        public int CurveX
+        {
+            get
+            {
+                return curveX;
+            }
+
+            set
+            {
+                curveX = value;
+                Calculate();
+            }
+        }
+
+        public int CurveY
+        {
+            get
+            {
+                return curveY;
+            }
+
+            set
+            {
+                curveY = value;
+                Calculate();
+            }
+        }
 
         OxyPlot.Wpf.PlotView chart;
         System.Windows.Controls.ListView list;
         System.Windows.Controls.Label label0;
         System.Windows.Controls.Label label1;
 
-        public int CurveX = 0;
-        public int CurveY = 1;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
 
         public static PlotModel LineSeries()
         {
@@ -134,11 +334,21 @@ namespace BicycleCalculatorWPF
             innow.teeth[13].Teeth = Properties.Settings.Default.innow14;
             for (int i = 0; i < 14; i++)
                 if (innow.teeth[i].Teeth == 0) innow.teeth[i].Teeth = 1;
+
+            Whlength = Properties.Settings.Default.wheellen;
+            TireISO1 = Properties.Settings.Default.numUD1;
+            TireISO2 = Properties.Settings.Default.numUD2;
+            IsMPH = Properties.Settings.Default.IsMPH;
+            Cad = Properties.Settings.Default.SpdVal;
+            IsSpd = Properties.Settings.Default.IsSpd;
+            IsISO = Properties.Settings.Default.IsISO;
         }
 
         double toothrateold = 0;
         List<CResult> results = new List<CResult>();
         public List<int> NaNNumber = new List<int>();
+
+
         public void Calculate()
         {
             if (!ready) return;
@@ -148,7 +358,7 @@ namespace BicycleCalculatorWPF
             CGear bktemp = bknow;
             CGear intemp = innow;
             CWheel whtemp = (CWheel)whnow.Clone();
-            whtemp.Lenth = whlength;
+            whtemp.Lenth = Whlength;
 
             list.Items.Clear();
 
@@ -207,17 +417,17 @@ namespace BicycleCalculatorWPF
 
                         if (IsSpd)
                         {
-                            if (Properties.Settings.Default.IsMPH)
-                                resulttemp.Speed1 = cad * 1.609344 / 2.0 * 1000000.0 / 60.0 / whtemp.Lenth / toothrate;
+                            if (IsMPH)
+                                resulttemp.Speed1 = Cad * 1.609344 / 2.0 * 1000000.0 / 60.0 / whtemp.Lenth / toothrate;
                             else
-                                resulttemp.Speed1 = cad / 2.0 * 1000000.0 / 60.0 / whtemp.Lenth / toothrate;
+                                resulttemp.Speed1 = Cad / 2.0 * 1000000.0 / 60.0 / whtemp.Lenth / toothrate;
                         }
                         else
                         {
-                            if (Properties.Settings.Default.IsMPH)
-                                resulttemp.Speed1 = toothrate * cad * whtemp.Lenth * 60 / 1000000.0 * 0.6213712;
+                            if (IsMPH)
+                                resulttemp.Speed1 = toothrate * Cad * whtemp.Lenth * 60 / 1000000.0 * 0.6213712;
                             else
-                                resulttemp.Speed1 = toothrate * cad * whtemp.Lenth * 60 / 1000000.0;
+                                resulttemp.Speed1 = toothrate * Cad * whtemp.Lenth * 60 / 1000000.0;
                         }
 
                         if (num >= 3)
@@ -315,7 +525,7 @@ namespace BicycleCalculatorWPF
                     pm.Axes[1].Title = Properties.Resources.StringGearRatio;
                     break;
                 case 4://车速踏频
-                    pm.Axes[1].Title = (IsSpd ? Properties.Resources.StringCAD + "(rpm)" : (Properties.Resources.StringSpeed + (Properties.Settings.Default.IsMPH ? "(mph)" : "(km/h)")));
+                    pm.Axes[1].Title = (IsSpd ? Properties.Resources.StringCAD + "(rpm)" : (Properties.Resources.StringSpeed + (IsMPH ? "(mph)" : "(km/h)")));
                     break;
             }
 
@@ -337,7 +547,32 @@ namespace BicycleCalculatorWPF
 
 
         }
-        
+
+        public void CalculateWheelLenth()
+        {
+            //if (checkBox2 == null) return;
+            if (IsISO)
+            {
+                try
+                {
+                    if (TireISO1 <= 5)
+                    {
+                        Whlength = Convert.ToInt32((TireISO1 * 25.4 * 2 + TireISO2) * Math.PI);
+                    }
+                    else
+                    {
+                        Whlength = Convert.ToInt32((TireISO1 * 2.0 + TireISO2) * Math.PI);
+                    }
+                }
+                catch { }
+            }
+            else
+            {
+                CWheel temp = whnow;
+                if (temp != null)
+                    Whlength = temp.Lenth;
+            }
+        }
 
         public void AddCurveNow()
         {
@@ -346,7 +581,7 @@ namespace BicycleCalculatorWPF
             CGear intemp = innow;
             CWheel whtemp = whnow;
 
-            whtemp.Lenth = whlength;
+            whtemp.Lenth = Whlength;
 
             string tempstr = "";
             tempstr += pm.Axes[0].Title;
@@ -441,10 +676,13 @@ namespace BicycleCalculatorWPF
             Properties.Settings.Default.innow14 = innow.teeth[13].Teeth;
 
             Properties.Settings.Default.IsSpd = IsSpd;
-            Properties.Settings.Default.SpdVal = cad;
-
+            Properties.Settings.Default.SpdVal = Cad;
+            Properties.Settings.Default.IsMPH = IsMPH;
             Properties.Settings.Default.wheelid = whnow_index;
-            Properties.Settings.Default.wheellen = whlength;
+            Properties.Settings.Default.wheellen = Whlength;
+            Properties.Settings.Default.IsISO = IsISO;
+            Properties.Settings.Default.numUD1 = TireISO1;
+            Properties.Settings.Default.numUD2 = TireISO2;
         }
 
         public void ExportFileTr()
@@ -468,7 +706,7 @@ namespace BicycleCalculatorWPF
             //for (int i = 0; i < dataGridViewIn.Items.Count; i++)
             //    intemp.teeth[i].teeth = ((CTeeth)dataGridViewIn.Items[i]).Teeth;
 
-            whtemp.Lenth = whlength;
+            whtemp.Lenth = Whlength;
             System.IO.StreamWriter swriter;
             string _filename = saveFileDialog1.FileName;
             try
@@ -517,7 +755,7 @@ namespace BicycleCalculatorWPF
             }
             else
             {
-                if (Properties.Settings.Default.IsMPH)
+                if (IsMPH)
                     strtemp += Properties.Resources.StringSpeed + " mph";
                 else
                     strtemp += Properties.Resources.StringSpeed + " km/h";
@@ -542,6 +780,14 @@ namespace BicycleCalculatorWPF
                 swriter.WriteLine(strtemp);
             }
             swriter.Close();
+        }
+
+        public void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

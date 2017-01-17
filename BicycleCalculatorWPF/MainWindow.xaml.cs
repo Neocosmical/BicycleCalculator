@@ -31,6 +31,10 @@ namespace BicycleCalculatorWPF
         
         CData data = new CData();
 
+        CGearSelector frSelector = new CGearSelector();
+        CGearSelector bkSelector = new CGearSelector();
+        CGearSelector inSelector = new CGearSelector();
+
         public MainWindow()
         {
             switch (Properties.Settings.Default.Language)
@@ -47,9 +51,6 @@ namespace BicycleCalculatorWPF
             InitializeComponent();
 
         }
-
-        
-
 
         System.Timers.Timer timerCAD = new System.Timers.Timer(50);
         System.Diagnostics.Stopwatch CADwatch = new System.Diagnostics.Stopwatch();
@@ -89,18 +90,10 @@ namespace BicycleCalculatorWPF
 
             }
             catch
-            {
-                ;
-            }
+            { }
             ///////////////////////////////////////////////////////////////////////////
             System.Threading.Thread InitThread = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(Init));
             InitThread.Start();
-            //DataInit(null);
-
-
-            //ready = true;
-            //Calculate();
-            //CalculateSpoke();
         }
 
         private void Init(object obj)
@@ -114,14 +107,13 @@ namespace BicycleCalculatorWPF
         {
             labelCAD.Dispatcher.Invoke(new Action(() =>
             {
-                if (checkBox1.IsChecked.Value)
+                if (TransmissionCal.IsSpd)
                 {
                     labelCAD.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
                 }
                 else
                 {
-                    
-                    byte n = Convert.ToByte(Math.Sin(Math.PI * trackBar1.Value / 30000.0 * CADwatch.ElapsedMilliseconds) * 100.0 + 100.0);
+                    byte n = Convert.ToByte(Math.Sin(Math.PI * TransmissionCal.Cad / 30000.0 * CADwatch.ElapsedMilliseconds) * 100.0 + 100.0);
                     labelCAD.Foreground = new SolidColorBrush(Color.FromRgb(n, n, n));
                 }
             }));
@@ -136,30 +128,15 @@ namespace BicycleCalculatorWPF
             TransmissionCal.ready = false;
             WheelCal.ready = false;
 
+            frSelector.RefreshData();
+            bkSelector.RefreshData();
+            inSelector.RefreshData();
+
             int temp0 = WheelcomboBox.SelectedIndex;
-            int temp1 = FrNumcomboBox.SelectedIndex;
-            int temp2 = FrModelcomboBox.SelectedIndex;
-            int temp3 = BkNumcomboBox.SelectedIndex;
-            int temp4 = BkModelcomboBox.SelectedIndex;
-            int temp5 = InNumcomboBox.SelectedIndex;
-            int temp6 = InModelcomboBox.SelectedIndex;
-            int temp7 = HubNumcomboBox.SelectedIndex;
-            int temp8 = RimNumcomboBox.SelectedIndex;
+            int temp1 = HubNumcomboBox.SelectedIndex;
+            int temp2 = RimNumcomboBox.SelectedIndex;
             
-            FrNumcomboBox.Items.Clear();
-            BkNumcomboBox.Items.Clear();
-            InNumcomboBox.Items.Clear();
             WheelcomboBox.Items.Clear();
-
-            foreach (CGearList list in data.frlists.Lists)
-                FrNumcomboBox.Items.Add(list);
-
-            foreach (CGearList list in data.bklists.Lists)
-                BkNumcomboBox.Items.Add(list);
-
-            foreach (CGearList list in data.inlists.Lists)
-                InNumcomboBox.Items.Add(list);
-
 
             foreach (CWheel wheel in data.wheelList)
             {
@@ -170,29 +147,17 @@ namespace BicycleCalculatorWPF
             RimNumcomboBox.Items.Refresh();
 
             WheelcomboBox.SelectedIndex = 0;
-            FrNumcomboBox.SelectedIndex = 0;
-            FrModelcomboBox.SelectedIndex = 0;
-            BkNumcomboBox.SelectedIndex = 0;
-            BkModelcomboBox.SelectedIndex = 0;
-            InNumcomboBox.SelectedIndex = 0;
-            InModelcomboBox.SelectedIndex = 0;
             HubNumcomboBox.SelectedIndex = 0;
             RimNumcomboBox.SelectedIndex = 0;
 
             WheelcomboBox.SelectedIndex   = temp0;
-            FrNumcomboBox.SelectedIndex   = temp1;
-            FrModelcomboBox.SelectedIndex = temp2;
-            BkNumcomboBox.SelectedIndex   = temp3;
-            BkModelcomboBox.SelectedIndex = temp4;
-            InNumcomboBox.SelectedIndex   = temp5;
-            InModelcomboBox.SelectedIndex = temp6;
-            HubNumcomboBox.SelectedIndex  = temp7;
-            RimNumcomboBox.SelectedIndex  = temp8;
+            HubNumcomboBox.SelectedIndex  = temp1;
+            RimNumcomboBox.SelectedIndex  = temp2;
 
             TransmissionCal.ready = true;
             WheelCal.ready = true;
             TransmissionCal.Calculate();
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
         }
 
         System.Timers.Timer timerload1;
@@ -201,46 +166,34 @@ namespace BicycleCalculatorWPF
             TransmissionCal.ready = false;
             WheelCal.ready = false;
 
-            FrNumcomboBox.Items.Clear();
-            BkNumcomboBox.Items.Clear();
-            InNumcomboBox.Items.Clear();
+
+            WheelLenthtextBox.SetBinding(TextBox.TextProperty, new Binding("Whlength") { Source = TransmissionCal });
+            numericUpDown1.SetBinding(TextBox.TextProperty, new Binding("TireISO1") { Source = TransmissionCal });
+            numericUpDown2.SetBinding(TextBox.TextProperty, new Binding("TireISO2") { Source = TransmissionCal });
+            labelCAD.SetBinding(Label.ContentProperty, new Binding("CadStr") { Source = TransmissionCal });
+            checkBox1.SetBinding(CheckBox.IsCheckedProperty, new Binding("IsSpd") { Source = TransmissionCal });
+            checkBox2.SetBinding(CheckBox.IsCheckedProperty, new Binding("IsISO") { Source = TransmissionCal });
+            TransmissionCal.PropertyChanged += TransmissionCal_PropertyChanged;
+
+            frSelector.Init(FrNumcomboBox, FrModelcomboBox, dataGridViewFr, TransmissionCal, data.frlists);
+            bkSelector.Init(BkNumcomboBox, BkModelcomboBox, dataGridViewBk, TransmissionCal, data.bklists);
+            inSelector.Init(InNumcomboBox, InModelcomboBox, dataGridViewIn, TransmissionCal, data.inlists);
+            TransmissionCal.Init(Chart1, listBox1, labelinfo, labelinfo1);
+            WheelCal.Init(Chart2, listBox2);
+                        
             WheelcomboBox.Items.Clear();
-
-            foreach (CGearList list in data.frlists.Lists)
-                FrNumcomboBox.Items.Add(list);
-
-            foreach (CGearList list in data.bklists.Lists)
-                BkNumcomboBox.Items.Add(list);
-
-            foreach (CGearList list in data.inlists.Lists)
-                InNumcomboBox.Items.Add(list);
-
-
+            
             foreach (CWheel wheel in data.wheelList)
             {
                 WheelcomboBox.Items.Add(wheel);
             }
 
             WheelcomboBox.SelectedIndex = 0;
-            FrNumcomboBox.SelectedIndex = 0;
-            FrModelcomboBox.SelectedIndex = 0;
-            BkNumcomboBox.SelectedIndex = 0;
-            BkModelcomboBox.SelectedIndex = 0;
-            InNumcomboBox.SelectedIndex = 0;
-            InModelcomboBox.SelectedIndex = 0;
             HubNumcomboBox.SelectedIndex = 0;
             RimNumcomboBox.SelectedIndex = 0;
 
 
-            WheelcomboBox.SelectedIndex = Properties.Settings.Default.wheelid;
-            
-            FrNumcomboBox.SelectedIndex = Properties.Settings.Default.frnumid;
-            FrModelcomboBox.SelectedIndex = Properties.Settings.Default.frmodid;
-            BkNumcomboBox.SelectedIndex = Properties.Settings.Default.bknumid;
-            BkModelcomboBox.SelectedIndex = Properties.Settings.Default.bkmodid;
-            InNumcomboBox.SelectedIndex = Properties.Settings.Default.innumid;
-            InModelcomboBox.SelectedIndex = Properties.Settings.Default.inmodid;
-            
+            WheelcomboBox.SelectedIndex = Properties.Settings.Default.wheelid;            
 
             timerCAD.Enabled = true;
             timerCAD.Elapsed += timerCAD_Elapsed;
@@ -252,27 +205,13 @@ namespace BicycleCalculatorWPF
             numericUpDown2.ToolTip = Properties.Resources.StringRimdiameter + "\r\n" + Properties.Resources.StringRimdiametermm;
             WheelLenthtextBox.ToolTip = Properties.Resources.StringTireCirc + "\r\n" + Properties.Resources.Stringmm;
 
-            TransmissionCal.Init(Chart1, listBox1, labelinfo, labelinfo1);
-            WheelCal.Init(Chart2, listBox2);
 
             HubNumcomboBox.ItemsSource = data.hublist;
             RimNumcomboBox.ItemsSource = data.rimlist;
 
             HubNumcomboBox.SelectedIndex = 1;
             RimNumcomboBox.SelectedIndex = 1;
-
-
-
-            checkBox1.IsChecked = Properties.Settings.Default.IsSpd;
-            trackBar1.Value = Properties.Settings.Default.SpdVal;
-            checkBox2.IsChecked = Properties.Settings.Default.IsISO;
-            tableLayoutPanel10.Visibility = checkBox2.IsChecked.Value ? Visibility.Visible : Visibility.Hidden;
-            WheelcomboBox.Visibility = checkBox2.IsChecked.Value ? Visibility.Hidden : Visibility.Visible;
-
-            WheelLenthtextBox.Text = Convert.ToString(Properties.Settings.Default.wheellen);
-            numericUpDown1.Text = Convert.ToString(Properties.Settings.Default.numUD1);
-            numericUpDown2.Text = Convert.ToString(Properties.Settings.Default.numUD2);
-
+            
             TabControlMain.SelectedIndex = Properties.Settings.Default.TabSlt;
 
             TransmissionCal.ready = true;
@@ -281,13 +220,30 @@ namespace BicycleCalculatorWPF
             checkBox1_Click(null, null);
 
             TransmissionCal.Calculate();
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
 
             
 
             timerload1 = new System.Timers.Timer(200);
             timerload1.Enabled = true;
             timerload1.Elapsed += timerload1_Elapsed;
+        }
+
+        private void TransmissionCal_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "SpeedHeaderStr":
+                    SpeedColumn.Header = TransmissionCal.SpeedHeaderStr;
+                    break;
+                case "Cad":
+                    trackBar1.Value = TransmissionCal.Cad;
+                    break;
+                case "IsISO":
+                    tableLayoutPanel10.Visibility = TransmissionCal.IsISO ? Visibility.Visible : Visibility.Hidden;
+                    WheelcomboBox.Visibility = TransmissionCal.IsISO ? Visibility.Hidden : Visibility.Visible;
+                    break;
+            }
         }
 
         double TextBlockLoadOpacity = 1;
@@ -305,110 +261,15 @@ namespace BicycleCalculatorWPF
             if (TextBlockLoadOpacity < 0)
                 timerload1.Enabled = false;
         }
-
-
-        private void FrNumcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (FrNumcomboBox.SelectedItem == null) return;
-            bool rtemp = TransmissionCal.ready;
-            TransmissionCal.ready = false;
-            FrModelcomboBox.Items.Clear();
-
-
-            foreach (CGear gear in ((CGearList)FrNumcomboBox.SelectedItem).Gears)
-                FrModelcomboBox.Items.Add(gear);
-
-            FrModelcomboBox.SelectedIndex = 0;
-            TransmissionCal.ready = rtemp;
-            TransmissionCal.Calculate();
-        }
-
-        private void BkNumcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (BkNumcomboBox.SelectedItem == null) return;
-            bool rtemp = TransmissionCal.ready;
-            TransmissionCal.ready = false;
-            BkModelcomboBox.Items.Clear();
-
-            foreach (CGear gear in ((CGearList)BkNumcomboBox.SelectedItem).Gears)
-                BkModelcomboBox.Items.Add(gear);
-
-            BkModelcomboBox.SelectedIndex = 0;
-            TransmissionCal.ready = rtemp;
-            TransmissionCal.Calculate();
-        }
-
-        private void InNumcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (InNumcomboBox.SelectedItem == null) return;
-            bool rtemp = TransmissionCal.ready;
-            TransmissionCal.ready = false;
-            InModelcomboBox.Items.Clear();
-
-            foreach (CGear gear in ((CGearList)InNumcomboBox.SelectedItem).Gears)
-                InModelcomboBox.Items.Add(gear);
-            InModelcomboBox.SelectedIndex = 0;
-            TransmissionCal.ready = rtemp;
-            TransmissionCal.Calculate();
-        }
-
-        private void FrModelcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (FrModelcomboBox.SelectedItem == null) return;
-
-            bool rtemp = TransmissionCal.ready;
-            TransmissionCal.ready = false;
-            TransmissionCal.frnow = (CGear)((CGear)FrModelcomboBox.SelectedItem).Clone();
-            dataGridViewFr.Items.Clear();
-            for (int i = 0; i < TransmissionCal.frnow.Speeds; i++) dataGridViewFr.Items.Add(TransmissionCal.frnow.teeth[i]);
-            TransmissionCal.ready = rtemp;
-            TransmissionCal.Calculate();
-        }
-
-        private void BkModelcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (BkModelcomboBox.SelectedItem == null) return;
-
-            bool rtemp = TransmissionCal.ready;
-            TransmissionCal.ready = false;
-            TransmissionCal.bknow = (CGear)((CGear)BkModelcomboBox.SelectedItem).Clone();
-            dataGridViewBk.Items.Clear();
-            for (int i = 0; i < TransmissionCal.bknow.Speeds; i++) dataGridViewBk.Items.Add(TransmissionCal.bknow.teeth[i]);
-            TransmissionCal.ready = rtemp;
-            TransmissionCal.Calculate();
-        }
-
-        private void InModelcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (InModelcomboBox.SelectedItem == null) return;
-            bool rtemp = TransmissionCal.ready;
-            TransmissionCal.ready = false;
-            TransmissionCal.innow = (CGear)((CGear)InModelcomboBox.SelectedItem).Clone();
-            dataGridViewIn.Items.Clear();
-            for (int i = 0; i < TransmissionCal.innow.Speeds; i++) dataGridViewIn.Items.Add(TransmissionCal.innow.teeth[i]);
-            if (TransmissionCal.innow.Speeds <= 1) dataGridViewIn.IsEnabled = false;
-            else dataGridViewIn.IsEnabled = true;
-            TransmissionCal.ready = rtemp;
-            TransmissionCal.Calculate();
-        }
-        
+                
         private void WheelcomboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
         {
             CWheel temp = (CWheel)WheelcomboBox.SelectedItem;
             if (temp == null) return;
-            WheelLenthtextBox.Text = temp.Lenth.ToString();
+            TransmissionCal.Whlength = temp.Lenth;
             TransmissionCal.whnow = temp;
             TransmissionCal.whnow_index = WheelcomboBox.SelectedIndex;
         }
-
-        private void WheelLenthtextBox_ValueChanged(object sender, EventArgs e)
-        {
-            TransmissionCal.Calculate();
-        }
-
-
-        
-        
 
         private void listBox1_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -473,127 +334,73 @@ namespace BicycleCalculatorWPF
         
         private void checkBox2_CheckedChanged(object sender, RoutedEventArgs e)
         {
-            tableLayoutPanel10.Visibility = checkBox2.IsChecked.Value ? Visibility.Visible : Visibility.Hidden;
-            WheelcomboBox.Visibility = checkBox2.IsChecked.Value ? Visibility.Hidden : Visibility.Visible;
-
-            CalculateWheelLenth();
+            TransmissionCal.IsISO = checkBox2.IsChecked.Value;
         }
 
-        private void CalculateWheelLenth()
-        {
 
-            if (checkBox2 == null) return;
-            if (checkBox2.IsChecked.Value)
-            {
-                try
-                {
-                    if (Convert.ToDouble(numericUpDown1.Text) <= 5)
-                    {
-                        WheelLenthtextBox.Text = ((Convert.ToDouble(numericUpDown1.Text) * 25.4 * 2 + Convert.ToDouble(numericUpDown2.Text)) * Math.PI).ToString("F0");
-                    }
-                    else
-                    {
-                        WheelLenthtextBox.Text = ((Convert.ToDouble(numericUpDown1.Text) * 2.0 + Convert.ToDouble(numericUpDown2.Text)) * Math.PI).ToString("F0");
-                    }
-                }
-                catch { }
-            }
-            else
-            {
-                CWheel temp = (CWheel)WheelcomboBox.SelectedItem;
-                if(temp != null)
-                WheelLenthtextBox.Text = temp.Lenth.ToString("D"); ;
-            }
-        }
 
         private void numericUpDown1_ValueChanged(object sender, TextChangedEventArgs e)
         {
-            CalculateWheelLenth();
-        }
-
-        private void numericUpDown1_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
             try
             {
-                if (Convert.ToDouble(numericUpDown1.Text) <= 5)
-                {
-                    numericUpDown1.Text = Convert.ToDouble(numericUpDown1.Text).ToString("F2");
-                }
-                else
-                {
-                    numericUpDown1.Text = Convert.ToDouble(numericUpDown1.Text).ToString("F0");
-                }
+                TransmissionCal.TireISO1 = Convert.ToDouble(numericUpDown1.Text);
             }
             catch
             {
-                numericUpDown1.Text = "50";
+                numericUpDown1.Text = TransmissionCal.TireISO1.ToString();
             }
         }
 
         private void numericUpDown2_ValueChanged(object sender, TextChangedEventArgs e)
         {
-            CalculateWheelLenth();
-        }
-
-
-        private void numericUpDown2_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
             try
             {
-                numericUpDown2.Text = Convert.ToDouble(numericUpDown2.Text).ToString("F0");
+                TransmissionCal.TireISO2 = Convert.ToDouble(numericUpDown2.Text);
             }
             catch
             {
-                numericUpDown2.Text = "406";
+                numericUpDown2.Text = TransmissionCal.TireISO2.ToString();
             }
         }
 
         private void NoneToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
             TransmissionCal.CurveX = 0;
-            TransmissionCal.Calculate();
         }
 
         private void WithCrankToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
             TransmissionCal.CurveX = 1;
-            TransmissionCal.Calculate();
         }
 
         private void WithCassToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
             TransmissionCal.CurveX = 2;
-            TransmissionCal.Calculate();
         }
 
         private void WithInterToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
             TransmissionCal.CurveX = 3;
-            TransmissionCal.Calculate();
         }
         
         private void SRToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
             TransmissionCal.CurveY = 1;
-            TransmissionCal.Calculate();
         }
 
         private void GIToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
             TransmissionCal.CurveY = 2;
-            TransmissionCal.Calculate();
         }
 
         private void GRToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
             TransmissionCal.CurveY = 3;
-            TransmissionCal.Calculate();
         }
 
         private void SpdToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
             TransmissionCal.CurveY = 4;
-            TransmissionCal.Calculate();
         }
 
 
@@ -637,14 +444,12 @@ namespace BicycleCalculatorWPF
 
         private void kMHToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.IsMPH = false;
-            TransmissionCal.Calculate();
+            TransmissionCal.IsMPH = false;
         }
 
         private void mPHToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.IsMPH = true;
-            TransmissionCal.Calculate();
+            TransmissionCal.IsMPH = true;
         }
 
 
@@ -688,129 +493,65 @@ namespace BicycleCalculatorWPF
 
         private void frMinuButton_Click(object sender, RoutedEventArgs e)
         {
-            RepeatButton b = sender as RepeatButton;
-            int id = Convert.ToInt32(b.CommandParameter);
-            if (((CTeeth)dataGridViewFr.Items[id - 1]).teeth > 1)
-                ((CTeeth)dataGridViewFr.Items[id - 1]).teeth--;
-            dataGridViewFr.Items.Refresh();
-            TransmissionCal.Calculate();
+            frSelector.MinuButton_Click(sender, e);
         }
 
         private void frAddButton_Click(object sender, RoutedEventArgs e)
         {
-            RepeatButton b = sender as RepeatButton;
-            int id = Convert.ToInt32(b.CommandParameter);
-            if (((CTeeth)dataGridViewFr.Items[id - 1]).teeth < 200)
-                ((CTeeth)dataGridViewFr.Items[id - 1]).teeth++;
-            dataGridViewFr.Items.Refresh();
-            TransmissionCal.Calculate();
+            frSelector.AddButton_Click(sender, e);
         }
 
         private void bkMinuButton_Click(object sender, RoutedEventArgs e)
         {
-            RepeatButton b = sender as RepeatButton;
-            int id = Convert.ToInt32(b.CommandParameter);
-            if (((CTeeth)dataGridViewBk.Items[id - 1]).teeth > 1)
-                ((CTeeth)dataGridViewBk.Items[id - 1]).teeth--;
-            dataGridViewBk.Items.Refresh();
-            TransmissionCal.Calculate();
+            bkSelector.MinuButton_Click(sender, e);
         }
 
         private void bkAddButton_Click(object sender, RoutedEventArgs e)
         {
-            RepeatButton b = sender as RepeatButton;
-            int id = Convert.ToInt32(b.CommandParameter);
-            if (((CTeeth)dataGridViewBk.Items[id - 1]).teeth < 200)
-                ((CTeeth)dataGridViewBk.Items[id - 1]).teeth++;
-            dataGridViewBk.Items.Refresh();
-            TransmissionCal.Calculate();
+            bkSelector.AddButton_Click(sender, e);
         }
 
         private void inMinuButton_Click(object sender, RoutedEventArgs e)
         {
-            RepeatButton b = sender as RepeatButton;
-            int id = Convert.ToInt32(b.CommandParameter);
-            if (((CTeeth)dataGridViewIn.Items[id - 1]).teeth > 0.01)
-                ((CTeeth)dataGridViewIn.Items[id - 1]).teeth -= 0.01;
-            dataGridViewIn.Items.Refresh();
-            TransmissionCal.Calculate();
+            inSelector.MinuButton_Click(sender, e);
         }
 
         private void inAddButton_Click(object sender, RoutedEventArgs e)
         {
-            RepeatButton b = sender as RepeatButton;
-            int id = Convert.ToInt32(b.CommandParameter);
-            if (((CTeeth)dataGridViewIn.Items[id - 1]).teeth < 20.0)
-                ((CTeeth)dataGridViewIn.Items[id - 1]).teeth += 0.01;
-            dataGridViewIn.Items.Refresh();
-            TransmissionCal.Calculate();
+            inSelector.AddButton_Click(sender, e);
         }
 
         private void trackBar1_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (!TransmissionCal.ready) return;
-            TransmissionCal.cad = trackBar1.Value;
-            TransmissionCal.Calculate();
-
-            if (TransmissionCal.IsSpd)
-            {
-                if (Properties.Settings.Default.IsMPH)
-                    labelCAD.Content = (trackBar1.Value / 2.0).ToString("0.0") + " mph";
-                else
-                    labelCAD.Content = (trackBar1.Value / 2.0).ToString("0.0") + " km/h";
-            }
-            else
-            {
-                labelCAD.Content = trackBar1.Value.ToString("0.0") + " rpm";
-            }
-
+            TransmissionCal.Cad = trackBar1.Value;
         }
 
         private void checkBox1_Click(object sender, RoutedEventArgs e)
         {
-            //if (!TransmissionCal.ready) return;
-            if (checkBox1.IsChecked.Value)
-            {
-                trackBar1.Value = 50;
-                timerCAD.Enabled = false;
-                labelCAD.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-                if (Properties.Settings.Default.IsMPH)
-                    labelCAD.Content = (trackBar1.Value / 2.0).ToString("0.0") + " mph";
-                else
-                    labelCAD.Content = (trackBar1.Value / 2.0).ToString("0.0") + " km/h";
-                SpeedColumn.Header = Properties.Resources.StringCAD + " rpm";
-            }
-            else
-            {
-                trackBar1.Value = 80;
-                timerCAD.Enabled = true;
-                labelCAD.Content = trackBar1.Value.ToString("0.0") + " rpm";
-                if (Properties.Settings.Default.IsMPH)
-                    SpeedColumn.Header = Properties.Resources.StringSpeed + " mph";
-                else
-                    SpeedColumn.Header = Properties.Resources.StringSpeed + " km/h";
-            }
             TransmissionCal.IsSpd = checkBox1.IsChecked.Value;
-            TransmissionCal.Calculate();
         }
 
         private void WheelLenthtextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            try { TransmissionCal.whlength = Convert.ToInt32(WheelLenthtextBox.Text); } catch { }
-            TransmissionCal.Calculate();
+            try { TransmissionCal.Whlength = Convert.ToInt32(WheelLenthtextBox.Text); } catch { }
+        }
+
+        private void WheelLenthtextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            WheelLenthtextBox.Text = TransmissionCal.Whlength.ToString();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            WheelLenthtextBox.Text = (Convert.ToInt16(WheelLenthtextBox.Text) + 1).ToString();
+            TransmissionCal.Whlength += 1;
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            WheelLenthtextBox.Text = (Convert.ToInt16(WheelLenthtextBox.Text) - 1).ToString();
+            TransmissionCal.Whlength -= 1;
         }
 
-        private void WheelLenthtextBox_MouseWheel(object sender, MouseWheelEventArgs e)
+        private void TextBox_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             int val = Convert.ToInt16(((TextBox)sender).Text);
             if (e.Delta > 0)
@@ -842,93 +583,38 @@ namespace BicycleCalculatorWPF
 
         private void TextBox_MouseWheel_Fr(object sender, MouseWheelEventArgs e)
         {
-            int id = (int)(((TextBox)sender).Tag);
-            if (((CTeeth)dataGridViewFr.Items[id - 1]).Teeth > 1 && e.Delta < 0)
-                ((CTeeth)dataGridViewFr.Items[id - 1]).Teeth -= 1;
-            if (((CTeeth)dataGridViewFr.Items[id - 1]).Teeth < 200 && e.Delta > 0)
-                ((CTeeth)dataGridViewFr.Items[id - 1]).Teeth += 1;
-            dataGridViewFr.Items.Refresh();
-            TransmissionCal.Calculate();
+            frSelector.TextBox_MouseWheel(sender, e);
         }
 
         private void TextBox_MouseWheel_Bk(object sender, MouseWheelEventArgs e)
         {
-            int id = (int)(((TextBox)sender).Tag);
-            if (((CTeeth)dataGridViewBk.Items[id - 1]).Teeth > 1 && e.Delta < 0)
-                ((CTeeth)dataGridViewBk.Items[id - 1]).Teeth -= 1;
-            if (((CTeeth)dataGridViewBk.Items[id - 1]).Teeth < 200 && e.Delta > 0)
-                ((CTeeth)dataGridViewBk.Items[id - 1]).Teeth += 1;
-            dataGridViewBk.Items.Refresh();
-            TransmissionCal.Calculate();
+            bkSelector.TextBox_MouseWheel(sender, e);
         }
 
         private void TextBox_MouseWheel_In(object sender, MouseWheelEventArgs e)
         {
-            int id = (int)(((TextBox)sender).Tag);
-            if (((CTeeth)dataGridViewIn.Items[id - 1]).Teeth > 0.01 && e.Delta < 0)
-                ((CTeeth)dataGridViewIn.Items[id - 1]).Teeth -= 0.01;
-            if (((CTeeth)dataGridViewIn.Items[id - 1]).Teeth < 20.0 && e.Delta > 0)
-                ((CTeeth)dataGridViewIn.Items[id - 1]).Teeth += 0.01;
-
-            dataGridViewIn.Items.Refresh();
-            TransmissionCal.Calculate();
+            inSelector.TextBox_MouseWheel(sender, e);
         }
 
         private void TextBox_LostKeyboardFocus_Fr(object sender, KeyboardFocusChangedEventArgs e)
         {
-            int id = (int)(((TextBox)sender).Tag);
-            double teethtemp = ((CTeeth)dataGridViewFr.Items[id - 1]).Teeth;
-            try
-            {
-                teethtemp = Convert.ToInt16(((TextBox)sender).Text);
-            }
-            catch
-            { }
-            if (teethtemp > 200) teethtemp = 200;
-            if (teethtemp < 1) teethtemp = 1;
-            ((CTeeth)dataGridViewFr.Items[id - 1]).Teeth = teethtemp;
-            dataGridViewFr.Items.Refresh();
-            TransmissionCal.Calculate();
+            frSelector.TextBox_LostKeyboardFocus(sender, e);
         }
 
         private void TextBox_LostKeyboardFocus_Bk(object sender, KeyboardFocusChangedEventArgs e)
         {
-            int id = (int)(((TextBox)sender).Tag);
-            double teethtemp = ((CTeeth)dataGridViewBk.Items[id - 1]).Teeth;
-            try
-            {
-                teethtemp = Convert.ToInt16(((TextBox)sender).Text);
-            }
-            catch
-            { }
-            if (teethtemp > 200) teethtemp = 200;
-            if (teethtemp < 1) teethtemp = 1;
-            ((CTeeth)dataGridViewBk.Items[id - 1]).Teeth = teethtemp;
-            dataGridViewBk.Items.Refresh();
-            TransmissionCal.Calculate();
+            bkSelector.TextBox_LostKeyboardFocus(sender, e);
         }
 
         private void TextBox_LostKeyboardFocus_In(object sender, KeyboardFocusChangedEventArgs e)
         {
-            int id = (int)(((TextBox)sender).Tag);
-            double teethtemp = ((CTeeth)dataGridViewIn.Items[id - 1]).Teeth;
-            try
-            {
-                teethtemp = Convert.ToDouble(((TextBox)sender).Text);
-            }
-            catch
-            { }
-            if (teethtemp > 20.0) teethtemp = 20.0;
-            if (teethtemp < 0.01) teethtemp = 0.01;
-            ((CTeeth)dataGridViewIn.Items[id - 1]).Teeth = teethtemp;
-            dataGridViewIn.Items.Refresh();
-            TransmissionCal.Calculate();
+            inSelector.TextBox_LostKeyboardFocus(sender, e);
         }
 
         private void unitToolStripMenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
         {
-            kMHToolStripMenuItem.IsChecked = !Properties.Settings.Default.IsMPH;
-            mPHToolStripMenuItem.IsChecked = Properties.Settings.Default.IsMPH;
+            kMHToolStripMenuItem.IsChecked = !TransmissionCal.IsMPH;
+            mPHToolStripMenuItem.IsChecked = TransmissionCal.IsMPH;
         }
 
         private void ViewMenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
@@ -1103,14 +789,22 @@ namespace BicycleCalculatorWPF
 
         private void labelCAD_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            ((MenuItem)((Label)sender).ContextMenu.Items[0]).IsChecked = !Properties.Settings.Default.IsMPH;
-            ((MenuItem)((Label)sender).ContextMenu.Items[1]).IsChecked = Properties.Settings.Default.IsMPH;
+            if (TransmissionCal.IsSpd)
+            {
+                labelCAD.ContextMenu.Visibility = Visibility.Visible;
+                ((MenuItem)((Label)sender).ContextMenu.Items[0]).IsChecked = !TransmissionCal.IsMPH;
+                ((MenuItem)((Label)sender).ContextMenu.Items[1]).IsChecked = TransmissionCal.IsMPH;
+            }
+            else
+            {
+                labelCAD.ContextMenu.Visibility = Visibility.Hidden;
+            }
         }
 
         private void listBox1_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            ((MenuItem)((ListView)sender).ContextMenu.Items[0]).IsChecked = !Properties.Settings.Default.IsMPH;
-            ((MenuItem)((ListView)sender).ContextMenu.Items[1]).IsChecked = Properties.Settings.Default.IsMPH;
+            ((MenuItem)((ListView)sender).ContextMenu.Items[0]).IsChecked = !TransmissionCal.IsMPH;
+            ((MenuItem)((ListView)sender).ContextMenu.Items[1]).IsChecked = TransmissionCal.IsMPH;
         }
 
         private void Window_Closed_1(object sender, EventArgs e)
@@ -1196,18 +890,6 @@ namespace BicycleCalculatorWPF
             Chart2.InvalidatePlot(false);
         }
 
-        private void WheelLenthtextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            try
-            {
-                WheelLenthtextBox.Text = Convert.ToDouble(WheelLenthtextBox.Text).ToString("F0");
-            }
-            catch
-            {
-                CalculateWheelLenth();
-            }
-        }
-
         private void WheelcomboBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             WheelcomboBox.IsDropDownOpen = true;
@@ -1230,7 +912,7 @@ namespace BicycleCalculatorWPF
             foreach (CValue v in WheelCal.rimnow.vals)
                 dataGridViewRim.Items.Add(v);
             WheelCal.ready = rtemp;
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
         }
 
         private void HubNumcomboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1243,7 +925,7 @@ namespace BicycleCalculatorWPF
             foreach (CValue v in WheelCal.hubnow.vals)
                 dataGridViewHub.Items.Add(v);
             WheelCal.ready = rtemp;
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
         }
 
         private void rimMinuButton_Click(object sender, RoutedEventArgs e)
@@ -1253,7 +935,7 @@ namespace BicycleCalculatorWPF
             if (((CValue)dataGridViewRim.Items[no]).Val > 0.0)
                 ((CValue)dataGridViewRim.Items[no]).Val -= 0.01;
             dataGridViewRim.Items.Refresh();
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
         }
 
         private void rimAddButton_Click(object sender, RoutedEventArgs e)
@@ -1263,7 +945,7 @@ namespace BicycleCalculatorWPF
             if (((CValue)dataGridViewRim.Items[no]).Val < 1000.0)
                 ((CValue)dataGridViewRim.Items[no]).Val += 0.01;
             dataGridViewRim.Items.Refresh();
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
         }
 
         private void hubMinuButton_Click(object sender, RoutedEventArgs e)
@@ -1273,7 +955,7 @@ namespace BicycleCalculatorWPF
             if (((CValue)dataGridViewHub.Items[no]).Val > 0.0)
                 ((CValue)dataGridViewHub.Items[no]).Val -= 0.01;
             dataGridViewHub.Items.Refresh();
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
         }
 
         private void hubAddButton_Click(object sender, RoutedEventArgs e)
@@ -1283,7 +965,7 @@ namespace BicycleCalculatorWPF
             if (((CValue)dataGridViewHub.Items[no]).Val < 1000.0)
                 ((CValue)dataGridViewHub.Items[no]).Val += 0.01;
             dataGridViewHub.Items.Refresh();
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
         }
 
         private void hubtextBox_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -1300,7 +982,7 @@ namespace BicycleCalculatorWPF
                     ((CValue)dataGridViewHub.Items[no]).Val -= 0.01;
             }
             dataGridViewHub.Items.Refresh();
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
         }
 
         private void rimtextBox_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -1317,7 +999,7 @@ namespace BicycleCalculatorWPF
                     ((CValue)dataGridViewRim.Items[no]).Val -= 0.01;
             }
             dataGridViewRim.Items.Refresh();
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
 
         }
 
@@ -1335,7 +1017,7 @@ namespace BicycleCalculatorWPF
             if (val < 0) val = 0;
             ((CValue)dataGridViewRim.Items[no]).Val = val;
             dataGridViewRim.Items.Refresh();
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
         }
 
         private void hubTextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -1352,7 +1034,7 @@ namespace BicycleCalculatorWPF
             if (val < 0) val = 0;
             ((CValue)dataGridViewHub.Items[no]).Val = val;
             dataGridViewHub.Items.Refresh();
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
         }
 
 
@@ -1400,7 +1082,7 @@ namespace BicycleCalculatorWPF
                 ((TextBox)sender).Text = temp.ToString();
             }
             WheelCal.Crosses = temp;
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
         }
 
 
@@ -1420,7 +1102,7 @@ namespace BicycleCalculatorWPF
                 ((TextBox)sender).Text = temp.ToString();
             }
             WheelCal.Spokes = temp;
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
         }
 
         private void LRSideDisToolStripMenuItem_Click(object sender, RoutedEventArgs e)
@@ -1432,13 +1114,13 @@ namespace BicycleCalculatorWPF
         private void DisLeftToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
             WheelCal.disleftside = !WheelCal.disleftside;
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
         }
 
         private void DisRightToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
             WheelCal.disrightside = !WheelCal.disrightside;
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
         }
 
         private void DisItemStripMenuItem_Click(object sender, RoutedEventArgs e)
@@ -1459,42 +1141,42 @@ namespace BicycleCalculatorWPF
             WheelCal.dishubline = true;
             WheelCal.dishubhole = true;
             WheelCal.disspokesline = true;
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
 
         }
 
         private void RimlineToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
             WheelCal.disrimline = !WheelCal.disrimline;
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
 
         }
 
         private void RimholeToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
             WheelCal.disrimhole = !WheelCal.disrimhole;
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
 
         }
 
         private void HublineToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
             WheelCal.dishubline = !WheelCal.dishubline;
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
 
         }
 
         private void HubholeToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
             WheelCal.dishubhole = !WheelCal.dishubhole;
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
 
         }
 
         private void SpolineToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
             WheelCal.disspokesline = !WheelCal.disspokesline;
-            WheelCal.CalculateSpoke();
+            WheelCal.Calculate();
 
         }
 
@@ -1569,20 +1251,10 @@ namespace BicycleCalculatorWPF
         private void Window_Closing_1(object sender, System.ComponentModel.CancelEventArgs e)
         {
             TransmissionCal.SaveSettings();
-
-            Properties.Settings.Default.frnumid = FrNumcomboBox.SelectedIndex;
-            Properties.Settings.Default.frmodid = FrModelcomboBox.SelectedIndex;
+            frSelector.SaveSettings();
+            bkSelector.SaveSettings();
+            inSelector.SaveSettings();
             
-            Properties.Settings.Default.bknumid = BkNumcomboBox.SelectedIndex;
-            Properties.Settings.Default.bkmodid = BkModelcomboBox.SelectedIndex;
-
-            Properties.Settings.Default.innumid = InNumcomboBox.SelectedIndex;
-            Properties.Settings.Default.inmodid = InModelcomboBox.SelectedIndex;
-
-            Properties.Settings.Default.IsISO = checkBox2.IsChecked.Value;
-            Properties.Settings.Default.numUD1 = Convert.ToDouble(numericUpDown1.Text);
-            Properties.Settings.Default.numUD2 = Convert.ToDouble(numericUpDown2.Text);
-
             //////////////////////////GUI/////////////////////////////////////////////////
             Properties.Settings.Default.InputCWidth = InputColumn.ActualWidth / GridT.ActualWidth;
             Properties.Settings.Default.UpRHight = UpRow.ActualHeight / GridT.ActualHeight;

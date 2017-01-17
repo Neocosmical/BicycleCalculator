@@ -78,7 +78,7 @@ namespace BicycleCalculatorWPF
         }
 
 
-        public void CalculateSpoke()
+        public void Calculate()
         {
             if (!ready) return;
             pm1.Series.Clear();
