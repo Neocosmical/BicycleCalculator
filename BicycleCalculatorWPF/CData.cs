@@ -54,36 +54,61 @@ namespace BicycleCalculatorWPF
 
         }
 
-        public void FilterRimData(string KeyWord)
+        string rim_last_key = "#####";
+        public bool FilterRimData(string KeyWord)
         {
+            if (rim_last_key == KeyWord) return false;
+            rim_last_key = KeyWord;
             rimlist_filtered.Clear();
             if (KeyWord == "")
             {
                 foreach (CRim item in rimlist)
                     rimlist_filtered.Add(item);
-                return;
+                return true;
             }
             foreach (CRim item in rimlist)
             {
-                if (item.Name.Contains(KeyWord))
-                    rimlist_filtered.Add(item);
+                string[] KeyWords = KeyWord.Split(' ');
+                bool Add = true;
+                foreach (string k in KeyWords)
+                {
+                    if (!item.Name.Contains(k))
+                    {
+                        Add = false;
+                        break;
+                    }
+                }
+                if (Add) rimlist_filtered.Add(item);
             }
+            return true;
         }
-
-        public void FilterHubData(string KeyWord)
+        string hub_last_key = "#####";
+        public bool FilterHubData(string KeyWord)
         {
+            if (hub_last_key == KeyWord) return false;
+            hub_last_key = KeyWord;
             hublist_filtered.Clear();
             if (KeyWord == "")
             {
                 foreach (CHub item in hublist)
                     hublist_filtered.Add(item);
-                return;
+                return true;
             }
             foreach (CHub item in hublist)
             {
-                if (item.Name.Contains(KeyWord))
-                    hublist_filtered.Add(item);
+                string[] KeyWords = KeyWord.Split(' ');
+                bool Add = true;
+                foreach (string k in KeyWords)
+                {
+                    if (!item.Name.Contains(k))
+                    {
+                        Add = false;
+                        break;
+                    }
+                }
+                if (Add) hublist_filtered.Add(item);
             }
+            return true;
         }
 
         public void SaveDate()

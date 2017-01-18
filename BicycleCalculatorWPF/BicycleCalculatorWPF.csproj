@@ -101,6 +101,7 @@
     <Compile Include="CHub.cs" />
     <Compile Include="CRim.cs" />
     <Compile Include="CTransmissionCal.cs" />
+    <Compile Include="CValue.cs" />
     <Compile Include="CWheelCal.cs" />
     <Compile Include="DonateWindow.xaml.cs">
       <DependentUpon>DonateWindow.xaml</DependentUpon>

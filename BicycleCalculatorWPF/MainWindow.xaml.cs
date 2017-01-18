@@ -108,7 +108,7 @@ namespace BicycleCalculatorWPF
 
         void timerCAD_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            labelCAD.Dispatcher.Invoke(new Action(() =>
+            this.Dispatcher.Invoke(new Action(() =>
             {
                 if (TransmissionCal.IsSpd)
                 {
@@ -922,8 +922,22 @@ namespace BicycleCalculatorWPF
 
         private void RimNumcomboBox_Changed(object sender, RoutedEventArgs e)
         {
-            data.FilterRimData(RimNumcomboBox.Text);
-            RimNumcomboBox.Items.Refresh();
+            if (!WheelCal.ready) return;
+            if (RimNumcomboBox.Text.Length < 3)
+            {
+                RimNumcomboBox.SelectedValue = -1;
+                if (RimNumcomboBox.Text.Length > 0)
+                    return;
+            }
+            string keyword = "";
+            if (RimNumcomboBox.SelectedItem == null || RimNumcomboBox.Text != RimNumcomboBox.SelectedItem.ToString())
+            {
+                keyword = RimNumcomboBox.Text;
+                RimNumcomboBox.IsDropDownOpen = true;
+            }
+
+            if (data.FilterRimData(keyword))
+                RimNumcomboBox.Items.Refresh();
         }
 
         private void HubNumcomboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -937,6 +951,26 @@ namespace BicycleCalculatorWPF
                 dataGridViewHub.Items.Add(v);
             WheelCal.ready = rtemp;
             WheelCal.Calculate();
+        }
+
+        private void HubNumcomboBox_Changed(object sender, RoutedEventArgs e)
+        {
+            if (!WheelCal.ready) return;
+            if (HubNumcomboBox.Text.Length < 3)
+            {
+                HubNumcomboBox.SelectedValue = -1;
+                if (HubNumcomboBox.Text.Length > 0)
+                    return;
+            }
+            string keyword = "";
+            if (HubNumcomboBox.SelectedItem == null || HubNumcomboBox.Text != HubNumcomboBox.SelectedItem.ToString())
+            {
+                keyword = HubNumcomboBox.Text;
+                HubNumcomboBox.IsDropDownOpen = true;
+            }
+
+            if (data.FilterHubData(keyword))
+                HubNumcomboBox.Items.Refresh();
         }
 
         private void rimMinuButton_Click(object sender, RoutedEventArgs e)

@@ -5,18 +5,8 @@ using System.Text;
 
 namespace BicycleCalculatorWPF
 {
-    public class CHub : ICloneable
+    public class CHub : CValueNameObj
     {
-        private string name = "";
-
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
-
-        public List<CValue> vals = new List<CValue>();
-
         public double LeftFlange
         {
             get { return vals[0].Val; }
@@ -48,9 +38,19 @@ namespace BicycleCalculatorWPF
         }
 
 
-        public CHub(string _name, double _leftFlange, double _rightFlange, double _centerToLeft, double _centerToRight, double _spokeHole)
+        public CHub()
+            : base("Hub")
         {
-            name = _name;
+            vals.Add(new CValue(0, Properties.Resources.StringFlangeL, 0));
+            vals.Add(new CValue(1, Properties.Resources.StringFlangeR, 0));
+            vals.Add(new CValue(2, Properties.Resources.StringCenterL, 0));
+            vals.Add(new CValue(3, Properties.Resources.StringCenterR, 0));
+            vals.Add(new CValue(4, Properties.Resources.StringSpokeHole, 0));
+        }
+
+        public CHub(string _name, double _leftFlange, double _rightFlange, double _centerToLeft, double _centerToRight, double _spokeHole)
+            : base("Hub", _name)
+        {
             vals.Add(new CValue(0, Properties.Resources.StringFlangeL, _leftFlange));
             vals.Add(new CValue(1, Properties.Resources.StringFlangeR, _rightFlange));
             vals.Add(new CValue(2, Properties.Resources.StringCenterL, _centerToLeft));
@@ -59,6 +59,7 @@ namespace BicycleCalculatorWPF
         }
 
         public CHub(string data)
+            : base("Hub")
         {
             vals.Add(new CValue(0, Properties.Resources.StringFlangeL, 0));
             vals.Add(new CValue(1, Properties.Resources.StringFlangeR, 0));
@@ -68,6 +69,7 @@ namespace BicycleCalculatorWPF
             Decode(data);
         }
 
+        /*
         public override string ToString()
         {
             return name;
@@ -113,6 +115,7 @@ namespace BicycleCalculatorWPF
             CenterToRight = Convert.ToDouble(strs[5]);
             SpokeHole = Convert.ToDouble(strs[6]);
         }
+        */
     }
 
     class CSpokeResult
