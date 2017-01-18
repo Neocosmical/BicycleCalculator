@@ -17,6 +17,9 @@ namespace BicycleCalculatorWPF
         public List<CRim> rimlist = new List<CRim>();
         public List<CHub> hublist = new List<CHub>();
 
+        public List<CRim> rimlist_filtered = new List<CRim>();
+        public List<CHub> hublist_filtered = new List<CHub>();
+
         public CData()
         {
             frlists.Lists.Add(new CGearList("1 Single", 1));
@@ -51,6 +54,37 @@ namespace BicycleCalculatorWPF
 
         }
 
+        public void FilterRimData(string KeyWord)
+        {
+            rimlist_filtered.Clear();
+            if (KeyWord == "")
+            {
+                foreach (CRim item in rimlist)
+                    rimlist_filtered.Add(item);
+                return;
+            }
+            foreach (CRim item in rimlist)
+            {
+                if (item.Name.Contains(KeyWord))
+                    rimlist_filtered.Add(item);
+            }
+        }
+
+        public void FilterHubData(string KeyWord)
+        {
+            hublist_filtered.Clear();
+            if (KeyWord == "")
+            {
+                foreach (CHub item in hublist)
+                    hublist_filtered.Add(item);
+                return;
+            }
+            foreach (CHub item in hublist)
+            {
+                if (item.Name.Contains(KeyWord))
+                    hublist_filtered.Add(item);
+            }
+        }
 
         public void SaveDate()
         {
@@ -243,7 +277,8 @@ namespace BicycleCalculatorWPF
                     rimlist.Add(rim);
                 }
 
-
+                FilterRimData("");
+                FilterHubData("");
                 //System.Windows.MessageBox.Show("读取数据完成。");
             }
             catch (Exception ex)

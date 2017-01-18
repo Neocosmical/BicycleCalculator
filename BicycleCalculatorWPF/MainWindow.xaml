@@ -532,7 +532,7 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <ComboBox x:Name="RimNumcomboBox" Grid.Column="1" Margin="3" SelectionChanged="RimNumcomboBox_SelectionChanged"/>
+                                    <ComboBox x:Name="RimNumcomboBox" TextBoxBase.TextChanged="RimNumcomboBox_Changed" Grid.Column="1" Margin="3" SelectionChanged="RimNumcomboBox_SelectionChanged" IsEditable="True" StaysOpenOnEdit="True"/>
                                     <DataGrid x:Name="dataGridViewRim" Grid.Row="1" Margin="3" Background="#B2FFFFFF" Grid.ColumnSpan="2" HeadersVisibility="None" GridLinesVisibility="Horizontal" HorizontalScrollBarVisibility="Disabled">
                                         <DataGrid.BorderBrush>
                                             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
@@ -599,7 +599,7 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <ComboBox x:Name="HubNumcomboBox" Grid.Column="1" Margin="3" SelectionChanged="HubNumcomboBox_SelectionChanged"/>
+                                    <ComboBox x:Name="HubNumcomboBox" Grid.Column="1" Margin="3" SelectionChanged="HubNumcomboBox_SelectionChanged" IsEditable="True" StaysOpenOnEdit="True"/>
                                     <DataGrid x:Name="dataGridViewHub" Grid.Row="1" Margin="3" Background="#B2FFFFFF" Grid.ColumnSpan="2" HeadersVisibility="None" GridLinesVisibility="Horizontal" HorizontalScrollBarVisibility="Disabled">
                                         <DataGrid.BorderBrush>
                                             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>

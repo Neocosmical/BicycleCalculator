@@ -209,8 +209,8 @@ namespace BicycleCalculatorWPF
             WheelLenthtextBox.ToolTip = Properties.Resources.StringTireCirc + "\r\n" + Properties.Resources.Stringmm;
 
 
-            HubNumcomboBox.ItemsSource = data.hublist;
-            RimNumcomboBox.ItemsSource = data.rimlist;
+            HubNumcomboBox.ItemsSource = data.hublist_filtered;
+            RimNumcomboBox.ItemsSource = data.rimlist_filtered;
 
             HubNumcomboBox.SelectedIndex = 1;
             RimNumcomboBox.SelectedIndex = 1;
@@ -918,6 +918,12 @@ namespace BicycleCalculatorWPF
                 dataGridViewRim.Items.Add(v);
             WheelCal.ready = rtemp;
             WheelCal.Calculate();
+        }
+
+        private void RimNumcomboBox_Changed(object sender, RoutedEventArgs e)
+        {
+            data.FilterRimData(RimNumcomboBox.Text);
+            RimNumcomboBox.Items.Refresh();
         }
 
         private void HubNumcomboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
