@@ -923,7 +923,7 @@ namespace BicycleCalculatorWPF
         private void RimNumcomboBox_Changed(object sender, RoutedEventArgs e)
         {
             if (!WheelCal.ready) return;
-            if (RimNumcomboBox.Text.Length < 3)
+            if (RimNumcomboBox.Text.Length < 2)
             {
                 RimNumcomboBox.SelectedValue = -1;
                 if (RimNumcomboBox.Text.Length > 0)
@@ -956,7 +956,7 @@ namespace BicycleCalculatorWPF
         private void HubNumcomboBox_Changed(object sender, RoutedEventArgs e)
         {
             if (!WheelCal.ready) return;
-            if (HubNumcomboBox.Text.Length < 3)
+            if (HubNumcomboBox.Text.Length < 2)
             {
                 HubNumcomboBox.SelectedValue = -1;
                 if (HubNumcomboBox.Text.Length > 0)
@@ -1097,21 +1097,35 @@ namespace BicycleCalculatorWPF
                 TextBoxSpokes.Text = (val - 1).ToString();
         }
 
-        private void OnCrossAddButtonClick(object sender, RoutedEventArgs e)
+        private void OnCrossLAddButtonClick(object sender, RoutedEventArgs e)
         {
-            int val = Convert.ToInt16(TextBoxCrosses.Text);
+            int val = Convert.ToInt16(TextBoxCrossesL.Text);
             if (val < 65535)
-                TextBoxCrosses.Text = (val + 1).ToString();
+                TextBoxCrossesL.Text = (val + 1).ToString();
         }
 
-        private void OnCrossMinButtonClick(object sender, RoutedEventArgs e)
+        private void OnCrossLMinButtonClick(object sender, RoutedEventArgs e)
         {
-            int val = Convert.ToInt16(TextBoxCrosses.Text);
+            int val = Convert.ToInt16(TextBoxCrossesL.Text);
             if (val > 0)
-                TextBoxCrosses.Text = (val - 1).ToString();
+                TextBoxCrossesL.Text = (val - 1).ToString();
         }
 
-        private void TextBoxCrosses_TextChanged(object sender, TextChangedEventArgs e)
+        private void OnCrossRAddButtonClick(object sender, RoutedEventArgs e)
+        {
+            int val = Convert.ToInt16(TextBoxCrossesR.Text);
+            if (val < 65535)
+                TextBoxCrossesR.Text = (val + 1).ToString();
+        }
+
+        private void OnCrossRMinButtonClick(object sender, RoutedEventArgs e)
+        {
+            int val = Convert.ToInt16(TextBoxCrossesR.Text);
+            if (val > 0)
+                TextBoxCrossesR.Text = (val - 1).ToString();
+        }
+
+        private void TextBoxCrossesL_TextChanged(object sender, TextChangedEventArgs e)
         {
             int temp;
             try
@@ -1126,7 +1140,27 @@ namespace BicycleCalculatorWPF
                 temp = 32;
                 ((TextBox)sender).Text = temp.ToString();
             }
-            WheelCal.Crosses = temp;
+            WheelCal.CrossesL = temp;
+            WheelCal.Calculate();
+        }
+
+
+        private void TextBoxCrossesR_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int temp;
+            try
+            {
+                temp = Convert.ToInt16(((TextBox)sender).Text);
+                if (!((TextBox)sender).IsKeyboardFocused && temp < 0) temp = 0;
+                if (temp > 100) temp = 100;
+                ((TextBox)sender).Text = temp.ToString();
+            }
+            catch
+            {
+                temp = 32;
+                ((TextBox)sender).Text = temp.ToString();
+            }
+            WheelCal.CrossesR = temp;
             WheelCal.Calculate();
         }
 

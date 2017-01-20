@@ -72,7 +72,7 @@ namespace BicycleCalculatorWPF
                 bool Add = true;
                 foreach (string k in KeyWords)
                 {
-                    if (!item.Name.Contains(k))
+                    if (!item.Name.ToLower().Contains(k.ToLower()))
                     {
                         Add = false;
                         break;
@@ -100,7 +100,7 @@ namespace BicycleCalculatorWPF
                 bool Add = true;
                 foreach (string k in KeyWords)
                 {
-                    if (!item.Name.Contains(k))
+                    if (!item.Name.ToLower().Contains(k.ToLower()))
                     {
                         Add = false;
                         break;
