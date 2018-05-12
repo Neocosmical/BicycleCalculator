@@ -16,7 +16,7 @@ bin:
       - "%SLN_NAME%/bin/Release/zh-TW/*.*"
       - "%SLN_NAME%/bin/Release/*.dll"
       - "%SLN_NAME%/bin/Release/DLL/*.dll"
-      - "%SLN_NAME%/bin/Release/DLL/*.csv"
-      - "%SLN_NAME%/bin/Release/DLL/*.mht"
+      - "%SLN_NAME%/bin/Release/*.csv"
+      - "%SLN_NAME%/bin/Release/*.mht"
   tags:
     - CSharp
