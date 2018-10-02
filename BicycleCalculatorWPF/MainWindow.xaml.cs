@@ -33,7 +33,7 @@ namespace BicycleCalculatorWPF
 
         CGearSelector frSelector = new CGearSelector();
         CGearSelector bkSelector = new CGearSelector();
-        CGearSelector inSelector = new CGearSelector();
+        CGearSelector inSelector = new CGearSelector(true);
 
         public MainWindow()
         {

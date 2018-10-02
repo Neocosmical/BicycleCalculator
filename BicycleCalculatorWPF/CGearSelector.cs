@@ -15,10 +15,11 @@ namespace BicycleCalculatorWPF
         DataGrid dataGridView;
         CTransmissionCal TransmissionCal;
         CGearLists lists;
+        bool is_float = false;
 
-        public CGearSelector()
+        public CGearSelector(bool _is_float = false)
         {
-
+            is_float = _is_float;
         }
 
         public void Init(ComboBox _NumcomboBox, ComboBox _ModelcomboBox, DataGrid _dataGridView, CTransmissionCal _TransmissionCal, CGearLists _lists)
@@ -60,14 +61,28 @@ namespace BicycleCalculatorWPF
         {
             int id = (int)(((TextBox)sender).Tag);
             double teethtemp = ((CTeeth)dataGridView.Items[id - 1]).Teeth;
-            try
+            if (is_float)
             {
-                teethtemp = Convert.ToInt16(((TextBox)sender).Text);
+                try
+                {
+                    teethtemp = Convert.ToDouble(((TextBox)sender).Text);
+                }
+                catch
+                { }
+                if (teethtemp > 200) teethtemp = 200;
+                if (teethtemp < 0.0001) teethtemp = 0.0001;
             }
-            catch
-            { }
-            if (teethtemp > 200) teethtemp = 200;
-            if (teethtemp < 1) teethtemp = 1;
+            else
+            {
+                try
+                {
+                    teethtemp = Convert.ToInt16(((TextBox)sender).Text);
+                }
+                catch
+                { }
+                if (teethtemp > 200) teethtemp = 200;
+                if (teethtemp < 1) teethtemp = 1;
+            }
             ((CTeeth)dataGridView.Items[id - 1]).Teeth = teethtemp;
             dataGridView.Items.Refresh();
             TransmissionCal.Calculate();
@@ -76,10 +91,13 @@ namespace BicycleCalculatorWPF
         public void TextBox_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
         {
             int id = (int)(((TextBox)sender).Tag);
-            if (((CTeeth)dataGridView.Items[id - 1]).Teeth > 1 && e.Delta < 0)
-                ((CTeeth)dataGridView.Items[id - 1]).Teeth -= 1;
+            double step = 0.0;
+            if (is_float) step = 0.1;
+            else step = 1.0;
+            if (((CTeeth)dataGridView.Items[id - 1]).Teeth > step && e.Delta < 0)
+                ((CTeeth)dataGridView.Items[id - 1]).Teeth -= step;
             if (((CTeeth)dataGridView.Items[id - 1]).Teeth < 200 && e.Delta > 0)
-                ((CTeeth)dataGridView.Items[id - 1]).Teeth += 1;
+                ((CTeeth)dataGridView.Items[id - 1]).Teeth += step;
             dataGridView.Items.Refresh();
             TransmissionCal.Calculate();
         }
@@ -87,9 +105,12 @@ namespace BicycleCalculatorWPF
         public void MinuButton_Click(object sender, RoutedEventArgs e)
         {
             RepeatButton b = sender as RepeatButton;
+            double step = 0.0;
+            if (is_float) step = 0.1;
+            else step = 1.0;
             int id = Convert.ToInt32(b.CommandParameter);
-            if (((CTeeth)dataGridView.Items[id - 1]).teeth > 1)
-                ((CTeeth)dataGridView.Items[id - 1]).teeth--;
+            if (((CTeeth)dataGridView.Items[id - 1]).teeth > step)
+                ((CTeeth)dataGridView.Items[id - 1]).teeth -= step;
             dataGridView.Items.Refresh();
             TransmissionCal.Calculate();
         }
@@ -97,9 +118,12 @@ namespace BicycleCalculatorWPF
         public void AddButton_Click(object sender, RoutedEventArgs e)
         {
             RepeatButton b = sender as RepeatButton;
+            double step = 0.0;
+            if (is_float) step = 0.1;
+            else step = 1.0;
             int id = Convert.ToInt32(b.CommandParameter);
             if (((CTeeth)dataGridView.Items[id - 1]).teeth < 200)
-                ((CTeeth)dataGridView.Items[id - 1]).teeth++;
+                ((CTeeth)dataGridView.Items[id - 1]).teeth += step;
             dataGridView.Items.Refresh();
             TransmissionCal.Calculate();
         }
