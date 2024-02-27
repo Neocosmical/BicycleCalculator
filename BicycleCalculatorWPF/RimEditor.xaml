@@ -6,7 +6,7 @@
         xmlns:res="clr-namespace:BicycleCalculatorWPF.Properties"
         xmlns:local="clr-namespace:BicycleCalculatorWPF"
         mc:Ignorable="d"
-        Title="RimEditor" Height="250" Width="200" Loaded="Window_Loaded"  ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Icon="Resources/自行车计算器s.ico">
+        Title="RimEditor" Height="250" Width="200" Loaded="Window_Loaded"  ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="Resources/自行车计算器s.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -76,8 +76,8 @@
                 <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="60"/>
             </Grid.ColumnDefinitions>
-            <Button Content="{x:Static res:Resources.StringCancel}" Grid.Column="1" Margin="5" Click="ButtonCancel_Click"/>
-            <Button Content="{x:Static res:Resources.StringOK}" Grid.Column="2" Margin="5" Click="ButtonOK_Click"/>
+            <Button Content="{x:Static res:Resources.StringCancel}" Grid.Column="2" Margin="5" Click="ButtonCancel_Click"/>
+            <Button Content="{x:Static res:Resources.StringOK}" Grid.Column="1" Margin="5" Click="ButtonOK_Click"/>
         </Grid>
     </Grid>
 </Window>

@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BicycleCalculatorWPF"
         mc:Ignorable="d"
-        Title="RimsEditor" Height="430" Width="600" Loaded="Window_Loaded" Icon="Resources/自行车计算器s.ico" WindowStartupLocation="CenterOwner">
+        Title="RimsEditor" Height="430" Width="600" Loaded="Window_Loaded" Icon="Resources/自行车计算器s.ico" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>

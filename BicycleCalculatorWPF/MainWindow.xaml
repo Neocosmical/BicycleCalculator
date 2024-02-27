@@ -5,7 +5,7 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="MainWindow1" x:Class="BicycleCalculatorWPF.MainWindow"
         xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:local="clr-namespace:WpfApplication2"
-        Title="{x:Static res:Resources.StringTitle}" Height="711" Width="1000" Loaded="Form1_Load" Closed="Window_Closed_1" Icon="Resources/自行车计算器s.ico" FontFamily="Microsoft YaHei UI" Background="#FFF0F0F0" Closing="Window_Closing_1">
+        Title="{x:Static res:Resources.StringTitle}" Height="711" Width="1000" Loaded="Form1_Load" Closed="Window_Closed_1" Icon="Resources/自行车计算器s.ico" FontFamily="Microsoft YaHei UI" Background="#FFF0F0F0" Closing="Window_Closing_1" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <local:MainViewModel/>
     </Window.DataContext>

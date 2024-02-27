@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BicycleCalculatorWPF"
         xmlns:res="clr-namespace:BicycleCalculatorWPF.Properties"
         mc:Ignorable="d"
-        Title="TiresEditor" Height="430" Width="600" Loaded="Window_Loaded" Icon="Resources/自行车计算器s.ico" WindowStartupLocation="CenterOwner">
+        Title="TiresEditor" Height="430" Width="600" Loaded="Window_Loaded" Icon="Resources/自行车计算器s.ico" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
