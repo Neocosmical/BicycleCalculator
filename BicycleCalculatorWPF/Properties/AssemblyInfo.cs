@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("neocosmical@qq.com")]
 [assembly: AssemblyProduct("Bicycle Calculator")]
-[assembly: AssemblyCopyright("Copyright © 2018 Neocosmical")]
+[assembly: AssemblyCopyright("Copyright © 2024 Neocosmical")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
