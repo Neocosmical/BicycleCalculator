@@ -111,7 +111,7 @@ namespace BicycleCalculatorWPF.Properties {
         
         /// <summary>
         ///   查找类似 Acknowledgement:
-        ///德满, 嘻哈, 淘淘爸, citysa, hachi, heiyaa, 楚狂声, bingol, xuchux, 落星, azuretears, blocked, babyfish79, dolphinic, coolsear, 骑楼街5号, enstan007, namrisgan, harvey.hung, pheather, 咸鱼, Seor, kuye, gmqh777 的本地化字符串。
+        ///德满, 嘻哈, 淘淘爸, citysa, hachi, heiyaa, 楚狂声, bingol, xuchux, 落星, azuretears, blocked, babyfish79, dolphinic, coolsear, 骑楼街5号, enstan007, namrisgan, harvey.hung, pheather, 咸鱼, Seor, kuye, gmqh777, ghoul 的本地化字符串。
         /// </summary>
         public static string StringAcknow {
             get {
