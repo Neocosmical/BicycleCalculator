@@ -5,16 +5,16 @@
         Title="{x:Static res:Resources.StringDonate}" Height="374" Width="476" Icon="Resources/自行车计算器s.ico" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#FFEFEFF5" FontFamily="Microsoft YaHei UI">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="177*"/>
-            <RowDefinition Height="55*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="125*"/>
             <ColumnDefinition Width="169*"/>
         </Grid.ColumnDefinitions>
-        <Image Source="Resources/支付宝3sina.png" Margin="3" Cursor="Hand" MouseUp="Image_MouseUp_1"/>
+        <Image Source="Resources/1709137594149.jpg" Margin="3" Cursor="Hand" MouseUp="Image_MouseUp_1"/>
         <Image Grid.Row="1" Source="Resources/btn_donateCC_LG.gif" Margin="3" Cursor="Hand" MouseUp="Image_MouseUp_2"/>
-        <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="{x:Static res:Resources.StringDonateContent}" Grid.RowSpan="2" Padding="10" VerticalAlignment="Center" Foreground="#FFEA5E00" FontSize="18"/>
+        <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="{x:Static res:Resources.StringDonateContent}" Grid.RowSpan="2" Padding="10" VerticalAlignment="Center" Foreground="Black" FontSize="18"/>
 
     </Grid>
 </Window>
