@@ -147,6 +147,24 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
+        ///   查找类似 BikeWt 的本地化字符串。
+        /// </summary>
+        public static string StringBikeWeight {
+            get {
+                return ResourceManager.GetString("StringBikeWeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 BodyWt 的本地化字符串。
+        /// </summary>
+        public static string StringBodyWeight {
+            get {
+                return ResourceManager.GetString("StringBodyWeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Cassette Sprockets Branch 的本地化字符串。
         /// </summary>
         public static string StringBranchbk {
@@ -192,7 +210,7 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Cadence / Speed 的本地化字符串。
+        ///   查找类似 Cadence / Speed / Power 的本地化字符串。
         /// </summary>
         public static string StringCadenceSpeed {
             get {
@@ -926,6 +944,15 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Slope 的本地化字符串。
+        /// </summary>
+        public static string StringSlope {
+            get {
+                return ResourceManager.GetString("StringSlope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Data source of rims and hubs: 
         ///http://bbs.77bike.com/read.php?tid=58657
         ///Data source of cassettes:
@@ -1213,6 +1240,15 @@ namespace BicycleCalculatorWPF.Properties {
         public static string StringView {
             get {
                 return ResourceManager.GetString("StringView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 WSpd 的本地化字符串。
+        /// </summary>
+        public static string StringWindSpeed {
+            get {
+                return ResourceManager.GetString("StringWindSpeed", resourceCulture);
             }
         }
         

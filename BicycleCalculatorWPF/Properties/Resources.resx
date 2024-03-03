@@ -287,7 +287,7 @@
     <value>Branch Display</value>
   </data>
   <data name="StringCadenceSpeed" xml:space="preserve">
-    <value>Cadence / Speed</value>
+    <value>Cadence / Speed / Power</value>
   </data>
   <data name="StringChart" xml:space="preserve">
     <value>Chart</value>
@@ -548,5 +548,17 @@ Are you sure to save the dataset?</value>
   </data>
   <data name="StringFailReadFile" xml:space="preserve">
     <value>Failed to read file.</value>
+  </data>
+  <data name="StringBikeWeight" xml:space="preserve">
+    <value>BikeWt</value>
+  </data>
+  <data name="StringBodyWeight" xml:space="preserve">
+    <value>BodyWt</value>
+  </data>
+  <data name="StringSlope" xml:space="preserve">
+    <value>Slope</value>
+  </data>
+  <data name="StringWindSpeed" xml:space="preserve">
+    <value>WSpd</value>
   </data>
 </root>

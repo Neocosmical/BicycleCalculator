@@ -287,7 +287,7 @@
     <value>分支顯示</value>
   </data>
   <data name="StringCadenceSpeed" xml:space="preserve">
-    <value>踏頻/車速</value>
+    <value>踏頻/車速/功率</value>
   </data>
   <data name="StringChart" xml:space="preserve">
     <value>圖像</value>
@@ -534,5 +534,17 @@ http://bbs.77bike.com/read.php?tid=233029</value>
   </data>
   <data name="StringFailReadFile" xml:space="preserve">
     <value>無法讀取文件。</value>
+  </data>
+  <data name="StringBikeWeight" xml:space="preserve">
+    <value>車重</value>
+  </data>
+  <data name="StringBodyWeight" xml:space="preserve">
+    <value>体重</value>
+  </data>
+  <data name="StringSlope" xml:space="preserve">
+    <value>坡度</value>
+  </data>
+  <data name="StringWindSpeed" xml:space="preserve">
+    <value>風速</value>
   </data>
 </root>

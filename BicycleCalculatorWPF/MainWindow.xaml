@@ -356,24 +356,41 @@
                                 <GroupBox Header="{x:Static res:Resources.StringCadenceSpeed}" Margin="5" Grid.Row="1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
                                             <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                                        <Slider x:Name="trackBar1" Grid.ColumnSpan="2" Margin="3" ValueChanged="trackBar1_ValueChanged" Minimum="1" Maximum="200" LargeChange="10" SmallChange="0.1" Value="80" TickFrequency="20"/>
-                                        <Label x:Name="labelCAD" Content="80 rpm" Grid.Row="1" Margin="3" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" Foreground="Black" ContextMenuOpening="labelCAD_ContextMenuOpening">
-                                            <Label.ContextMenu>
-                                                <ContextMenu>
-                                                    <MenuItem Header="KM/H" Click="kMHToolStripMenuItem_Click"/>
-                                                    <MenuItem Header="MPH" Click="mPHToolStripMenuItem_Click"/>
-                                                </ContextMenu>
-                                            </Label.ContextMenu>
-                                        </Label>
-                                        <CheckBox x:Name="checkBox1" Content="{x:Static res:Resources.StringSpeed}" Grid.Column="1" Margin="3" Grid.Row="1" VerticalAlignment="Center" Click="checkBox1_Click"/>
-
+                                        <Slider x:Name="trackBar1" Grid.ColumnSpan="4" Margin="3,3,3,0" ValueChanged="trackBar1_ValueChanged" Minimum="1" Maximum="200" LargeChange="10" SmallChange="0.1" Value="80" TickFrequency="20"/>
+                                        <Grid Grid.ColumnSpan="4" Grid.Row="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label x:Name="labelCAD" Content="80 rpm" Grid.Row="1" Margin="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" Foreground="Black" ContextMenuOpening="labelCAD_ContextMenuOpening">
+                                                <Label.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem Header="KM/H" Click="kMHToolStripMenuItem_Click"/>
+                                                        <MenuItem Header="MPH" Click="mPHToolStripMenuItem_Click"/>
+                                                    </ContextMenu>
+                                                </Label.ContextMenu>
+                                            </Label>
+                                            <CheckBox x:Name="checkBox1" Content="{x:Static res:Resources.StringSpeed}" Grid.Column="1" Margin="3,0,3,0" Grid.Row="1" VerticalAlignment="Center" Click="checkBox1_Click"/>
+                                        </Grid>
+                                        <TextBlock Text="{x:Static res:Resources.StringBikeWeight}" Grid.Row="2" Grid.Column="0" Margin="3" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{x:Static res:Resources.StringSlope}" Grid.Row="2" Grid.Column="2" Margin="3" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{x:Static res:Resources.StringBodyWeight}" Grid.Row="3" Grid.Column="0" Margin="3" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{x:Static res:Resources.StringWindSpeed}" Grid.Row="3" Grid.Column="2" Margin="3" VerticalAlignment="Center"/>
+                                        <TextBox Grid.Row="2" Grid.Column="1" Margin="3"/>
+                                        <TextBox Grid.Row="2" Grid.Column="3" Margin="3"/>
+                                        <TextBox Grid.Row="3" Grid.Column="1" Margin="3"/>
+                                        <TextBox Grid.Row="3" Grid.Column="3" Margin="3"/>
                                     </Grid>
                                 </GroupBox>
                                 <GroupBox Header="{x:Static res:Resources.StringTire}" Margin="5" Grid.Row="2">
@@ -459,6 +476,14 @@
                                 </Label.Background>
                             </Label>
                             <Label x:Name="labelinfo2" Grid.Row="1" Grid.Column="2" Content="Increasment: 23.5%" Margin="3" Visibility="Collapsed" BorderThickness="1" Padding="5,3">
+                                <Label.BorderBrush>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                                </Label.BorderBrush>
+                                <Label.Background>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}"/>
+                                </Label.Background>
+                            </Label>
+                            <Label x:Name="labelinfo3" Grid.Row="1" Grid.Column="2" Content="Power: 200W" Margin="3" BorderThickness="1" Padding="5,3">
                                 <Label.BorderBrush>
                                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
                                 </Label.BorderBrush>
