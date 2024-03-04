@@ -791,6 +791,15 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Power 的本地化字符串。
+        /// </summary>
+        public static string StringPower {
+            get {
+                return ResourceManager.GetString("StringPower", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Racing 的本地化字符串。
         /// </summary>
         public static string StringRacing {

@@ -547,4 +547,7 @@ http://bbs.77bike.com/read.php?tid=233029</value>
   <data name="StringWindSpeed" xml:space="preserve">
     <value>风速</value>
   </data>
+  <data name="StringPower" xml:space="preserve">
+    <value>功率</value>
+  </data>
 </root>

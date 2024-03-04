@@ -31,7 +31,79 @@ namespace BicycleCalculatorWPF
         private bool isMPH;
         private int curveX = 0;
         private int curveY = 1;
+        private double bikewt;
+        private double bodywt;
+        private double windspd;
+        private double slop;
 
+
+        public double Bikewt
+        {
+            get
+            {
+                return bikewt;
+            }
+            set
+            {
+                if (bikewt != value)
+                {
+                    bikewt = value;
+                    NotifyPropertyChanged("Bikewt");
+                    Calculate();
+                }
+            }
+        }
+
+        public double Bodywt
+        {
+            get
+            {
+                return bodywt;
+            }
+            set
+            {
+                if (bodywt != value)
+                {
+                    bodywt = value;
+                    NotifyPropertyChanged("Bodywt");
+                    Calculate();
+                }
+            }
+        }
+
+        public double Windspd
+        {
+            get
+            {
+                return windspd;
+            }
+            set
+            {
+                if (windspd != value)
+                {
+                    windspd = value;
+                    NotifyPropertyChanged("Windspd");
+                    Calculate();
+                }
+            }
+        }
+
+        public double Slop
+        {
+            get
+            {
+                return slop;
+            }
+            set
+            {
+                if (slop != value)
+                {
+                    slop = value;
+                    NotifyPropertyChanged("Slop");
+                    Calculate();
+                }
+            }
+        }
 
         public int Whlength
         {
@@ -226,6 +298,7 @@ namespace BicycleCalculatorWPF
         System.Windows.Controls.ListView list;
         System.Windows.Controls.Label label0;
         System.Windows.Controls.Label label1;
+        System.Windows.Controls.Label label3;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -264,12 +337,13 @@ namespace BicycleCalculatorWPF
             
         }
 
-        public void Init(OxyPlot.Wpf.PlotView _chart, System.Windows.Controls.ListView _list, System.Windows.Controls.Label _label0, System.Windows.Controls.Label _label1)
+        public void Init(OxyPlot.Wpf.PlotView _chart, System.Windows.Controls.ListView _list, System.Windows.Controls.Label _label0, System.Windows.Controls.Label _label1, System.Windows.Controls.Label _label3)
         {
             chart = _chart;
             list = _list;
             label0 = _label0;
             label1 = _label1;
+            label3 = _label3;
             lineSeriesCurrent = new LineSeries();
             pm = new PlotModel();
             pm = LineSeries();
@@ -342,6 +416,11 @@ namespace BicycleCalculatorWPF
             Cad = Properties.Settings.Default.SpdVal;
             IsSpd = Properties.Settings.Default.IsSpd;
             IsISO = Properties.Settings.Default.IsISO;
+
+            Bikewt = Properties.Settings.Default.bikewt;
+            Bodywt = Properties.Settings.Default.bodywt;
+            Windspd = Properties.Settings.Default.windspd;
+            Slop = Properties.Settings.Default.slop;
         }
 
         double toothrateold = 0;
@@ -365,6 +444,7 @@ namespace BicycleCalculatorWPF
             lineSeriesCurrent.Points.Clear();
             double toothratemax = 0;
             double toothratemin = 0;
+            double power = 0;
 
             int num = 1;
             NaNNumber.Clear();
@@ -529,12 +609,38 @@ namespace BicycleCalculatorWPF
                     break;
             }
 
+            double bike_speed = 0;
+            if (IsSpd)
+            {
+                if (IsMPH)
+                    bike_speed = Cad * 1.609344 / 2.0 / 3.6;
+                else
+                    bike_speed = Cad / 2.0 / 3.6;
+            }
+            else
+            {
+                
+            }
+            double rollk = 0.02;
+            double res_wind = 0.2 * (bike_speed - Windspd) * (bike_speed - Windspd);
+            double res_roll = rollk * (Bodywt + Bikewt);
+            double res_slop = 9.8 * (Bodywt + Bikewt) * Math.Sin(Slop * Math.PI / 180.0);
+            power = (res_wind + res_roll + res_slop) * bike_speed;
 
             label0.Content = Properties.Resources.StringTotaldiff + ": " +
                 (Convert.ToDouble(toothratemax / toothratemin * 100.0)).ToString("F0") +
                 "%";
             label1.Content = Properties.Resources.StringTotalCap + ": " +
                 (frtemp.teeth[frtemp.Speeds - 1].teeth - frtemp.teeth[0].teeth - bktemp.teeth[bktemp.Speeds - 1].teeth + bktemp.teeth[0].teeth).ToString() + "T";
+
+            if (IsSpd)
+            {
+                label3.Content = Properties.Resources.StringPower + ": " + power.ToString("F2") + "W";
+            }
+            else
+            {
+                label3.Content = Properties.Resources.StringPower + ": -";
+            }
 
 
 
@@ -683,6 +789,12 @@ namespace BicycleCalculatorWPF
             Properties.Settings.Default.IsISO = IsISO;
             Properties.Settings.Default.numUD1 = TireISO1;
             Properties.Settings.Default.numUD2 = TireISO2;
+
+            Properties.Settings.Default.bikewt = Bikewt;
+            Properties.Settings.Default.bodywt = Bodywt;
+            Properties.Settings.Default.windspd = Windspd;
+            Properties.Settings.Default.slop = Slop;
+
         }
 
         public void ExportFileTr()

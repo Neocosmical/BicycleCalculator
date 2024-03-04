@@ -387,10 +387,10 @@
                                         <TextBlock Text="{x:Static res:Resources.StringSlope}" Grid.Row="2" Grid.Column="2" Margin="3" VerticalAlignment="Center"/>
                                         <TextBlock Text="{x:Static res:Resources.StringBodyWeight}" Grid.Row="3" Grid.Column="0" Margin="3" VerticalAlignment="Center"/>
                                         <TextBlock Text="{x:Static res:Resources.StringWindSpeed}" Grid.Row="3" Grid.Column="2" Margin="3" VerticalAlignment="Center"/>
-                                        <TextBox Grid.Row="2" Grid.Column="1" Margin="3"/>
-                                        <TextBox Grid.Row="2" Grid.Column="3" Margin="3"/>
-                                        <TextBox Grid.Row="3" Grid.Column="1" Margin="3"/>
-                                        <TextBox Grid.Row="3" Grid.Column="3" Margin="3"/>
+                                        <TextBox x:Name="textBox_bikewt" Grid.Row="2" Grid.Column="1" Margin="3" TextChanged="textBox_bikewt_TextChanged" MouseWheel="textBox_MouseWheel_float" LostKeyboardFocus="textBox_bikewt_LostKeyboardFocus"/>
+                                        <TextBox x:Name="textBox_slop" Grid.Row="2" Grid.Column="3" Margin="3" TextChanged="textBox_slop_TextChanged" MouseWheel="textBox_MouseWheel_float" LostKeyboardFocus="textBox_slop_LostKeyboardFocus"/>
+                                        <TextBox x:Name="textBox_bodywt" Grid.Row="3" Grid.Column="1" Margin="3" TextChanged="textBox_bodywt_TextChanged" MouseWheel="textBox_MouseWheel_float" LostKeyboardFocus="textBox_bodywt_LostKeyboardFocus"/>
+                                        <TextBox x:Name="textBox_windspd" Grid.Row="3" Grid.Column="3" Margin="3" TextChanged="textBox_windspd_TextChanged" MouseWheel="textBox_MouseWheel_float" LostKeyboardFocus="textBox_windspd_LostKeyboardFocus"/>
                                     </Grid>
                                 </GroupBox>
                                 <GroupBox Header="{x:Static res:Resources.StringTire}" Margin="5" Grid.Row="2">

@@ -754,5 +754,53 @@ namespace BicycleCalculatorWPF.Properties {
                 this["TabSlt"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public double bikewt {
+            get {
+                return ((double)(this["bikewt"]));
+            }
+            set {
+                this["bikewt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("70")]
+        public double bodywt {
+            get {
+                return ((double)(this["bodywt"]));
+            }
+            set {
+                this["bodywt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double windspd {
+            get {
+                return ((double)(this["windspd"]));
+            }
+            set {
+                this["windspd"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double slop {
+            get {
+                return ((double)(this["slop"]));
+            }
+            set {
+                this["slop"] = value;
+            }
+        }
     }
 }

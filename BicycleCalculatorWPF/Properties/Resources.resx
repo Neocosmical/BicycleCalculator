@@ -561,4 +561,7 @@ Are you sure to save the dataset?</value>
   <data name="StringWindSpeed" xml:space="preserve">
     <value>WSpd</value>
   </data>
+  <data name="StringPower" xml:space="preserve">
+    <value>Power</value>
+  </data>
 </root>
