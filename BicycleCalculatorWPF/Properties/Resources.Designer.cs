@@ -926,6 +926,15 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Select items to calculate power. 的本地化字符串。
+        /// </summary>
+        public static string StringSelect2Cal {
+            get {
+                return ResourceManager.GetString("StringSelect2Cal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Select All 的本地化字符串。
         /// </summary>
         public static string StringSelectAll {

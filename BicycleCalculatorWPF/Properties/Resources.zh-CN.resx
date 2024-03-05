@@ -550,4 +550,7 @@ http://bbs.77bike.com/read.php?tid=233029</value>
   <data name="StringPower" xml:space="preserve">
     <value>功率</value>
   </data>
+  <data name="StringSelect2Cal" xml:space="preserve">
+    <value>选择档位计算功率。</value>
+  </data>
 </root>

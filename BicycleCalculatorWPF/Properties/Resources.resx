@@ -564,4 +564,7 @@ Are you sure to save the dataset?</value>
   <data name="StringPower" xml:space="preserve">
     <value>Power</value>
   </data>
+  <data name="StringSelect2Cal" xml:space="preserve">
+    <value>Select items to calculate power.</value>
+  </data>
 </root>

@@ -49,7 +49,7 @@ namespace BicycleCalculatorWPF
                 {
                     bikewt = value;
                     NotifyPropertyChanged("Bikewt");
-                    Calculate();
+                    CalculatePower();
                 }
             }
         }
@@ -66,7 +66,7 @@ namespace BicycleCalculatorWPF
                 {
                     bodywt = value;
                     NotifyPropertyChanged("Bodywt");
-                    Calculate();
+                    CalculatePower();
                 }
             }
         }
@@ -83,7 +83,7 @@ namespace BicycleCalculatorWPF
                 {
                     windspd = value;
                     NotifyPropertyChanged("Windspd");
-                    Calculate();
+                    CalculatePower();
                 }
             }
         }
@@ -100,7 +100,7 @@ namespace BicycleCalculatorWPF
                 {
                     slop = value;
                     NotifyPropertyChanged("Slop");
-                    Calculate();
+                    CalculatePower();
                 }
             }
         }
@@ -189,6 +189,7 @@ namespace BicycleCalculatorWPF
                 NotifyPropertyChanged("Cad");
                 NotifyPropertyChanged("CadStr");
                 Calculate();
+                CalculatePower();
             }
         }
 
@@ -246,6 +247,7 @@ namespace BicycleCalculatorWPF
                 NotifyPropertyChanged("CadStr");
                 NotifyPropertyChanged("SpeedHeaderStr");
                 Calculate();
+                CalculatePower();
             }
         }
 
@@ -263,6 +265,7 @@ namespace BicycleCalculatorWPF
                 NotifyPropertyChanged("SpeedHeaderStr");
                 Cad = isSpd ? 50 : 80;
                 Calculate();
+                CalculatePower();
             }
         }
 
@@ -609,40 +612,11 @@ namespace BicycleCalculatorWPF
                     break;
             }
 
-            double bike_speed = 0;
-            if (IsSpd)
-            {
-                if (IsMPH)
-                    bike_speed = Cad * 1.609344 / 2.0 / 3.6;
-                else
-                    bike_speed = Cad / 2.0 / 3.6;
-            }
-            else
-            {
-                
-            }
-            double rollk = 0.02;
-            double res_wind = 0.2 * (bike_speed - Windspd) * (bike_speed - Windspd);
-            double res_roll = rollk * (Bodywt + Bikewt);
-            double res_slop = 9.8 * (Bodywt + Bikewt) * Math.Sin(Slop * Math.PI / 180.0);
-            power = (res_wind + res_roll + res_slop) * bike_speed;
-
             label0.Content = Properties.Resources.StringTotaldiff + ": " +
                 (Convert.ToDouble(toothratemax / toothratemin * 100.0)).ToString("F0") +
                 "%";
             label1.Content = Properties.Resources.StringTotalCap + ": " +
                 (frtemp.teeth[frtemp.Speeds - 1].teeth - frtemp.teeth[0].teeth - bktemp.teeth[bktemp.Speeds - 1].teeth + bktemp.teeth[0].teeth).ToString() + "T";
-
-            if (IsSpd)
-            {
-                label3.Content = Properties.Resources.StringPower + ": " + power.ToString("F2") + "W";
-            }
-            else
-            {
-                label3.Content = Properties.Resources.StringPower + ": -";
-            }
-
-
 
             chart.ResetAllAxes();
             chart.InvalidatePlot(true);
@@ -654,6 +628,68 @@ namespace BicycleCalculatorWPF
 
         }
 
+        public void CalculatePower()
+        {
+            double rollk = 0.02;
+            double res_roll = rollk * (Bodywt + Bikewt);
+            double res_slop = 9.8 * (Bodywt + Bikewt) * Math.Sin(Slop * Math.PI / 180.0);
+
+            if (IsSpd)
+            {
+                double bike_speed = 0;
+                if (IsMPH)
+                    bike_speed = Cad * 1.609344 / 2.0 / 3.6;
+                else
+                    bike_speed = Cad / 2.0 / 3.6;
+
+                double res_wind = 0.2 * (bike_speed - Windspd) * (bike_speed - Windspd);
+                double power = (res_wind + res_roll + res_slop) * bike_speed;
+                label3.Content = Properties.Resources.StringPower + ": " + power.ToString("F2") + "W";
+            }
+            else
+            {
+                double spd_min = 100000000;
+                double spd_max = 0;
+                if (list == null || list.SelectedItems.Count == 0)
+                {
+                    if (label3 != null) label3.Content = Properties.Resources.StringSelect2Cal;
+                    return;
+                }
+
+                foreach (CResult item in list.SelectedItems)
+                {
+                    if (item.Speed1 > spd_max) spd_max = item.Speed1;
+                    if (item.Speed1 < spd_min) spd_min = item.Speed1;
+                }
+
+                double speedmin = 0;
+                double speedmax = 0;
+                if (IsMPH)
+                {
+                    speedmin = spd_min * 1.609344 / 3.6;
+                    speedmax = spd_max * 1.609344 / 3.6;
+                }
+                else
+                {
+                    speedmin = spd_min / 3.6;
+                    speedmax = spd_max / 3.6;
+                }
+
+                double power_min = 0;
+                double power_max = 0;
+
+                double res_wind_min = 0.2 * (speedmin - Windspd) * (speedmin - Windspd);
+                power_min = (res_wind_min + res_roll + res_slop) * speedmin;
+
+                double res_wind_max = 0.2 * (speedmax - Windspd) * (speedmax - Windspd);
+                power_max = (res_wind_max + res_roll + res_slop) * speedmax;
+
+                if (Math.Abs(power_min - power_max) < 0.001)
+                    label3.Content = Properties.Resources.StringPower + ": " + power_min.ToString("F2") + "W";
+                else
+                    label3.Content = Properties.Resources.StringPower + ": " + power_min.ToString("F2") + "W ~ " + power_max.ToString("F2") + "W";
+            }
+        }
         public void CalculateWheelLenth()
         {
             //if (checkBox2 == null) return;

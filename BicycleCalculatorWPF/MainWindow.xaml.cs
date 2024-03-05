@@ -161,6 +161,7 @@ namespace BicycleCalculatorWPF
             WheelCal.ready = true;
             TransmissionCal.Calculate();
             WheelCal.Calculate();
+            TransmissionCal.CalculatePower();
         }
 
         System.Timers.Timer timerload1;
@@ -266,6 +267,8 @@ namespace BicycleCalculatorWPF
                 TextBlockLoad.Dispatcher.Invoke(new Action(() =>
                 {
                     TransmissionCal.Calculate();
+                    TransmissionCal.CalculatePower();
+
                     WheelCal.Calculate();
                 }));
             }
@@ -299,7 +302,6 @@ namespace BicycleCalculatorWPF
 
             double max = 0;
             double min = 100000000;
-            
             foreach (CResult item in listBox1.SelectedItems)
             {
                 int n = item.No1 - 1;
@@ -313,7 +315,6 @@ namespace BicycleCalculatorWPF
                 dataGridViewBk.SelectedIndex = b;
                 dataGridViewIn.SelectedIndex = i;
 
-
                 PointAnnotation pointAnnotation1 = new PointAnnotation();
                 int nanadd = 0;
                 foreach (int nan in TransmissionCal.NaNNumber)
@@ -326,8 +327,8 @@ namespace BicycleCalculatorWPF
                 pointAnnotation1.StrokeThickness = 1;
                 pointAnnotation1.Text = item.Gear1;
                 TransmissionCal.pm.Annotations.Add(pointAnnotation1);
-
             }
+
             if (listBox1.SelectedItems.Count > 1)
             {
                 labelinfo2.Content = Properties.Resources.StringIncrement + ": " + ((max / min - 1.0) * 100.0).ToString("0.0") + "%";
@@ -339,6 +340,7 @@ namespace BicycleCalculatorWPF
                 labelinfo2.Visibility = Visibility.Collapsed;
             }
             Chart1.InvalidatePlot(true);
+            TransmissionCal.CalculatePower();
         }
         
         private void checkBox2_CheckedChanged(object sender, RoutedEventArgs e)
