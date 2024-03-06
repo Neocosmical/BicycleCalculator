@@ -147,7 +147,7 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
-        ///   查找类似 BikeWt 的本地化字符串。
+        ///   查找类似 BikeWt(kg) 的本地化字符串。
         /// </summary>
         public static string StringBikeWeight {
             get {
@@ -156,7 +156,7 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
-        ///   查找类似 BodyWt 的本地化字符串。
+        ///   查找类似 BodyWt(kg) 的本地化字符串。
         /// </summary>
         public static string StringBodyWeight {
             get {
@@ -260,6 +260,15 @@ namespace BicycleCalculatorWPF.Properties {
         public static string StringChart {
             get {
                 return ResourceManager.GetString("StringChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Circ 的本地化字符串。
+        /// </summary>
+        public static string StringCirc {
+            get {
+                return ResourceManager.GetString("StringCirc", resourceCulture);
             }
         }
         
@@ -962,7 +971,7 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Slope 的本地化字符串。
+        ///   查找类似 Slope(%) 的本地化字符串。
         /// </summary>
         public static string StringSlope {
             get {
@@ -1262,7 +1271,7 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
-        ///   查找类似 WSpd 的本地化字符串。
+        ///   查找类似 Wind(m/s) 的本地化字符串。
         /// </summary>
         public static string StringWindSpeed {
             get {

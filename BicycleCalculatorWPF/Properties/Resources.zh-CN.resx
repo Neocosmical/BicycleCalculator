@@ -536,21 +536,24 @@ http://bbs.77bike.com/read.php?tid=233029</value>
     <value>文件读取失败。</value>
   </data>
   <data name="StringBikeWeight" xml:space="preserve">
-    <value>车重</value>
+    <value>车重kg</value>
   </data>
   <data name="StringBodyWeight" xml:space="preserve">
-    <value>体重</value>
+    <value>体重kg</value>
   </data>
   <data name="StringSlope" xml:space="preserve">
-    <value>坡度</value>
+    <value>坡度%</value>
   </data>
   <data name="StringWindSpeed" xml:space="preserve">
-    <value>风速</value>
+    <value>风速m/s</value>
   </data>
   <data name="StringPower" xml:space="preserve">
     <value>功率</value>
   </data>
   <data name="StringSelect2Cal" xml:space="preserve">
     <value>选择档位计算功率。</value>
+  </data>
+  <data name="StringCirc" xml:space="preserve">
+    <value>周长</value>
   </data>
 </root>

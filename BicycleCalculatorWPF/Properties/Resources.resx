@@ -550,21 +550,24 @@ Are you sure to save the dataset?</value>
     <value>Failed to read file.</value>
   </data>
   <data name="StringBikeWeight" xml:space="preserve">
-    <value>BikeWt</value>
+    <value>BikeWt(kg)</value>
   </data>
   <data name="StringBodyWeight" xml:space="preserve">
-    <value>BodyWt</value>
+    <value>BodyWt(kg)</value>
   </data>
   <data name="StringSlope" xml:space="preserve">
-    <value>Slope</value>
+    <value>Slope(%)</value>
   </data>
   <data name="StringWindSpeed" xml:space="preserve">
-    <value>WSpd</value>
+    <value>Wind(m/s)</value>
   </data>
   <data name="StringPower" xml:space="preserve">
     <value>Power</value>
   </data>
   <data name="StringSelect2Cal" xml:space="preserve">
     <value>Select items to calculate power.</value>
+  </data>
+  <data name="StringCirc" xml:space="preserve">
+    <value>Circ</value>
   </data>
 </root>
