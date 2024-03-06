@@ -383,10 +383,10 @@
                                             </Label>
                                             <CheckBox x:Name="checkBox1" Content="{x:Static res:Resources.StringSpeed}" Grid.Column="1" Margin="3,0,3,0" Grid.Row="1" VerticalAlignment="Center" Click="checkBox1_Click"/>
                                         </Grid>
-                                        <TextBlock Text="{x:Static res:Resources.StringBikeWeight}" Grid.Row="2" Grid.Column="0" Margin="3" VerticalAlignment="Center" TextAlignment="Right"/>
-                                        <TextBlock Text="{x:Static res:Resources.StringSlope}" Grid.Row="2" Grid.Column="2" Margin="3" VerticalAlignment="Center" TextAlignment="Right"/>
-                                        <TextBlock Text="{x:Static res:Resources.StringBodyWeight}" Grid.Row="3" Grid.Column="0" Margin="3" VerticalAlignment="Center" TextAlignment="Right"/>
-                                        <TextBlock Text="{x:Static res:Resources.StringWindSpeed}" Grid.Row="3" Grid.Column="2" Margin="3" VerticalAlignment="Center" TextAlignment="Right"/>
+                                        <TextBlock Text="{x:Static res:Resources.StringBikeWeight}" Grid.Row="2" Grid.Column="0" Margin="3,3,0,3" VerticalAlignment="Center" TextAlignment="Right"/>
+                                        <TextBlock Text="{x:Static res:Resources.StringSlope}" Grid.Row="2" Grid.Column="2" Margin="3,3,0,3" VerticalAlignment="Center" TextAlignment="Right"/>
+                                        <TextBlock Text="{x:Static res:Resources.StringBodyWeight}" Grid.Row="3" Grid.Column="0" Margin="3,3,0,3" VerticalAlignment="Center" TextAlignment="Right"/>
+                                        <TextBlock Text="{x:Static res:Resources.StringWindSpeed}" Grid.Row="3" Grid.Column="2" Margin="3,3,0,3" VerticalAlignment="Center" TextAlignment="Right"/>
                                         <TextBox x:Name="textBox_bikewt" Grid.Row="2" Grid.Column="1" Margin="3" TextChanged="textBox_bikewt_TextChanged" MouseWheel="textBox_MouseWheel_float" LostKeyboardFocus="textBox_bikewt_LostKeyboardFocus"/>
                                         <TextBox x:Name="textBox_slop" Grid.Row="2" Grid.Column="3" Margin="3" TextChanged="textBox_slop_TextChanged" MouseWheel="textBox_MouseWheel_float" LostKeyboardFocus="textBox_slop_LostKeyboardFocus"/>
                                         <TextBox x:Name="textBox_bodywt" Grid.Row="3" Grid.Column="1" Margin="3" TextChanged="textBox_bodywt_TextChanged" MouseWheel="textBox_MouseWheel_float" LostKeyboardFocus="textBox_bodywt_LostKeyboardFocus"/>
@@ -417,8 +417,8 @@
                                             <TextBox x:Name="numericUpDown2" Text="406" Grid.Column="2" TextChanged="numericUpDown2_ValueChanged" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" MouseWheel="TextBox_MouseWheel"/>
                                             <TextBlock Grid.Column="1" Text="-" Margin="2" HorizontalAlignment="Center"/>
                                         </Grid>
-                                        <TextBlock Text="{x:Static res:Resources.StringCirc}" Grid.Row="1" Grid.Column="0" Margin="3" VerticalAlignment="Center" TextAlignment="Right"/>
-                                        <CheckBox x:Name="checkBox2" Content="ISO" Grid.Column="4" Margin="3" Grid.Row="1" VerticalAlignment="Center" Click="checkBox2_CheckedChanged"/>
+                                        <TextBlock Text="{x:Static res:Resources.StringCirc}" Grid.Row="1" Grid.Column="0" Margin="3,3,0,3" VerticalAlignment="Center" TextAlignment="Right"/>
+                                        <CheckBox x:Name="checkBox2" Content="ISO" Grid.Column="4" Margin="5,3,3,3" Grid.Row="1" VerticalAlignment="Center" Click="checkBox2_CheckedChanged"/>
                                         <RepeatButton Content="-" Grid.Column="2" Margin="1,3" Grid.Row="1" Click="Button_Click_2" Padding="1,0,1,1" Width="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                         <RepeatButton Content="+" Grid.Column="3" Margin="1,3" Grid.Row="1" Click="Button_Click_1" Padding="1,0,1,1" Width="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                         <TextBox x:Name="WheelLenthtextBox" Margin="3" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Text="2000" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" TextChanged="WheelLenthtextBox_TextChanged" MouseWheel="TextBox_MouseWheel" LostKeyboardFocus="WheelLenthtextBox_LostKeyboardFocus"/>
