@@ -583,12 +583,26 @@ namespace BicycleCalculatorWPF
             if (e.Delta > 0)
             {
                 if (val < 65535)
-                    ((TextBox)sender).Text = (Convert.ToDouble(((TextBox)sender).Text) + 0.01).ToString("");
+                    ((TextBox)sender).Text = (Convert.ToDouble(((TextBox)sender).Text) + 0.01).ToString();
             }
             else if (e.Delta < 0)
             {
                 if (val > 0)
-                ((TextBox)sender).Text = (Convert.ToDouble(((TextBox)sender).Text) - 0.01).ToString();
+                    ((TextBox)sender).Text = (Convert.ToDouble(((TextBox)sender).Text) - 0.01).ToString();
+            }
+        }
+        private void textBox_MouseWheel_signed_float(object sender, MouseWheelEventArgs e)
+        {
+            double val = Convert.ToDouble(((TextBox)sender).Text);
+            if (e.Delta > 0)
+            {
+                if (val < 65535)
+                    ((TextBox)sender).Text = (Convert.ToDouble(((TextBox)sender).Text) + 0.1).ToString();
+            }
+            else if (e.Delta < 0)
+            {
+                if (val > -65535)
+                    ((TextBox)sender).Text = (Convert.ToDouble(((TextBox)sender).Text) - 0.1).ToString();
             }
         }
 

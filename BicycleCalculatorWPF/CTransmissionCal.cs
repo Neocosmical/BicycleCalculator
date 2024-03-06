@@ -632,7 +632,9 @@ namespace BicycleCalculatorWPF
         {
             double rollk = 0.02;
             double res_roll = rollk * (Bodywt + Bikewt);
-            double res_slop = 9.8 * (Bodywt + Bikewt) * Math.Sin(Slop * Math.PI / 180.0);
+            double slop1 = Slop / 100.0;
+            double sin_slop = slop1 / Math.Sqrt(1 + slop1 * slop1);
+            double res_slop = 9.8 * (Bodywt + Bikewt) * sin_slop;
 
             if (IsSpd)
             {
