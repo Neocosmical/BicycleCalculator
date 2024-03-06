@@ -161,6 +161,7 @@ namespace BicycleCalculatorWPF
             WheelCal.ready = true;
             TransmissionCal.Calculate();
             WheelCal.Calculate();
+            TransmissionCal.CalculatePower();
         }
 
         System.Timers.Timer timerload1;
@@ -169,6 +170,10 @@ namespace BicycleCalculatorWPF
             TransmissionCal.ready = false;
             WheelCal.ready = false;
 
+            textBox_bikewt.SetBinding(TextBox.TextProperty, new Binding("Bikewt") { Source = TransmissionCal });
+            textBox_bodywt.SetBinding(TextBox.TextProperty, new Binding("Bodywt") { Source = TransmissionCal });
+            textBox_windspd.SetBinding(TextBox.TextProperty, new Binding("Windspd") { Source = TransmissionCal });
+            textBox_slop.SetBinding(TextBox.TextProperty, new Binding("Slop") { Source = TransmissionCal });
 
             WheelLenthtextBox.SetBinding(TextBox.TextProperty, new Binding("Whlength") { Source = TransmissionCal });
             numericUpDown1.SetBinding(TextBox.TextProperty, new Binding("TireISO1") { Source = TransmissionCal });
@@ -181,7 +186,7 @@ namespace BicycleCalculatorWPF
             frSelector.Init(FrNumcomboBox, FrModelcomboBox, dataGridViewFr, TransmissionCal, data.frlists);
             bkSelector.Init(BkNumcomboBox, BkModelcomboBox, dataGridViewBk, TransmissionCal, data.bklists);
             inSelector.Init(InNumcomboBox, InModelcomboBox, dataGridViewIn, TransmissionCal, data.inlists);
-            TransmissionCal.Init(Chart1, listBox1, labelinfo, labelinfo1);
+            TransmissionCal.Init(Chart1, listBox1, labelinfo, labelinfo1, labelinfo3);
             WheelCal.Init(Chart2, listBox2);
                         
             WheelcomboBox.Items.Clear();
@@ -262,6 +267,8 @@ namespace BicycleCalculatorWPF
                 TextBlockLoad.Dispatcher.Invoke(new Action(() =>
                 {
                     TransmissionCal.Calculate();
+                    TransmissionCal.CalculatePower();
+
                     WheelCal.Calculate();
                 }));
             }
@@ -295,7 +302,6 @@ namespace BicycleCalculatorWPF
 
             double max = 0;
             double min = 100000000;
-            
             foreach (CResult item in listBox1.SelectedItems)
             {
                 int n = item.No1 - 1;
@@ -309,7 +315,6 @@ namespace BicycleCalculatorWPF
                 dataGridViewBk.SelectedIndex = b;
                 dataGridViewIn.SelectedIndex = i;
 
-
                 PointAnnotation pointAnnotation1 = new PointAnnotation();
                 int nanadd = 0;
                 foreach (int nan in TransmissionCal.NaNNumber)
@@ -322,8 +327,8 @@ namespace BicycleCalculatorWPF
                 pointAnnotation1.StrokeThickness = 1;
                 pointAnnotation1.Text = item.Gear1;
                 TransmissionCal.pm.Annotations.Add(pointAnnotation1);
-
             }
+
             if (listBox1.SelectedItems.Count > 1)
             {
                 labelinfo2.Content = Properties.Resources.StringIncrement + ": " + ((max / min - 1.0) * 100.0).ToString("0.0") + "%";
@@ -335,6 +340,7 @@ namespace BicycleCalculatorWPF
                 labelinfo2.Visibility = Visibility.Collapsed;
             }
             Chart1.InvalidatePlot(true);
+            TransmissionCal.CalculatePower();
         }
         
         private void checkBox2_CheckedChanged(object sender, RoutedEventArgs e)
@@ -1487,6 +1493,46 @@ namespace BicycleCalculatorWPF
             reditor.ShowDialog();
             data.LoadData();
             RefreshData();
+        }
+
+        private void textBox_bikewt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try { TransmissionCal.Bikewt = Convert.ToDouble(textBox_bikewt.Text); } catch { }
+        }
+
+        private void textBox_bikewt_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            textBox_bikewt.Text = TransmissionCal.Bikewt.ToString();
+        }
+
+        private void textBox_slop_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try { TransmissionCal.Slop = Convert.ToDouble(textBox_slop.Text); } catch { }
+        }
+
+        private void textBox_slop_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            textBox_slop.Text = TransmissionCal.Slop.ToString();
+        }
+
+        private void textBox_bodywt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try { TransmissionCal.Bodywt = Convert.ToDouble(textBox_bodywt.Text); } catch { }
+        }
+
+        private void textBox_bodywt_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            textBox_bodywt.Text = TransmissionCal.Bodywt.ToString();
+        }
+
+        private void textBox_windspd_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try { TransmissionCal.Windspd = Convert.ToDouble(textBox_windspd.Text); } catch { }
+        }
+
+        private void textBox_windspd_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            textBox_windspd.Text = TransmissionCal.Windspd.ToString();
         }
     }
 }

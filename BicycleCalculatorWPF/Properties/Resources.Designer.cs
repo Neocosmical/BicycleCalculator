@@ -147,6 +147,24 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
+        ///   查找类似 BikeWt(kg) 的本地化字符串。
+        /// </summary>
+        public static string StringBikeWeight {
+            get {
+                return ResourceManager.GetString("StringBikeWeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 BodyWt(kg) 的本地化字符串。
+        /// </summary>
+        public static string StringBodyWeight {
+            get {
+                return ResourceManager.GetString("StringBodyWeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Cassette Sprockets Branch 的本地化字符串。
         /// </summary>
         public static string StringBranchbk {
@@ -192,7 +210,7 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Cadence / Speed 的本地化字符串。
+        ///   查找类似 Cadence / Speed / Power 的本地化字符串。
         /// </summary>
         public static string StringCadenceSpeed {
             get {
@@ -242,6 +260,15 @@ namespace BicycleCalculatorWPF.Properties {
         public static string StringChart {
             get {
                 return ResourceManager.GetString("StringChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Circ 的本地化字符串。
+        /// </summary>
+        public static string StringCirc {
+            get {
+                return ResourceManager.GetString("StringCirc", resourceCulture);
             }
         }
         
@@ -773,6 +800,15 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Power 的本地化字符串。
+        /// </summary>
+        public static string StringPower {
+            get {
+                return ResourceManager.GetString("StringPower", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Racing 的本地化字符串。
         /// </summary>
         public static string StringRacing {
@@ -899,6 +935,15 @@ namespace BicycleCalculatorWPF.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Select items to calculate power. 的本地化字符串。
+        /// </summary>
+        public static string StringSelect2Cal {
+            get {
+                return ResourceManager.GetString("StringSelect2Cal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Select All 的本地化字符串。
         /// </summary>
         public static string StringSelectAll {
@@ -922,6 +967,15 @@ namespace BicycleCalculatorWPF.Properties {
         public static string StringSizeToFit {
             get {
                 return ResourceManager.GetString("StringSizeToFit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Slope(%) 的本地化字符串。
+        /// </summary>
+        public static string StringSlope {
+            get {
+                return ResourceManager.GetString("StringSlope", resourceCulture);
             }
         }
         
@@ -1213,6 +1267,15 @@ namespace BicycleCalculatorWPF.Properties {
         public static string StringView {
             get {
                 return ResourceManager.GetString("StringView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Wind(m/s) 的本地化字符串。
+        /// </summary>
+        public static string StringWindSpeed {
+            get {
+                return ResourceManager.GetString("StringWindSpeed", resourceCulture);
             }
         }
         
